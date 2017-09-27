@@ -136,7 +136,7 @@ namespace alize
     ///
     virtual const MixtureGF& readMixtureGF();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 

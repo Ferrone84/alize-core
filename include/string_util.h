@@ -52,8 +52,8 @@
 	Jean-Francois Bonastre [jean-francois.bonastre@univ-avignon.fr]
 */
 
-#if !defined(ALIZE_MixtureFileWriter_h)
-#define ALIZE_MixtureFileWriter_h
+#if !defined(ALIZE_string_util_h)
+#define ALIZE_string_util_h
 
 #if defined(_WIN32)
 #if defined(ALIZE_EXPORTS)
@@ -65,62 +65,50 @@
 #define ALIZE_API
 #endif
 
-#include "FileWriter.h"
+#include <string>
+#include <stdexcept>
 
-namespace alize
+namespace alize 
 {
-  class Mixture;
-  class MixtureGD;
-  class Config;
-  class MixtureGF;
-
-  /// Convenient class used to save 1 mixture in a raw or xml file 
-  ///
-  /// @author Frederic Wils  frederic.wils@lia.univ-avignon.fr
-  /// @version 1.0
-  /// @date 2003
-
-  class ALIZE_API MixtureFileWriter : public FileWriter
-  {
-
-  public :
-
-    /// Create a new MixtureFileWriter object to save a mixture
-    /// in a file
-    /// @param f the name of the file
-    /// @param c the configuration to use
+	/// Returns the {index}th substring of str, each separated by space or tabulation (separators)
+	/// And skip the firsts separators
+	///
+	/// Example : string = " aaa bbb ccc "
+    ///       getToken(0) will return "aaa"
+    ///       getToken(1) will return "bbb"
+    ///       getToken(2) will return "ccc"
+    ///       getToken(3 or more) will return ""
+    /// @param str the string to tokenize
+    /// @param index the index of the token to return
+    /// @return a string with the token if it exists; return an empty string otherwise
+    /// @exception invalid_argument
     ///
-    explicit MixtureFileWriter(const FileName& f, const Config& c);
+	ALIZE_API std::string getToken(const std::string& str, size_t index);
 
-    virtual ~MixtureFileWriter();
+	/// Tests whether this string begins with the specified prefix
+    /// @return true if the character sequence represented by the
+    ///     argument <s> is a prefix of the character sequence
+    ///     represented by the argument <str>; return false otherwise.
+    ///     Note that the result will be true if the argument is
+    ///     the empty string.
+    ///
+	ALIZE_API bool beginsWith(const std::string& str, const std::string& s);
 
-    /// Write a mixture to the file
-    /// @param mixture the mixture to save
-    /// @exception IOException if an I/O error occurs
+	/// Tests whether this string begins with the specified prefix
+    /// @return true if the character sequence represented by the
+    ///     argument <s> is a suffix of the character sequence
+    ///     represented by the argument <str>; return false otherwise.
+    ///     Note that the result will be true if the argument is
+    ///     the empty string.
+    ///
+	ALIZE_API bool endsWith(const std::string& str, const std::string& s);
 
-    virtual void writeMixture(const Mixture& mixture);
-    virtual std::string getClassName() const;
-
-  private :
-
-    const Config& _config;
-
-
-    std::string getFullFileName(const Config&, const FileName&) const;
-
-    void writeMixtureGD_XML(const MixtureGD&);
-    void writeMixtureGD_RAW(const MixtureGD&);
-    void writeMixtureGD_ETAT(const MixtureGD&);
-    void writeMixtureGF_XML(const MixtureGF&);
-    void writeMixtureGF_RAW(const MixtureGF&);
-    MixtureFileWriter(const MixtureFileWriter&);   /*!Not implemented*/
-    const MixtureFileWriter& operator=(
-                const MixtureFileWriter&); /*!Not implemented*/
-    bool operator==(const MixtureFileWriter&) const; /*!Not implemented*/
-    bool operator!=(const MixtureFileWriter&) const; /*!Not implemented*/
-  };
+	/// Converts this string into a boolean value
+	/// @return the value
+    /// @exception invalid_argument
+	///
+	ALIZE_API bool toBool(const std::string& str);
 
 } // end namespace alize
 
-#endif // !defined(ALIZE_MixtureFileWriter_h)
-
+#endif  // ALIZE_string_util_h

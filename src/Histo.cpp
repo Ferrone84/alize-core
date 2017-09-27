@@ -63,7 +63,7 @@
 #include <cstdio>
 #include "Object.h"
 #include "Histo.h"
-#include "alizeString.h"
+
 #include "RealVector.h"
 #include "Exception.h"
 
@@ -357,21 +357,21 @@ void Histo::div(real_t factor)
 //-------------------------------------------------------------------------
 unsigned long Histo::size() const { return _nbBin; }
 //-------------------------------------------------------------------------
-String Histo::getClassName() const { return "Histo"; }
+string Histo::getClassName() const { return "Histo"; }
 //-------------------------------------------------------------------------
-String Histo::toString() const
+string Histo::toString() const
 {
   unsigned long i;
   real_t sum = 0.0;
-  String s = Object::toString() + " Nb bin = " + String::valueOf(_nbBin);
+  string s = Object::toString() + " Nb bin = " + std::to_string(_nbBin);
   for (i=0; i<_nbBin; i++)
   {
-    s += "\n  " + String::valueOf(_bound[i]) + " : "
-    + String::valueOf(_count[i]);
+    s += "\n  " + std::to_string(_bound[i]) + " : "
+    + std::to_string(_count[i]);
     sum += (_bound[i+1] - _bound[i]) * _count[i];
   }
   if (_nbBin != 0)
-    s += "\n  " + String::valueOf(_bound[i]);
+    s += "\n  " + std::to_string(_bound[i]);
   return s;
 }
 //-------------------------------------------------------------------------

@@ -57,7 +57,7 @@
 
 //#include <cmath>
 #include "MixtureStat.h"
-#include "alizeString.h"
+
 #include "Mixture.h"
 #include "Distrib.h"
 #include "Exception.h"
@@ -66,6 +66,7 @@
 #include "RealVector.h"
 #include "StatServer.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureStat S;
 //-------------------------------------------------------------------------
@@ -149,7 +150,7 @@ real_t S::computeAndAccumulateOcc(const Feature& f, weight_t w)
   return sum;
 }
 //-------------------------------------------------------------------------
-// calcule la contribution de la trame à chaque distribution de la mixture
+// calcule la contribution de la trame Ã  chaque distribution de la mixture
 // -> _occVect[nb distrib]
 // 0 < occ(distrib) <= 1
 //-------------------------------------------------------------------------
@@ -230,15 +231,15 @@ void S::assertResetEMDone() const
     throw Exception("EM not reseted", __FILE__, __LINE__);
 }
 //-------------------------------------------------------------------------
-String S::toString() const
+string S::toString() const
 // TODO : a completer
 {
   return Object::toString()
     + "\n  id        = '" + _pMixture->getId() + "'"
-    + "\n  llk       = " + String::valueOf(_llk)
-    + "\n  accum llk     = " + String::valueOf(_accumulatedLLK)
+    + "\n  llk       = " + std::to_string(_llk)
+    + "\n  accum llk     = " + std::to_string(_accumulatedLLK)
     + "\n  feature counter = "
-            + String::valueOf(_featureCounterForAccumulatedLK);
+            + std::to_string(_featureCounterForAccumulatedLK);
 }
 //-------------------------------------------------------------------------
 S::~MixtureStat() {}

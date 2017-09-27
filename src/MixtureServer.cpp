@@ -70,6 +70,7 @@
 #include "XLine.h"
 #include "ULongVector.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServer S;
 
@@ -185,15 +186,15 @@ Mixture& S::createMixture(unsigned long dc, DistribType type)
   return m;
 }
 //-------------------------------------------------------------------------
-String S::newId() // private
+string S::newId() // private
 {
-  String id;
-  do { id = "#" + String::valueOf(++_lastMixtureId); }
+  string id;
+  do { id = "#" + std::to_string(++_lastMixtureId); }
   while (_mixtureDict.getIndexOfId(id) != -1);
   return id;
 }
 //-------------------------------------------------------------------------
-void S::setMixtureId(Mixture& mixture, const String& id)
+void S::setMixtureId(Mixture& mixture, const string& id)
 {
   /*long i = _mixtureDict.getIndexOfId(id);
   if (i != -1 && &getMixture(i) != &mixture)
@@ -204,10 +205,10 @@ void S::setMixtureId(Mixture& mixture, const String& id)
 Mixture& S::duplicateMixture(const Mixture& mixture, DuplDistrib d)
 {
   Mixture& m = mixture.duplicate(K::k, d);
-  String id(mixture.getId());
+  string id(mixture.getId());
   unsigned long cpt = 1;
   while (_mixtureDict.getIndexOfId(id) != -1) // if the id already exists
-    id = mixture.getId() + " #" + String::valueOf(++cpt);
+    id = mixture.getId() + " #" + std::to_string(++cpt);
   m.setId(K::k, id);
   addMixtureToDict(m);
 
@@ -265,7 +266,7 @@ Distrib& S::duplicateDistrib(const Distrib& distrib)
   return d;
 }
 //-------------------------------------------------------------------------
-long S::getMixtureIndex(const String& id) const
+long S::getMixtureIndex(const string& id) const
 { return _mixtureDict.getIndexOfId(id); }
 //-------------------------------------------------------------------------
 void S::setDistribToMixture(Mixture& m, Distrib& d, weight_t w,
@@ -290,7 +291,7 @@ Mixture& S::loadMixture(const FileName& f)
   const Mixture& m0 = r.readMixture();
   if (!_config.existsParam_vectSize)
     const_cast<Config&>(_config)
-                   .setParam("vectSize", String::valueOf(m0.getVectSize()));
+                   .setParam("vectSize", std::to_string(m0.getVectSize()));
   Mixture& m = createMixture(m0.getDistribCount(), m0.getType());
   m = m0;
   autoSetMixtureId(m, f);
@@ -310,19 +311,19 @@ Mixture& S::loadMixture(const FileName& f, DistribType type) // private
   const Mixture& m0 = r.readMixture(type);    
   if (!_config.existsParam_vectSize)
     const_cast<Config&>(_config)
-                   .setParam("vectSize", String::valueOf(m0.getVectSize()));
+                   .setParam("vectSize", std::to_string(m0.getVectSize()));
   Mixture& m = createMixture(m0.getDistribCount(), type);
   m = m0; // operator= overloaded. // Does not copy Id.
   autoSetMixtureId(m, f);
   return m;
 }
 //-------------------------------------------------------------------------
-void S::autoSetMixtureId(Mixture& m, String id) // private
+void S::autoSetMixtureId(Mixture& m, string id) // private
 {
-  const String f = id;
+  const string f = id;
   unsigned long cpt = 1;
   while (_mixtureDict.getIndexOfId(id) != -1) // if the id already exists
-    id = f + " #" + String::valueOf(++cpt);
+    id = f + " #" + std::to_string(++cpt);
   _mixtureDict.setMixtureId(m, id);
 }
 //-------------------------------------------------------------------------
@@ -383,9 +384,9 @@ MixtureGF& S::getMixtureGF(unsigned long i) const
   return *p;
 }
 //-------------------------------------------------------------------------
-const String& S::getServerName() const { return _serverName; }
+const string& S::getServerName() const { return _serverName; }
 //-------------------------------------------------------------------------
-void S::setServerName(const String& s) { _serverName = s; }
+void S::setServerName(const string& s) { _serverName = s; }
 //-------------------------------------------------------------------------
 void S::load(const FileName& f)
 { MixtureServerFileReader(f, _config).readMixtureServer(*this); }
@@ -414,19 +415,19 @@ void S::deleteUnusedDistribs()
 void S::save(const FileName& f) const
 { MixtureServerFileWriter(f, _config).writeMixtureServer(*this); }
 //-------------------------------------------------------------------------
-String S::toString() const
+string S::toString() const
 {
-  String s = Object::toString()
+  string s = Object::toString()
     + "\n  serverName   = '" + _serverName + "'"
-    + "\n  distribCount = " + String::valueOf(getDistribCount())
-    + "\n  mixtureCount = " + String::valueOf(getMixtureCount());
+    + "\n  distribCount = " + std::to_string(getDistribCount())
+    + "\n  mixtureCount = " + std::to_string(getMixtureCount());
   for (unsigned long i=0; i<getMixtureCount(); i++)
-    s += "\n  mixture #" + String::valueOf(i)
+    s += "\n  mixture #" + std::to_string(i)
       + " Id = " + getMixture(i).getId();
   return s;
 }
 //-------------------------------------------------------------------------
-String S::getClassName() const { return "MixtureServer"; }
+string S::getClassName() const { return "MixtureServer"; }
 //-------------------------------------------------------------------------
 S::~MixtureServer() {}
 //-------------------------------------------------------------------------

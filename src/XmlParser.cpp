@@ -61,6 +61,7 @@
 
 // see http://babel.alis.com/web_ml/xml/REC-xml.fr.html#NT-XMLDecl
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -74,9 +75,9 @@ void XmlParser::parse()
   parseElement("", readOneChar());
 }
 //-------------------------------------------------------------------------
-void XmlParser::parseElement(String path, String s)
+void XmlParser::parseElement(string path, string s)
 {
-  String tag, value;
+  string tag, value;
 
   // read the opening tag
   test(s != ">" && s != "<" && s != "\"" && !isASeparator(s), "");
@@ -124,7 +125,7 @@ void XmlParser::parseElement(String path, String s)
     {
       s  = readOneChar();
       test(s != ">", ": a tag cannot be empty");
-      String closingElement; // lecture balise de fermeture
+      string closingElement; // lecture balise de fermeture
       while (s != ">")
       {
         test(s != "/" && s != "\"" && s != "<" && !isASeparator(s),
@@ -142,9 +143,9 @@ void XmlParser::parseElement(String path, String s)
   }
 }
 //-------------------------------------------------------------------------
-void XmlParser::parseAttribute(String path, String s)
+void XmlParser::parseAttribute(string path, string s)
 {
-  String attribute, value;
+  string attribute, value;
   test(s != "\"" && s != "<" && s != "=", "");
   while (s != "=" && !isASeparator(s))
   {
@@ -157,8 +158,8 @@ void XmlParser::parseAttribute(String path, String s)
   if (isASeparator(s))
     test(readNextChar() == "=",
        ": Missing equals sign between attribute and attribute value");
-  String quote = readNextChar();
-  test(quote == "\"" || quote == "'", String(": a string literal was")
+  string quote = readNextChar();
+  test(quote == "\"" || quote == "'", string(": a string literal was")
           + "expected, but no opening quote character was found");
   while ( (s = readOneChar()) != quote)
     value += s;
@@ -167,21 +168,21 @@ void XmlParser::parseAttribute(String path, String s)
 //-------------------------------------------------------------------------
 // Return the next character of the file that is not a separator character
 //-------------------------------------------------------------------------
-const String& XmlParser::readNextChar()
+const string& XmlParser::readNextChar()
 {
   while(true) 
   {
-    const String& s = readOneChar();
+    const string& s = readOneChar();
     if (!isASeparator(s))
       return s;
   }
   return readNextChar(); // never used
 }
 //-------------------------------------------------------------------------
-bool XmlParser::isASeparator(String s) const
+bool XmlParser::isASeparator(string s) const
 { return s == " " || s == "\n" || s == "\t" ||s == "\r"; }
 //-------------------------------------------------------------------------
-void XmlParser::test(bool v, const String& msg) { if (!v) eventError(msg); }
+void XmlParser::test(bool v, const string& msg) { if (!v) eventError(msg); }
 //-------------------------------------------------------------------------
 XmlParser::~XmlParser() {}
 //-------------------------------------------------------------------------

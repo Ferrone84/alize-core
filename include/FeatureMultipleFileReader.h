@@ -203,10 +203,10 @@ namespace alize
     /// @param srcIdx index of the file
     /// @return the name of the file
     ///
-    virtual const String& getNameOfASource(unsigned long srcIdx);
+    virtual const std::string& getNameOfASource(unsigned long srcIdx);
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
 
   private :

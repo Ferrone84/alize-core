@@ -143,7 +143,7 @@ namespace alize
     ///
     virtual real_t getSampleRate();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
     typedef SPRO3DataKind datakind_t;  /* Definition of sample kinds     */
 

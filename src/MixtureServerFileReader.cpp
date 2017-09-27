@@ -62,7 +62,9 @@
 #include "MixtureServer.h"
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServerFileReader R;
 
@@ -74,7 +76,7 @@ R::MixtureServerFileReader(const FileName& f, const Config& c)
 MixtureServerFileReaderAbstract& R::createReader(const FileName& f,
                                               const Config& c)  // private
 {
-  if ((f + getExt(f, c)).endsWith(".xml"))
+  if (endsWith((f + getExt(f, c)), ".xml"))
     return MixtureServerFileReaderXml::create(f, c);
   else
     return MixtureServerFileReaderRaw::create(f, c);
@@ -90,7 +92,7 @@ R& R::create(const FileName& f, const Config& c)
 void R::readMixtureServer(MixtureServer& ms)
 { _pServerReader->readMixtureServer(ms); }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureServerFileReader"; }
+string R::getClassName() const { return "MixtureServerFileReader"; }
 //-------------------------------------------------------------------------
 R::~MixtureServerFileReader()
 {

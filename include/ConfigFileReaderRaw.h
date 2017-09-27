@@ -103,7 +103,7 @@ namespace alize
     ///
     virtual void readConfig(Config& c);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

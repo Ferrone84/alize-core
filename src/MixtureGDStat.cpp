@@ -57,7 +57,7 @@
 
 #include <new>
 #include "MixtureGDStat.h"
-#include "alizeString.h"
+
 #include "Feature.h"
 #include "DistribGD.h"
 #include "Mixture.h"
@@ -66,6 +66,7 @@
 #include "Config.h"
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureGDStat M;
 
@@ -202,7 +203,7 @@ MixtureGD& M::getInternalAccumEM()
   return *_pMixForAccumulation;
 }
 //-------------------------------------------------------------------------
-String M::getClassName() const { return "MixtureGDStat"; }
+string M::getClassName() const { return "MixtureGDStat"; }
 //-------------------------------------------------------------------------
 M::~MixtureGDStat()
 {

@@ -65,6 +65,8 @@
 #define ALIZE_API
 #endif
 
+#include <iostream>
+#include <string>
 #include "SegAbstract.h"
 #include "SegServer.h"
 
@@ -137,8 +139,8 @@ namespace alize
     ///
     Seg& duplicate() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     // internal usage 
     
@@ -149,7 +151,7 @@ namespace alize
     Seg& duplicate(const K&, SegServer& ss) const;
     static Seg& create(const K&, SegServer& ss, unsigned long b = 0,
                unsigned long e = 0, unsigned long lc = 0,
-               const String& s = "", const String& sn = "");
+               const std::string& s = "", const std::string& sn = "");
     virtual void getExtremeBoundaries(const K&, unsigned long& b,
                  unsigned long& e, bool& isDefined) const;
 
@@ -160,7 +162,7 @@ namespace alize
 
     explicit Seg(SegServer& ss, unsigned long b = 0,
            unsigned long e = 0, unsigned long lc = 0,
-           const String& s = "", const String& sn = "");
+           const std::string& s = "", const std::string& sn = "");
     Seg(const Seg&);/*! not implemented */
     const Seg& operator=(const Seg& c);/*! not implemented */
     bool operator==(const Seg& c) const;/*! not implemented */

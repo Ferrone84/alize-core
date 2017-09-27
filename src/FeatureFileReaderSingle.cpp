@@ -65,9 +65,11 @@
 #include "Config.h"
 #include "RealVector.h"
 #include "FileReader.h"
+#include "string_util.h"
 
 #include <iostream>
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderSingle R;
 
@@ -82,16 +84,16 @@ R::FeatureFileReaderSingle(FileReader* r, FeatureInputStream* st,
  _featureIndexOfBuffer(0), _nbStored(0), _pBuffer(&FloatVector::create())
 {}
 //-------------------------------------------------------------------------
-String R::getPath(const FileName& f, const Config& c) const
+string R::getPath(const FileName& f, const Config& c) const
 {  // protected method
-   if (f.beginsWith("/") || f.beginsWith("./"))
+   if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_featureFilesPath();
 }
 //-------------------------------------------------------------------------
-String R::getExt(const FileName& f, const Config& c) const
+string R::getExt(const FileName& f, const Config& c) const
 {  // protected method
-   if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_loadFeatureFileExtension();
 }
@@ -189,7 +191,7 @@ bool R::readFeature(Feature& f, unsigned long step)
       _nbStored = _pReader->readSomeFloats(*_pBuffer)/getVectSize();
     else
     {
-      // Pas performant. A améliorer
+      // Pas performant. A amÃ©liorer
       _nbStored = 0;
       unsigned long vectSize = _pFeatureInputStream->getVectSize();
       while ((_nbStored+1)*vectSize <= _pBuffer->size()
@@ -207,7 +209,7 @@ bool R::readFeature(Feature& f, unsigned long step)
     if (_nbStored == featureCount)
       close();
     else
-      // données pas toutes en mémoire -> interdit le writeFeature()
+      // donnÃ©es pas toutes en mÃ©moire -> interdit le writeFeature()
       _featuresAreWritable = false;
   }
   f.setVectSize(K::k, getVectSize());
@@ -323,7 +325,7 @@ bool R::writeFeature(const Feature& f, unsigned long step)
       _nbStored = _pReader->readSomeFloats(*_pBuffer)/getVectSize();
     else
     {
-      // Pas performant. A améliorer
+      // Pas performant. A amÃ©liorer
       _nbStored = 0;
       unsigned long vectSize = _pFeatureInputStream->getVectSize();
       while ((_nbStored+1)*vectSize <= _pBuffer->size()
@@ -341,14 +343,14 @@ bool R::writeFeature(const Feature& f, unsigned long step)
     if (_nbStored == featureCount)
       close();
     else
-      // données pas toutes en mémoire -> interdit le writeFeature()
+      // donnÃ©es pas toutes en mÃ©moire -> interdit le writeFeature()
       throw Exception("Feature writing forbidden (data are not all in memory)"
                       , __FILE__, __LINE__);
   }
   unsigned long vectSize = getVectSize();
   if (vectSize != f.getVectSize())
-    throw Exception("incompatibles vectSize (" + String::valueOf(vectSize)
-        + "/" + String::valueOf(f.getVectSize()) + ")", __FILE__, __LINE__);
+    throw Exception("incompatibles vectSize (" + std::to_string(vectSize)
+        + "/" + std::to_string(f.getVectSize()) + ")", __FILE__, __LINE__);
   unsigned long offset = (_featureIndex-_featureIndexOfBuffer)*vectSize;
   for (unsigned long i=0; i<vectSize; i++)
     (*_pBuffer)[i+offset] = (float)f[i]; // TODO : conversion a revoir ?
@@ -425,7 +427,7 @@ unsigned long R::getFirstFeatureIndexOfASource(const FileName& f)
   return 0;
 }
 //-------------------------------------------------------------------------
-const String& R::getNameOfASource(unsigned long srcIdx)
+const string& R::getNameOfASource(unsigned long srcIdx)
 {
   if (srcIdx != 0)
     throw Exception("Only 1 file available", __FILE__, __LINE__);
@@ -436,28 +438,28 @@ const String& R::getNameOfASource(unsigned long srcIdx)
     return _pFeatureInputStream->getNameOfASource(0); // TODO : always 0 ?
 }
 //-------------------------------------------------------------------------
-String R::toString() const
+string R::toString() const
 {
   assert(_pReader != NULL || _pFeatureInputStream != NULL);
   FeatureFileReaderSingle& r
                            = const_cast<FeatureFileReaderSingle&>(*this);
   const FeatureFlags flags(r.getFeatureFlags());
-  String n;
+  string n;
   if (_pReader != NULL)
     n = _pReader->getFullFileName();
   else
     n = _pFeatureInputStream->getNameOfASource(0); // TODO : always 0 ?
   return Object::toString()
     + "\n  file name   = '" + n + "'"
-    + "\n  vectSize    = " + String::valueOf(r.getVectSize())
-    + "\n  feature count = " + String::valueOf(r.getFeatureCount())
-    + "\n  sample rate   = " + String::valueOf(r.getSampleRate())
-    + "\n  flag S    = " + String::valueOf(flags.useS)
-    + "\n  flag E    = " + String::valueOf(flags.useE)
-    + "\n  flag D    = " + String::valueOf(flags.useD)
-    + "\n  flag DE     = " + String::valueOf(flags.useDE)
-    + "\n  flag DD     = " + String::valueOf(flags.useDD)
-    + "\n  flag DDE    = " + String::valueOf(flags.useDDE);
+    + "\n  vectSize    = " + std::to_string(r.getVectSize())
+    + "\n  feature count = " + std::to_string(r.getFeatureCount())
+    + "\n  sample rate   = " + std::to_string(r.getSampleRate())
+    + "\n  flag S    = " + std::to_string(flags.useS)
+    + "\n  flag E    = " + std::to_string(flags.useE)
+    + "\n  flag D    = " + std::to_string(flags.useD)
+    + "\n  flag DE     = " + std::to_string(flags.useDE)
+    + "\n  flag DD     = " + std::to_string(flags.useDD)
+    + "\n  flag DDE    = " + std::to_string(flags.useDDE);
 }
 //-------------------------------------------------------------------------
 R::~FeatureFileReaderSingle()

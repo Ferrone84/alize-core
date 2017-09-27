@@ -60,9 +60,10 @@
 #include <memory.h>
 #include <cstdlib>
 #include "DoubleSquareMatrix.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 
+using namespace std;
 using namespace alize;
 typedef DoubleSquareMatrix M;
 
@@ -218,18 +219,18 @@ M::_type* M::getArray() const { return _array.getArray(); }
 //-------------------------------------------------------------------------
 unsigned long M::size() const { return _size; }
 //-------------------------------------------------------------------------
-String M::getClassName() const { return "DoubleSquareMatrix"; }
+string M::getClassName() const { return "DoubleSquareMatrix"; }
 //-------------------------------------------------------------------------
-String M::toString() const
+string M::toString() const
 {
-  String s = Object::toString()
-    + "\n  size  = " + String::valueOf(_size)+"x"+String::valueOf(_size);
+  string s = Object::toString()
+    + "\n  size  = " + std::to_string(_size)+"x"+std::to_string(_size);
   for (unsigned long i=0; i<_size; i++)
   {
     for (unsigned long j=0; j<_size; j++)
-      s += "\n  [" + String::valueOf(j)
-        + "," + String::valueOf(i)
-        + "] = " + String::valueOf((*this)(j, i));
+      s += "\n  [" + std::to_string(j)
+        + "," + std::to_string(i)
+        + "] = " + std::to_string((*this)(j, i));
     s += "\n";
   }
   return s;

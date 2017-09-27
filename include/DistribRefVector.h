@@ -136,7 +136,7 @@ namespace alize
 
     void clear();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private:

@@ -58,12 +58,13 @@
 #include <new>
 #include "FeatureServer.h"
 #include "Feature.h"
-#include "alizeString.h"
+
 #include "FeatureFileReader.h"
 #include "FeatureInputStreamModifier.h"
 #include "Config.h"
 #include "XLine.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureServer S;
 
@@ -169,13 +170,13 @@ void S::init() // private
   if (vectSizeDefined)
   {
     if (!config.existsParam_vectSize)
-      const_cast<Config&>(config).setParam("vectSize", String::valueOf(vectSize));
+      const_cast<Config&>(config).setParam("vectSize", std::to_string(vectSize));
     else if (config.getParam_vectSize() != vectSize){
 
       throw Exception("vectSize from config ("
-            + String::valueOf(config.getParam_vectSize())
+            + std::to_string(config.getParam_vectSize())
             + ") is not equal to vectSize from file ("
-            + String::valueOf(getVectSize()) + ")", __FILE__, __LINE__);
+            + std::to_string(getVectSize()) + ")", __FILE__, __LINE__);
 	}
   }
   /*try
@@ -204,10 +205,10 @@ unsigned long S::defineHistoricSize() const
 {
   if (!getConfig().existsParam_featureServerBufferSize)
     return 0; // size not used
-  const String& s = getConfig().getParam_featureServerBufferSize();
+  const string& s = getConfig().getParam_featureServerBufferSize();
   if (s == "ALL_FEATURES")
     return 0; // size not used
-  return s.toULong();
+  return stoull(s);
 }
 //-------------------------------------------------------------------------
 BufferUsage S::defineBufferUsage() const // private
@@ -230,7 +231,7 @@ void S::close()
     inputStream().close();
 }
 //-------------------------------------------------------------------------
-void S::seekFeature(unsigned long featureNbr, const String& srcName)
+void S::seekFeature(unsigned long featureNbr, const string& srcName)
 {
   if (_pInputStream != NULL)
     inputStream().seekFeature(featureNbr, srcName);
@@ -263,9 +264,9 @@ bool S::addFeature(const Feature& f)
   return ok;
 }
 //-------------------------------------------------------------------------
-const String& S::getServerName() const { return _serverName; }
+const string& S::getServerName() const { return _serverName; }
 //-------------------------------------------------------------------------
-void S::setServerName(const String& s) { _serverName = s; }
+void S::setServerName(const string& s) { _serverName = s; }
 //-------------------------------------------------------------------------
 unsigned long S::getFeatureCount() 
 {
@@ -291,16 +292,16 @@ unsigned long S::getSourceCount()
 unsigned long S::getFeatureCountOfASource(unsigned long srcIdx)
 { return inputStream().getFeatureCountOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-unsigned long S::getFeatureCountOfASource(const String& f)
+unsigned long S::getFeatureCountOfASource(const string& f)
 { return inputStream().getFeatureCountOfASource(f); }
 //-------------------------------------------------------------------------
 unsigned long S::getFirstFeatureIndexOfASource(unsigned long srcIdx)
 { return inputStream().getFirstFeatureIndexOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-unsigned long S::getFirstFeatureIndexOfASource(const String& srcName)
+unsigned long S::getFirstFeatureIndexOfASource(const string& srcName)
 { return inputStream().getFirstFeatureIndexOfASource(srcName); }
 //-------------------------------------------------------------------------
-const String& S::getNameOfASource(unsigned long srcIdx)
+const string& S::getNameOfASource(unsigned long srcIdx)
 { return inputStream().getNameOfASource(srcIdx); }
 //-------------------------------------------------------------------------
 FeatureInputStream& S::inputStream()
@@ -310,13 +311,13 @@ FeatureInputStream& S::inputStream()
   return *_pInputStream;
 }
 //-------------------------------------------------------------------------
-String S::toString() const
+string S::toString() const
 {
-  String s = Object::toString()
+  string s = Object::toString()
     + "\n  serverName = '" + _serverName + "'";
   if (_pInputStream != NULL)
   {
-    s += "\n  vectSize   = " + String::valueOf(_pInputStream->getVectSize())
+    s += "\n  vectSize   = " + std::to_string(_pInputStream->getVectSize())
     + "\n  flags    = " + _pInputStream->getFeatureFlags().getString();
   }
   else
@@ -324,7 +325,7 @@ String S::toString() const
   return s;
 }
 //-------------------------------------------------------------------------
-String S::getClassName() const { return "FeatureServer"; }
+string S::getClassName() const { return "FeatureServer"; }
 //-------------------------------------------------------------------------
 void S::releaseAll()
 {

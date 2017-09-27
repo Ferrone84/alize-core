@@ -62,9 +62,10 @@
 #include <cstdlib> // for exit()
 #include <cstdio>
 #include "Object.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 
 #if !defined(NDEBUG)
@@ -112,10 +113,10 @@ Object::Object()
 #endif
 }
 //-------------------------------------------------------------------------
-String Object::toString() const
+string Object::toString() const
 { return "[ " + getClassName() + " " + getAddress() + " ]"; }
 //-------------------------------------------------------------------------
-String Object::getAddress() const
+string Object::getAddress() const
 {
   char str[50];
   ::sprintf(str, "%p", (void*)this);
@@ -152,7 +153,7 @@ void Object::assertMemoryIsAllocated(const void* p, const char* f, int l)
 unsigned long Object::max(unsigned long a, unsigned long b)
 { return (a>=b?a:b); }
 //-------------------------------------------------------------------------
-String Object::getParamTypeName(ParamType t)
+string Object::getParamTypeName(ParamType t)
 {
   if (t == PARAMTYPE_INTEGER)
     return "INTEGER";
@@ -167,7 +168,7 @@ String Object::getParamTypeName(ParamType t)
   throw Exception("", __FILE__, __LINE__);
 }
 //-------------------------------------------------------------------------
-ParamType Object::getParamType(const String& s)
+ParamType Object::getParamType(const string& s)
 {
   if (s == "INTEGER")
    return PARAMTYPE_INTEGER;
@@ -182,7 +183,7 @@ ParamType Object::getParamType(const String& s)
   throw Exception("", __FILE__, __LINE__);
 }
 //-------------------------------------------------------------------------
-MixtureServerFileWriterFormat Object::getMixtureServerFileWriterFormat(const String& name)
+MixtureServerFileWriterFormat Object::getMixtureServerFileWriterFormat(const string& name)
 {
   if (name == "XML")
     return MixtureServerFileWriterFormat_XML;
@@ -193,14 +194,14 @@ MixtureServerFileWriterFormat Object::getMixtureServerFileWriterFormat(const Str
   return MixtureServerFileWriterFormat_RAW; // never called
 }
 //-------------------------------------------------------------------------
-String Object::getDistribTypeName(DistribType t)
+string Object::getDistribTypeName(DistribType t)
 {
   if (t == DistribType_GD)
     return "GD";
   return "GF";
 }
 //-------------------------------------------------------------------------
-DistribType Object::getDistribType(const String& name)
+DistribType Object::getDistribType(const string& name)
 {
   if (name == "GD")
     return DistribType_GD;
@@ -211,7 +212,7 @@ DistribType Object::getDistribType(const String& name)
   return DistribType_GD; // never called
 }
 //-------------------------------------------------------------------------
-FeatureFileReaderFormat Object::getFeatureFileReaderFormat(const String& name)
+FeatureFileReaderFormat Object::getFeatureFileReaderFormat(const string& name)
 {
   if (name == "SPRO3")
     return FeatureFileReaderFormat_SPRO3;
@@ -226,7 +227,7 @@ FeatureFileReaderFormat Object::getFeatureFileReaderFormat(const String& name)
   return FeatureFileReaderFormat_RAW; // never called
 }
 //-------------------------------------------------------------------------
-SPRO3DataKind Object::getSPro3DataKind(const String& name)
+SPRO3DataKind Object::getSPro3DataKind(const string& name)
 {
   if (name == "OTHER") // Anything else I didn't think about
     return SPRO3DataKind_OTHER;
@@ -247,7 +248,7 @@ SPRO3DataKind Object::getSPro3DataKind(const String& name)
   return SPRO3DataKind_OTHER; // never called
 }
 //-------------------------------------------------------------------------
-SegServerFileReaderFormat Object::getSegServerFileReaderFormat(const String& name)
+SegServerFileReaderFormat Object::getSegServerFileReaderFormat(const string& name)
 {
   if (name == "XML")
     return SegServerFileReaderFormat_XML;
@@ -260,7 +261,7 @@ SegServerFileReaderFormat Object::getSegServerFileReaderFormat(const String& nam
   return SegServerFileReaderFormat_LIUM; // never called
 }
 //-------------------------------------------------------------------------
-SegServerFileWriterFormat Object::getSegServerFileWriterFormat(const String& n)
+SegServerFileWriterFormat Object::getSegServerFileWriterFormat(const string& n)
 {
   if (n == "XML")
     return SegServerFileWriterFormat_XML;
@@ -275,7 +276,7 @@ SegServerFileWriterFormat Object::getSegServerFileWriterFormat(const String& n)
   return SegServerFileWriterFormat_XML; // never called
 }
 //-------------------------------------------------------------------------
-MixtureFileWriterFormat Object::getMixtureFileWriterFormat(const String& name)
+MixtureFileWriterFormat Object::getMixtureFileWriterFormat(const string& name)
 {
   if (name == "XML")
     return MixtureFileWriterFormat_XML;
@@ -288,7 +289,7 @@ MixtureFileWriterFormat Object::getMixtureFileWriterFormat(const String& name)
   return MixtureFileWriterFormat_RAW; // never called
 }
 //-------------------------------------------------------------------------
-FeatureFileWriterFormat Object::getFeatureFileWriterFormat(const String& name)
+FeatureFileWriterFormat Object::getFeatureFileWriterFormat(const string& name)
 {
   if (name == "SPRO3")
     return FeatureFileWriterFormat_SPRO3;
@@ -301,7 +302,7 @@ FeatureFileWriterFormat Object::getFeatureFileWriterFormat(const String& name)
   return FeatureFileWriterFormat_RAW; // never called
 }
 //-------------------------------------------------------------------------
-MixtureFileReaderFormat Object::getMixtureFileReaderFormat(const String& name)
+MixtureFileReaderFormat Object::getMixtureFileReaderFormat(const string& name)
 {
   if (name == "AMIRAL")
     return MixtureFileReaderFormat_AMIRAL;

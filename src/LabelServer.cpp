@@ -58,10 +58,11 @@
 #include "Object.h"
 #include "LabelServer.h"
 #include "RefVector.h"
-#include "alizeString.h"
+
 #include "Label.h"
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -114,7 +115,7 @@ Label& LabelServer::getLabel(unsigned long index) const
   // can throw IndexOutOfBoundsException
 }
 //-------------------------------------------------------------------------
-long LabelServer::getLabelIndexByString(const String& s) const
+long LabelServer::getLabelIndexByString(const string& s) const
 {
   unsigned long size = _vect.size();
   for (unsigned long i=0; i<size; i++)
@@ -132,7 +133,7 @@ void LabelServer::clear(bool deletePreDefined)
 //-------------------------------------------------------------------------
 unsigned long LabelServer::size() const { return _vect.size(); }
 //-------------------------------------------------------------------------
-String LabelServer::getClassName() const { return "LabelServer"; }
+string LabelServer::getClassName() const { return "LabelServer"; }
 //-------------------------------------------------------------------------
 LabelServer::~LabelServer() { clear(true); }
 //-------------------------------------------------------------------------

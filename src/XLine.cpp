@@ -59,6 +59,7 @@
 #include "XLine.h"
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -74,7 +75,7 @@ XLine& XLine::create()
 //-------------------------------------------------------------------------
 /* Modified 19/07/07 - richard.dufour@lium.univ-lemans.fr
  */
-XLine& XLine::create(String& key, String& value)
+XLine& XLine::create(string& key, string& value)
 {
   XLine& l = XLine::create();
   l.addElement(key);
@@ -87,7 +88,7 @@ XLine::XLine(const XLine& l)
 :Object(), _current(0), _pLine(NULL)
 {
   for (unsigned long i=0; i<l._vector.size(); i++)
-    _vector.addObject(l._vector.getObject(i).duplicate());
+    _vector.addObject(l._vector.getObject(i));
 }
 //-------------------------------------------------------------------------
 XLine& XLine::duplicate() const
@@ -121,22 +122,22 @@ bool XLine::operator==(const XLine& l) const
 //-------------------------------------------------------------------------
 bool XLine::operator!=(const XLine& l) const { return !(*this==l); }
 //-------------------------------------------------------------------------
-void XLine::deleteElement(const String& e)
+void XLine::deleteElement(const string& e)
 { delete &_vector.removeObject(e);}
 //-------------------------------------------------------------------------
 void XLine::rewind() const { _current = 0; }
 //-------------------------------------------------------------------------
-String& XLine::getElement(const unsigned long i,
+string& XLine::getElement(const unsigned long i,
                           const bool becomeCurrent) const
 {
-  String& s = _vector.getObject(i);
-  // getObject(i) can throw IndexOutOfBoundsException
+  string& s = _vector.getObject(i);
+  /// getObject(i) can throw IndexOutOfBoundsException
   if (becomeCurrent)
     _current = i;
   return s;
 }
 //-------------------------------------------------------------------------
-long XLine::getIndex(const String& e) const
+long XLine::getIndex(const string& e) const
 {
   unsigned long size = _vector.size();
   for (unsigned long i=0; i<size; i++)
@@ -145,12 +146,12 @@ long XLine::getIndex(const String& e) const
   return -1;
 }
 //-------------------------------------------------------------------------
-String* XLine::getElement() const
+string XLine::getElement() const
 {
   if (_current >= _vector.size())
-    return NULL;
+    return "";
   _current++;
-  return &_vector.getObject(_current-1);
+  return _vector.getObject(_current-1);
 }
 //-------------------------------------------------------------------------
 const XLine& XLine::getElements() const
@@ -160,13 +161,13 @@ const XLine& XLine::getElements() const
   else
     _pLine->reset();
   for (unsigned long i=_current; i<_vector.size(); i++)
-    _pLine->_vector.addObject(_vector.getObject(i).duplicate());
+    _pLine->_vector.addObject(_vector.getObject(i));
   return *_pLine;
 }
 //-------------------------------------------------------------------------
-XLine& XLine::addElement(const String& e) 
+XLine& XLine::addElement(string e) 
 {
-  _current = _vector.addObject(e.duplicate());
+  _current = _vector.addObject(e);
   return *this;
 }
 //-------------------------------------------------------------------------
@@ -178,11 +179,11 @@ void XLine::reset()
 //-------------------------------------------------------------------------
 unsigned long XLine::getElementCount() const { return _vector.size(); }
 //-------------------------------------------------------------------------
-String XLine::getClassName() const { return "XLine"; }
+string XLine::getClassName() const { return "XLine"; }
 //-------------------------------------------------------------------------
-String XLine::toString() const
+string XLine::toString() const
 {
-  String s;
+  string s;
   for (unsigned long i=0; i<_vector.size(); i++)
     s += " " + _vector.getObject(i); 
   return Object::toString() + s;

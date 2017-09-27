@@ -89,7 +89,7 @@ namespace alize
 
     // <FRANCAIS>
     /// Affiche le nombre d'options de la ligne. Attention : les options
-    /// --help et --version ne sont pas comptée
+    /// --help et --version ne sont pas comptÃ©e
     ///    
     unsigned long getOptionCount() const;
 
@@ -103,13 +103,13 @@ namespace alize
     /// @param i index of the option
     /// @return the name of the option #i
     ///
-    String& getName(unsigned long i) const;
+    std::string& getName(unsigned long i) const;
 
     /// Returns the content of the option #i
     /// @param i index of the option
     /// @return the content of the option #i
     ///
-    String& getContent(unsigned long i) const;
+    std::string& getContent(unsigned long i) const;
 
     /// Return true if the command line contains --help
     /// @return true if the command line contains --help; false otherwise
@@ -126,7 +126,7 @@ namespace alize
     ///
     void copyIntoConfig(Config& c) const;
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 

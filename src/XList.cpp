@@ -63,6 +63,7 @@
 #include <fstream>
 #include <LKVector.h>
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -149,7 +150,7 @@ XLine& XList::addLine()
 //-------------------------------------------------------------------------
 /* Modified 19/07/07 - richard.dufour@lium.univ-lemans.fr
  */
-XLine& XList::addLine(String& key, String& value)
+XLine& XList::addLine(string& key, string& value)
 {
   XLine& l = XLine::create(key,value);
   _current = _vector.addObject(l);
@@ -177,7 +178,7 @@ XLine* XList::getLine() const
   return &line;
 }
 //-------------------------------------------------------------------------
-XLine* XList::findLine(const String& key, unsigned long idx) const
+XLine* XList::findLine(const string& key, unsigned long idx) const
 {
   for (unsigned long i=0; i<_vector.size(); i++)
   {
@@ -216,7 +217,7 @@ XLine& XList::getAllUniqueElements() const
   return _line; 
 }
 //-------------------------------------------------------------------------
-void XList::sortByElementNumber(String order){
+void XList::sortByElementNumber(string order){
 
 	// Get the number of sessions per speaker
 	LKVector spk(0,0);
@@ -260,13 +261,13 @@ void XList::reset()
 //-------------------------------------------------------------------------
 unsigned long XList::getLineCount() const { return _vector.size(); }
 //-------------------------------------------------------------------------
-String XList::getClassName() const { return "XList"; }
+string XList::getClassName() const { return "XList"; }
 //-------------------------------------------------------------------------
 /* Modified 19/07/07 - richard.dufour@lium.univ-lemans.fr
  */
-String XList::searchValue(String& index)
+string XList::searchValue(string& index)
 {
-  String result = "";
+  string result = "";
   for (unsigned long i=0; i<_vector.size(); i++)
   {
     XLine& l = _vector.getObject(i);
@@ -278,9 +279,9 @@ String XList::searchValue(String& index)
   return result;
 }
 //-------------------------------------------------------------------------
-String XList::toString() const
+string XList::toString() const
 {
-  String s;
+  string s;
   for (unsigned long i=0; i<_vector.size(); i++)
   {
     s += "\n";

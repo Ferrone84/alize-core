@@ -57,7 +57,7 @@
 
 #include "AutoDestructor.h"
 #include "Exception.h"
-#include "alizeString.h"
+
 #include "RealVector.h"
 #include "RefVector.h"
 #include "Matrix.h"
@@ -129,4 +129,3 @@
 #include "ConfigChecker.h"
 
 #endif // !defined(ALIZE_alize_h)
-

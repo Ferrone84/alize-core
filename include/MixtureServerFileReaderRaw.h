@@ -98,11 +98,11 @@ namespace alize
     ///
     virtual void readMixtureServer(MixtureServer& ms);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
-    void error(const String& msg);
+    void error(const std::string& msg);
     bool operator==(const MixtureServerFileReaderRaw&)
                           const; /*!Not implemented*/
     bool operator!=(const MixtureServerFileReaderRaw&)

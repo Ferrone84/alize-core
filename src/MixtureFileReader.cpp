@@ -64,7 +64,9 @@
 #include "MixtureGD.h"
 #include "MixtureGF.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureFileReader R;
 
@@ -87,10 +89,10 @@ MixtureFileReaderAbstract& R::createReader(const FileName& f,
         return MixtureFileReaderRaw::create(f, c, be);
     }
   const FileName& ff = f + getExt(f, c);
-  if (ff.endsWith(".xml"))
+  if (endsWith(ff, ".xml"))
     return MixtureFileReaderXml::create(f, c);
-  //if (ff.endsWith(".gmm"))
-  //  return MixtureFileReaderAmiral::create(f, c, be);
+  if (endsWith(ff, ".gmm"))
+    return MixtureFileReaderAmiral::create(f, c, be);
   throw Exception("Param 'loadMixtureFileFormat' expected in the config",
                   __FILE__, __LINE__);
 }
@@ -112,7 +114,7 @@ const MixtureGD& R::readMixtureGD()
 const MixtureGF& R::readMixtureGF()
 { return _pMixFileReader->readMixtureGF(); }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureFileReader"; }
+string R::getClassName() const { return "MixtureFileReader"; }
 //-------------------------------------------------------------------------
 R::~MixtureFileReader()
 {

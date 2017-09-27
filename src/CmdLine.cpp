@@ -58,6 +58,7 @@
 #include "CmdLine.h"
 #include "Config.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -94,7 +95,7 @@ CmdLine::CmdLine(int argc, char* argv[])
             arg++;
           }
         }
-        String name(pName+2);
+        string name(pName+2);
         if (name == "version")
           _displayVersion = true;
         else if  (name == "help")
@@ -122,10 +123,10 @@ unsigned long CmdLine::getOptionCount() const
 bool CmdLine::isShortOption(unsigned long i) const
 { return _list.getLine(i).getElement(0) == "-"; }
 //-------------------------------------------------------------------------
-String& CmdLine::getName(unsigned long i) const
+string& CmdLine::getName(unsigned long i) const
 { return _list.getLine(i).getElement(1); }
 //-------------------------------------------------------------------------
-String& CmdLine::getContent(unsigned long i) const
+string& CmdLine::getContent(unsigned long i) const
 { return _list.getLine(i).getElement(2); }
 //-------------------------------------------------------------------------
 bool CmdLine::displayHelpRequired() const { return _displayHelp; }
@@ -141,7 +142,7 @@ void CmdLine::copyIntoConfig(Config& c) const
   }
 }
 //-------------------------------------------------------------------------
-String CmdLine::getClassName() const { return "CmdLine"; }
+string CmdLine::getClassName() const { return "CmdLine"; }
 //-------------------------------------------------------------------------
 CmdLine::~CmdLine() {}
 //-------------------------------------------------------------------------

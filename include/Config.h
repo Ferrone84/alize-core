@@ -124,20 +124,20 @@ namespace alize
     unsigned long getParamCount() const;
 
     /// Returns the parameter name number i
-    /// @return a String object with the parameter name
+    /// @return a std::string object with the parameter name
     /// @exception IndexOutOfBoundsException
     ///
-    const String& getParamName(unsigned long) const;
+    const std::string& getParamName(unsigned long) const;
 
     /// Returns the parameter content number i
-    /// @return a String object with the parameter content
+    /// @return a std::string object with the parameter content
     /// @exception IndexOutOfBoundsException
     ///
-    const String& getParamContent(unsigned long) const;
+    const std::string& getParamContent(unsigned long) const;
 
     /// Adds (or replaces) a parameter in this config
     ///
-    void setParam(const String& name, const String& content);
+    void setParam(const std::string& name, const std::string& content);
 
     /// Copy the parameters of the config c in this config
     ///
@@ -145,23 +145,23 @@ namespace alize
 
     /// @exception if the param does not exist
     ///
-    const String& getParam(const String& name) const;
+    const std::string& getParam(const std::string& name) const;
 
     /// @exception if the param does not exist
     ///
-    long getIntegerParam(const String& name) const;
+    long getIntegerParam(const std::string& name) const;
 
     /// @exception if the param does not exist
     ///
-    double getFloatParam(const String& name) const;
+    double getFloatParam(const std::string& name) const;
 
     /// @exception if the param does not exist
     ///
-    bool getBooleanParam(const String& name) const;
+    bool getBooleanParam(const std::string& name) const;
 
     /// Tests whether a parameter exists
     ///
-    bool existsParam(const String& name) const;
+    bool existsParam(const std::string& name) const;
 
     //------------------------------------------------------------------
 
@@ -225,20 +225,20 @@ namespace alize
     /// Can be a number or "ALL_FEATURES"
     /// @exception if the param does not exist
     ///
-    const String& getParam_featureServerBufferSize() const;
+    const std::string& getParam_featureServerBufferSize() const;
     
     /// See method FeatureInputStreamModifier::setMask()
     /// @exception if the param does not exist
     ///
-    const String& getParam_featureServerMask() const;
+    const std::string& getParam_featureServerMask() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_featureFilesPath() const;
+    const std::string& getParam_featureFilesPath() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_audioFilesPath() const;
+    const std::string& getParam_audioFilesPath() const;
 
     /// @exception if the param does not exist
     ///
@@ -262,11 +262,11 @@ namespace alize
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_loadFeatureFileExtension() const;
+    const std::string& getParam_loadFeatureFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_loadAudioFileExtension() const;
+    const std::string& getParam_loadAudioFileExtension() const;
 
     /// @exception if the param does not exist
     ///
@@ -278,7 +278,7 @@ namespace alize
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_featureServerMode() const;
+    const std::string& getParam_featureServerMode() const;
 
     /// @exception if the param does not exist
     ///
@@ -290,7 +290,7 @@ namespace alize
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_saveFeatureFileExtension() const;
+    const std::string& getParam_saveFeatureFileExtension() const;
 
     /// @exception if the param does not exist
     ///
@@ -309,31 +309,31 @@ namespace alize
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_loadMixtureFileExtension() const;
+    const std::string& getParam_loadMixtureFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_loadSegServerFileExtension() const;
+    const std::string& getParam_loadSegServerFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_saveMixtureFileExtension() const;
+    const std::string& getParam_saveMixtureFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_saveMixtureServerFileExtension() const;
+    const std::string& getParam_saveMixtureServerFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_saveSegServerFileExtension() const;
+    const std::string& getParam_saveSegServerFileExtension() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_mixtureFilesPath() const;
+    const std::string& getParam_mixtureFilesPath() const;
 
     /// @exception if the param does not exist
     ///
-    const String& getParam_segServerFilesPath() const;
+    const std::string& getParam_segServerFilesPath() const;
 
     /// @exception if the param does not exist
     ///
@@ -343,8 +343,8 @@ namespace alize
     ///
     real_t getParam_sampleRate() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     bool  existsParam_minCov;
     bool  existsParam_vectSize;
@@ -398,37 +398,37 @@ namespace alize
     bool                _param_computeLLKWithTopDistribs;
     bool                _param_debug;
     unsigned long       _param_topDistribsCount;
-    String              _param_featureServerBufferSize; // can be a number
+    std::string              _param_featureServerBufferSize; // can be a number
                                // or "ALL_FEATURES"
-    String              _param_featureServerMask;
+    std::string              _param_featureServerMask;
     FeatureFlags        _param_featureFlags;
     unsigned long       _param_mixtureDistribCount;
     MixtureFileWriterFormat _param_saveMixtureFileFormat;
     MixtureServerFileWriterFormat _param_saveMixtureServerFileFormat;
     SegServerFileWriterFormat _param_saveSegServerFileFormat;
-    String              _param_saveMixtureFileExtension;
-    String              _param_saveMixtureServerFileExtension;
-    String              _param_saveSegServerFileExtension;
+    std::string              _param_saveMixtureFileExtension;
+    std::string              _param_saveMixtureServerFileExtension;
+    std::string              _param_saveSegServerFileExtension;
     MixtureFileReaderFormat _param_loadMixtureFileFormat;
     SegServerFileReaderFormat _param_loadSegServerFileFormat;
-    String              _param_loadMixtureFileExtension;
-    String              _param_loadSegServerFileExtension;
-    String              _param_mixtureFilesPath;
+    std::string              _param_loadMixtureFileExtension;
+    std::string              _param_loadSegServerFileExtension;
+    std::string              _param_mixtureFilesPath;
     FeatureFileWriterFormat _param_saveFeatureFileFormat;
     SPRO3DataKind       _param_saveFeatureFileSPro3DataKind;
-    String              _param_saveFeatureFileExtension;
+    std::string              _param_saveFeatureFileExtension;
     FeatureFileReaderFormat _param_loadFeatureFileFormat;
     unsigned long _param_loadFeatureFileVectSize;
     unsigned long _param_loadAudioFileChannel;
-    String              _param_loadFeatureFileExtension;
-    String              _param_loadAudioFileExtension;
+    std::string              _param_loadFeatureFileExtension;
+    std::string              _param_loadAudioFileExtension;
     bool                _param_loadFeatureFileBigEndian;
     bool                _param_loadAudioFileBigEndian;
-    String              _param_featureServerMode;
+    std::string              _param_featureServerMode;
     bool                _param_loadMixtureFileBigEndian;
-    String              _param_featureFilesPath;
-    String              _param_audioFilesPath;
-    String              _param_segServerFilesPath;
+    std::string              _param_featureFilesPath;
+    std::string              _param_audioFilesPath;
+    std::string              _param_segServerFilesPath;
     lk_t         _param_minLLK;
     lk_t         _param_maxLLK;
     DistribType  _param_distribType;
@@ -438,7 +438,7 @@ namespace alize
     XList        _set;
 
     void assign(const Config&);
-    void err(const String&) const;
+    void err(const std::string&) const;
   };
 
 } // end namespace alize

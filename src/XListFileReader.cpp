@@ -59,7 +59,9 @@
 #include "XListFileReader.h"
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize; 
 
 //-------------------------------------------------------------------------
@@ -82,13 +84,13 @@ void XListFileReader::readList(XList& list)
   {
     while (true)
     {
-      String s = _pReader->readLine(); // can throw IOException
-      String token = s.getToken(0);
-      if (token.length() != 0)
+      auto s = _pReader->readLine(); // can throw IOException
+      auto token = getToken(s, 0);
+      if (!token.empty())
       {
         XLine& line = list.addLine();
         line.addElement(token);
-        for (unsigned long i=1; (token = s.getToken(i)) != ""; i++)
+        for (unsigned long i=1; !(token = getToken(s, i)).empty(); i++)
         { line.addElement(token); }
         line.rewind(); // set current element to first element
       }
@@ -99,7 +101,7 @@ void XListFileReader::readList(XList& list)
   list.rewind();
 }
 //-------------------------------------------------------------------------
-String XListFileReader::getClassName() const { return "XListFileReader"; }
+string XListFileReader::getClassName() const { return "XListFileReader"; }
 //-------------------------------------------------------------------------
 XListFileReader::~XListFileReader()
 {

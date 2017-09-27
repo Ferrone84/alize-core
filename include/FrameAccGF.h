@@ -109,7 +109,7 @@ namespace alize
     ///
     const DoubleSquareMatrix& getStdMatrix();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
     /// Add values from another FrameAcc - LIUM Modification
     /// @param f the frame acc

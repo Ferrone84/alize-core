@@ -62,6 +62,7 @@
 #include "FileWriter.h"
 #include "Exception.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -76,7 +77,7 @@ void FileWriter::open()
 {
   if (isOpen())
     close();
-  if (_fileName.isEmpty())
+  if (_fileName.empty())
     throw Exception("empty file name", __FILE__, __LINE__);
   _pFileStruct = ::fopen(_fileName.c_str(),"wb");
   if (_pFileStruct == NULL)
@@ -144,9 +145,9 @@ void FileWriter::writeChar(char v)
                _fileName);
 }
 //-------------------------------------------------------------------------
-void FileWriter::writeString(const String& string)
+void FileWriter::writeString(const string& string)
 {
-  if (string.isEmpty())
+  if (string.empty())
     return;
   assert(_pFileStruct != NULL);
   if (::fwrite(string.c_str(), string.length(), 1, _pFileStruct) != 1)
@@ -154,19 +155,19 @@ void FileWriter::writeString(const String& string)
                _fileName);
 }
 //-------------------------------------------------------------------------
-void FileWriter::writeAttribute(const String& name, const String& value)
+void FileWriter::writeAttribute(const string& name, const string& value)
 {
   //assert(false); // transformer les < > &... idem pour FileReader
   writeString(" " + name + "=\"" + value + "\"");
 }
 //-------------------------------------------------------------------------
-void FileWriter::writeAttribute(const String& name, unsigned long value)
-{ writeString(" " + name + "=\"" + String::valueOf(value) + "\""); }
+void FileWriter::writeAttribute(const string& name, unsigned long value)
+{ writeString(" " + name + "=\"" + std::to_string(value) + "\""); }
 //-------------------------------------------------------------------------
-void FileWriter::writeAttribute(const String& name, double value)
-{ writeString(" " + name + "=\"" + String::valueOf(value) + "\""); }
+void FileWriter::writeAttribute(const string& name, double value)
+{ writeString(" " + name + "=\"" + std::to_string(value) + "\""); }
 //-------------------------------------------------------------------------
-String FileWriter::toString() const
+string FileWriter::toString() const
 {
   return Object::toString()
     + "\n  file name = '" + _fileName;
@@ -215,7 +216,7 @@ void FileWriter::swap8Bytes(void *src, void *dest)
   }
 }
 //-------------------------------------------------------------------------
-String FileWriter::getClassName() const { return "FileWriter"; }
+string FileWriter::getClassName() const { return "FileWriter"; }
 //-------------------------------------------------------------------------
 FileWriter::~FileWriter() { close(); }
 //-------------------------------------------------------------------------

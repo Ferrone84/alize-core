@@ -58,7 +58,7 @@
 #include <new>
 #include "AudioInputStream.h"
 #include "AudioFrame.h"
-#include "alizeString.h"
+
 #include "Config.h"
 
 using namespace alize;

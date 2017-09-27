@@ -59,7 +59,9 @@
 #include "MixtureServerFileReaderAbstract.h"
 #include "MixtureServer.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServerFileReaderAbstract R;
 
@@ -67,16 +69,16 @@ typedef MixtureServerFileReaderAbstract R;
 R::MixtureServerFileReaderAbstract(FileReader* p)
 :Object(), _pReader(p) {}
 //-------------------------------------------------------------------------
-String R::getPath(const FileName& f,const Config& c) const // protected
+string R::getPath(const FileName& f,const Config& c) const // protected
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_mixtureFilesPath();
 }
 //-------------------------------------------------------------------------
-String R::getExt(const FileName& f,const Config& c) const // protected
+string R::getExt(const FileName& f,const Config& c) const // protected
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_loadMixtureFileExtension();
 }

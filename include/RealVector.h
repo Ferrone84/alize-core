@@ -69,7 +69,7 @@
 #include <math.h>
 #include <memory.h>
 #include <cstdlib>
-#include "alizeString.h"
+
 #include "Exception.h"
 
 namespace alize
@@ -341,18 +341,17 @@ namespace alize
       return _array;
     }
 
-    virtual String getClassName() const
+    virtual std::string getClassName() const
     {
       return "RealVector";
     }
 
-    virtual String toString() const
+    virtual std::string toString() const
     {
-      String s = Object::toString()
-        + "\n  size = " + String::valueOf(size());
+      std::string s = "\n  size = " + std::to_string(size());
       for (unsigned long i=0; i<size(); i++)
-        s += "\n  value[" + String::valueOf(i) + "] = "
-          + String::valueOf(operator[](i)); 
+        s += "\n  value[" + std::to_string(i) + "] = "
+          + std::to_string(operator[](i)); 
       return s;
     }
 

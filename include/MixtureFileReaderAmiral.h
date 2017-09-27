@@ -122,7 +122,7 @@ namespace alize
     ///
     virtual const MixtureGD& readMixtureGD();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 

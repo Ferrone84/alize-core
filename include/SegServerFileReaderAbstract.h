@@ -101,8 +101,8 @@ namespace alize
 
   private :
 
-    String getPath(const FileName&, const Config&) const;
-    String getExt(const FileName&, const Config&) const;
+    std::string getPath(const FileName&, const Config&) const;
+    std::string getExt(const FileName&, const Config&) const;
     bool operator==(const SegServerFileReaderAbstract&) const;/*!Not implemented*/
     bool operator!=(const SegServerFileReaderAbstract&) const;/*!Not implemented*/
     const SegServerFileReaderAbstract& operator=(

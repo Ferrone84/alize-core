@@ -201,8 +201,8 @@ namespace alize
     DoubleVector& getCovInvVect();
     const DoubleVector& getCovInvVect() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     /// Sets a value in the inverse covariance vector.
     /// *** internal usage ***

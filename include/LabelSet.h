@@ -111,14 +111,14 @@ namespace alize
     /// @param e the end value in seconds
     /// @param n the name of the label
     ///
-    void addLabel(real_t b, real_t e, const String& n);
+    void addLabel(real_t b, real_t e, std::string& n);
 
     /// Gets the label of the line i
     /// @param i the index of the line
     /// @return a constant reference to the label
     /// @exception IndexOutOfBoundsException
     ///
-    const String& getName(unsigned long i) const;
+    std::string& getName(unsigned long i) const;
 
     /// Gets the begin value of the line i
     /// @param i the index of the line
@@ -143,13 +143,13 @@ namespace alize
     ///
     void clear();
 
-    virtual String toString() const;
-    virtual String getClassName() const;
+    virtual std::string toString() const;
+    virtual std::string getClassName() const;
 
 
   private :
 
-    RefVector<String> _nameVect;
+    RefVector<std::string> _nameVect;
     DoubleVector  _beginVect;
     DoubleVector  _endVect;
   };

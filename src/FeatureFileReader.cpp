@@ -69,7 +69,9 @@
 #include "FeatureFlags.h"
 #include "XLine.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReader R;
 
@@ -105,7 +107,7 @@ FeatureFileReaderAbstract& R::createStream(const FileName& f,
              unsigned long bufferSize, HistoricUsage h,
              unsigned long historicSize)
 {
-  if (f.endsWith(".lst"))
+  if (endsWith(f, ".lst"))
     return FeatureMultipleFileReader::create(
                  XList(f, c).getAllElements(), c, p, be, b, bufferSize, h, historicSize);
   if (c.existsParam_loadFeatureFileFormat)
@@ -179,7 +181,7 @@ bool R::addFeature(const Feature& f)
   return ok;
 }
 //-------------------------------------------------------------------------
-void R::seekFeature(unsigned long featureNbr, const String& sourceName)
+void R::seekFeature(unsigned long featureNbr, const string& sourceName)
 {
   if (_pFeatureReader != NULL)
       _pFeatureReader->seekFeature(featureNbr, sourceName);
@@ -271,13 +273,13 @@ unsigned long R::getFirstFeatureIndexOfASource(const FileName& f)
   return _pFeatureReader->getFirstFeatureIndexOfASource(f);
 }
 //-------------------------------------------------------------------------
-const String& R::getNameOfASource(unsigned long srcIdx)
+const string& R::getNameOfASource(unsigned long srcIdx)
 {
   if (_pFeatureReader == NULL)
     throw Exception("No source of features", __FILE__, __LINE__);
   return _pFeatureReader->getNameOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-String R::getClassName() const{return "FeatureFileReader";}
+string R::getClassName() const{return "FeatureFileReader";}
 //-------------------------------------------------------------------------
 R::~FeatureFileReader()
 {

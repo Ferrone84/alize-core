@@ -56,16 +56,16 @@
 #define ALIZE_AutoDestructor_cpp
 
 #include "AutoDestructor.h"
-#include "alizeString.h"
 #include "Object.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
 AutoDestructor::AutoDestructor(const Object& o)
 :Object(), _o(o) {}
 //-------------------------------------------------------------------------
-String AutoDestructor::getClassName() const { return "AutoDestructor"; }
+string AutoDestructor::getClassName() const { return "AutoDestructor"; }
 //-------------------------------------------------------------------------
 AutoDestructor::~AutoDestructor() { delete &_o; }
 //-------------------------------------------------------------------------

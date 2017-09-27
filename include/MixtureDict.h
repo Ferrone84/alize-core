@@ -67,8 +67,7 @@
 
 #include "Object.h"
 #include "RefVector.h"
-#include "alizeString.h"
-using alize::String; // before #include <map>
+
 #include <map>
 #include "Mixture.h"
 
@@ -102,9 +101,9 @@ namespace alize
 
     /// @return the index of the mixture.  Returns -1 if not found
     ///
-    long getIndexOfId(const String& id) const;
+    long getIndexOfId(const std::string& id) const;
 
-    void setMixtureId(Mixture& m, const String& id);
+    void setMixtureId(Mixture& m, const std::string& id);
   
     /// Deletes a set of mixtures from the array.
     /// @param f index of the first mixture to delete
@@ -121,15 +120,15 @@ namespace alize
 
     unsigned long size() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
   
   private:
 
-	std::map<String, unsigned long> _map;
-    // map = conteneur associatif à clés uniques
-    std::map<String, unsigned long>::iterator _it;
+	std::map<std::string, unsigned long> _map;
+    // map = conteneur associatif Ã  clÃ©s uniques
+    std::map<std::string, unsigned long>::iterator _it;
     RefVector<Mixture> _vect;
   
     MixtureDict(const MixtureDict&); /*!Not implemented*/

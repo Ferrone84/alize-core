@@ -58,11 +58,12 @@
 #include <new>
 #include <memory.h>
 #include "Object.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 #include "Distrib.h"
 #include "DistribRefVector.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -174,7 +175,7 @@ void DistribRefVector::clear()
   _size = 0;
 }
 //-------------------------------------------------------------------------
-String DistribRefVector::getClassName() const { return "DistribRefVector";}
+string DistribRefVector::getClassName() const { return "DistribRefVector";}
 //-------------------------------------------------------------------------
 DistribRefVector::~DistribRefVector()
 {

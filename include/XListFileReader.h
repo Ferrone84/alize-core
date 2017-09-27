@@ -104,7 +104,7 @@ namespace alize
     ///
     virtual void readList(XList& l);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

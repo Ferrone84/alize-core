@@ -63,10 +63,11 @@
 #include "Config.h"
 #include "MixtureFileWriter.h"
 
+using namespace std; 
 using namespace alize;
 typedef Mixture M;
 //-------------------------------------------------------------------------
-M::Mixture(const String& id, unsigned long distribCount, unsigned long v)
+M::Mixture(const string& id, unsigned long distribCount, unsigned long v)
 :Object(), _vectSize(v), _weightVect(distribCount),
  _distribVect(distribCount), _id(id) {}
 //-------------------------------------------------------------------------
@@ -79,9 +80,9 @@ void M::assign(const Mixture& m) // private
   const unsigned long n = getDistribCount();
   if (n != m.getDistribCount())
     throw Exception("target distribCount ("
-              + String::valueOf(getDistribCount())
+              + std::to_string(getDistribCount())
               + ") != source distribCount ("
-              + String::valueOf(m.getDistribCount())
+              + std::to_string(m.getDistribCount())
               + ")", __FILE__, __LINE__);
   for (unsigned long i=0; i<n; i++)
   {
@@ -151,11 +152,11 @@ const DoubleVector& M::getTabWeight() const { return _weightVect; }
 Distrib** M::getTabDistrib() const
 { return _distribVect.getArray(); }
 //-------------------------------------------------------------------------
-String M::getId() const { return _id; }
+string M::getId() const { return _id; }
 //-------------------------------------------------------------------------
-void M::setId(const K&, const String& id) { _id = id; }
+void M::setId(const K&, const string& id) { _id = id; }
 //-------------------------------------------------------------------------
-void M::setId(const String& id) { _id = id; }
+void M::setId(const string& id) { _id = id; }
 //-------------------------------------------------------------------------
 unsigned long M::getDistribCount() const
 { return _distribVect.size(); }
@@ -171,7 +172,7 @@ unsigned long M::getVectSize() const { return _vectSize; }
 // static method
 //-------------------------------------------------------------------------
 Mixture& M::create(const K&, const unsigned long dc,
-                         const DistribType type, const String& id,
+                         const DistribType type, const string& id,
                          const unsigned long vectSize)
 {
   if (type == DistribType_GD)
@@ -185,16 +186,16 @@ Mixture& M::create(const K&, const unsigned long dc,
 //-------------------------------------------------------------------------
 //unsigned long M::getVectSize() const { return _vectSize; }
 //-------------------------------------------------------------------------
-String M::toString() const
+string M::toString() const
 {
-  String s = Object::toString()
+  string s = Object::toString()
     + "\n  id      = '" + _id + "'"
-    + "\n  distribCount  = " + String::valueOf(getDistribCount());
+    + "\n  distribCount  = " + std::to_string(getDistribCount());
   for (unsigned long i=0; i<getDistribCount(); i++)
   {
-    s += "\n  weight[" + String::valueOf(i) + "] = "
-      + String::valueOf(weight(i))
-      + "  distrib[" + String::valueOf(i) + "] = [ "
+    s += "\n  weight[" + std::to_string(i) + "] = "
+      + std::to_string(weight(i))
+      + "  distrib[" + std::to_string(i) + "] = [ "
       + getDistrib(i).getClassName()
       + " " + getDistrib(i).getAddress() + " ]";
   }

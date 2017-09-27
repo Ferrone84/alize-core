@@ -99,13 +99,13 @@ namespace alize
     /// @exception IOException if an I/O error occurs
 
     virtual void writeMixtureServer(const MixtureServer& m);
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
     MixtureServerFileWriterFormat _format;
 
-    String getFullFileName(const Config&, const FileName&) const;
+    std::string getFullFileName(const Config&, const FileName&) const;
 
     void writeMixtureServerXml(const MixtureServer&);
     void writeMixtureServerRaw(const MixtureServer&);

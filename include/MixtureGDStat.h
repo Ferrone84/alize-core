@@ -105,7 +105,7 @@ namespace alize
     ///
     MixtureGD& getInternalAccumEM(); /* NOT VIRTUAL */
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
   
   
   private :

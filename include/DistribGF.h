@@ -212,8 +212,8 @@ namespace alize
     DoubleSquareMatrix& getCovInvMatrix();
     const DoubleSquareMatrix& getCovInvMatrix() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     /// Sets a value in the inverse covariance matrix.
     /// *** internal usage ***

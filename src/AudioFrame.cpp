@@ -57,8 +57,8 @@
 
 #include <new>
 #include "AudioFrame.h"
-#include "alizeString.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -99,13 +99,13 @@ void AudioFrame::setData(long v) { _value = v; }
 //-------------------------------------------------------------------------
 long AudioFrame::getData() const { return _value; }
 //-------------------------------------------------------------------------
-String AudioFrame::getClassName() const { return "AudioFrame"; }
+string AudioFrame::getClassName() const { return "AudioFrame"; }
 //-------------------------------------------------------------------------
-String AudioFrame::toString() const
+string AudioFrame::toString() const
 {
-  String s = Object::toString()
-    + "\n  is valid = " + String::valueOf(_isValid)
-    + "\n  value    = " + String::valueOf(_value);
+  string s = Object::toString()
+    + "\n  is valid = " + std::to_string(_isValid)
+    + "\n  value    = " + std::to_string(_value);
   return s;
 }
 //-------------------------------------------------------------------------

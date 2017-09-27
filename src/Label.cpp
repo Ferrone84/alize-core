@@ -57,16 +57,17 @@
 
 #include <new>
 #include "Label.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
-Label::Label(const String& s)
+Label::Label(const string& s)
 :Object(), _string(s) {}
 //-------------------------------------------------------------------------
-Label& Label::create(const String& l)
+Label& Label::create(const string& l)
 {
   Label* p = new (std::nothrow) Label(l);
   assertMemoryIsAllocated(p, __FILE__, __LINE__);
@@ -105,21 +106,21 @@ bool Label::operator!=(const Label& c) const { return !(*this == c); }
 //-------------------------------------------------------------------------
 void Label::reset()
 {
-  _string.reset();
-  _srcName.reset();
+  _string.clear();
+  _srcName.clear();
 }
 //-------------------------------------------------------------------------
-void Label::setString(const String& s) { _string = s; }
+void Label::setString(const string& s) { _string = s; }
 //-------------------------------------------------------------------------
-const String& Label::getString() const { return _string; }
+const string& Label::getString() const { return _string; }
 //-------------------------------------------------------------------------
-void Label::setSourceName(const String& s) { _srcName = s; }
+void Label::setSourceName(const string& s) { _srcName = s; }
 //-------------------------------------------------------------------------
-const String& Label::getSourceName() const { return _srcName; }
+const string& Label::getSourceName() const { return _srcName; }
 //-------------------------------------------------------------------------
-String Label::getClassName() const { return "Label"; }
+string Label::getClassName() const { return "Label"; }
 //-------------------------------------------------------------------------
-String Label::toString() const
+string Label::toString() const
 {
   return Object::toString() + "\n  string   = \'" + _string
                                         + "'\n  sourceName = '" + _srcName;

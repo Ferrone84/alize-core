@@ -58,7 +58,9 @@
 #include "SegServerFileReaderAbstract.h"
 #include "SegServer.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 typedef SegServerFileReaderAbstract R;
 
@@ -67,16 +69,16 @@ R::SegServerFileReaderAbstract(const FileName& f, const Config& c)
  :Object(), _pReader(&FileReader::create(f, getPath(f, c), getExt(f, c),
  false)), _pSegServer(NULL) {}
 //-------------------------------------------------------------------------
-String R::getPath(const FileName& f,const Config& c) const // private
+string R::getPath(const FileName& f,const Config& c) const // private
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_segServerFilesPath();
 }
 //-------------------------------------------------------------------------
-String R::getExt(const FileName& f, const Config& c) const // private
+string R::getExt(const FileName& f, const Config& c) const // private
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_loadSegServerFileExtension();
 }

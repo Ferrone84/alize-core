@@ -65,6 +65,7 @@
 #include "FeatureFlags.h"
 #include "Config.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderRaw R;
 
@@ -119,7 +120,7 @@ const FeatureFlags& R::getFeatureFlags()
 //-------------------------------------------------------------------------
 real_t R::getSampleRate() { return getConfig().getParam_sampleRate(); }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "FeatureFileReaderRaw"; }
+string R::getClassName() const { return "FeatureFileReaderRaw"; }
 //-------------------------------------------------------------------------
 R::~FeatureFileReaderRaw() {}
 //-------------------------------------------------------------------------

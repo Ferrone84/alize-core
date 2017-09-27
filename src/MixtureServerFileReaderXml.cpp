@@ -66,9 +66,11 @@
 #include "XmlParser.h"
 #include "Config.h"
 #include "FileReader.h"
+#include "string_util.h"
 
 // see http://babel.alis.com/web_ml/xml/REC-xml.fr.html#NT-XMLDecl
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServerFileReaderXml R;
 
@@ -93,88 +95,88 @@ void R::readMixtureServer(MixtureServer& ms)
   _pReader->close();
 }
 //-------------------------------------------------------------------------
-void R::eventOpeningElement(const String& path)
+void R::eventOpeningElement(const string& path)
 {
   if (false) {}
-  else if (path.endsWith("<mean>"))
+  else if (endsWith(path, "<mean>"))
   {
     _meanIndexFound = false;
   }
-  else if (path.endsWith("<covInv>"))
+  else if (endsWith(path, "<covInv>"))
   {
     _covInvIndexFound = false;
     _covInvIndexJFound = false;
   }
-  else if (path.endsWith("<cov>"))
+  else if (endsWith(path, "<cov>"))
   {
     _covIndexFound = false;
   }
-  else if (path.endsWith("<mean><i>"))   {}
-  else if (path.endsWith("<covInv><i>") || path.endsWith("<covInv><j>")) {}
-  else if (path.endsWith("<cov><i>") || path.endsWith("<cov><j>"))  {}
-  else if (path.endsWith("<MixtureServer><DistribGD>"))
+  else if (endsWith(path, "<mean><i>"))   {}
+  else if (endsWith(path, "<covInv><i>") || endsWith(path, "<covInv><j>")) {}
+  else if (endsWith(path, "<cov><i>") || endsWith(path, "<cov><j>"))  {}
+  else if (endsWith(path, "<MixtureServer><DistribGD>"))
   {
     _distribTypeDefined = true;
     _distribType = DistribType_GD;
     _pDistrib = NULL;
   }
-  else if (path.endsWith("<MixtureServer><DistribGF>"))
+  else if (endsWith(path, "<MixtureServer><DistribGF>"))
   {
     _distribTypeDefined = true;
     _distribType = DistribType_GF;
     _pDistrib = NULL;
   }
-  else if (path.endsWith("<MixtureServer><DistribGD><i>")) {}
-  else if (path.endsWith("<MixtureServer><DistribGF><i>")) {}
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD>"))
+  else if (endsWith(path, "<MixtureServer><DistribGD><i>")) {}
+  else if (endsWith(path, "<MixtureServer><DistribGF><i>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD>"))
   {
     _distribIndexFound = false;
     _weightFound = false;
     _distribTypeDefined = true;
     _distribType = DistribType_GD;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGF><DistribGF>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGF><DistribGF>"))
   {
     _distribIndexFound = false;
     _weightFound = false;
     _distribTypeDefined = true;
     _distribType = DistribType_GF;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><i>"))     {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><DistribGF><i>"))     {}
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><dictIdx>")) {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><DistribGF><dictIdx>")) {}
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><weight>"))  {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><DistribGF><weight>"))  {}
-  else if (path.endsWith("<MixtureServer><MixtureGD>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><i>"))     {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><DistribGF><i>"))     {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><dictIdx>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><DistribGF><dictIdx>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><weight>"))  {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><DistribGF><weight>"))  {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD>"))
   {
     _pMixture = NULL;
     _mixtType = DistribType_GD;
     _mixtTypeDefined = true;
     _distribTypeDefined = false;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGF>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGF>"))
   {
     _pMixture = NULL;
     _mixtType = DistribType_GF;
     _mixtTypeDefined = true;
     _distribTypeDefined = false;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGD><id>"))       {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><id>"))       {}
-  else if (path.endsWith("<MixtureServer><MixtureGD><distribCount>")) {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><distribCount>")) {}
-  else if (path.endsWith("<MixtureServer><vectSize>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><id>"))       {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><id>"))       {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><distribCount>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><distribCount>")) {}
+  else if (endsWith(path, "<MixtureServer><vectSize>"))
   {
     if (_vectSizeFound)
       eventError("More than one tag " + path + " !");
     _vectSizeFound = true;
   }
-  else if (path.endsWith("<MixtureServer><version>"))    {}
-  else if (path.endsWith("<MixtureServer><mixtureCount>")) {}
-  else if (path.endsWith("<MixtureServer><distribCount>")) {}
-  else if (path.endsWith("<MixtureServer><name>"))     {}
-  else if (path.endsWith("<MixtureServer>"))
+  else if (endsWith(path, "<MixtureServer><version>"))    {}
+  else if (endsWith(path, "<MixtureServer><mixtureCount>")) {}
+  else if (endsWith(path, "<MixtureServer><distribCount>")) {}
+  else if (endsWith(path, "<MixtureServer><name>"))     {}
+  else if (endsWith(path, "<MixtureServer>"))
   {
     _pMixtureServer->reset();
     _pMixtureServer->setServerName("");
@@ -185,38 +187,38 @@ void R::eventOpeningElement(const String& path)
     eventError("Unknown tag in the path " + path);
 }
 //-------------------------------------------------------------------------
-void R::eventClosingElement(const String& path,
-                             const String& value)
+void R::eventClosingElement(const string& path,
+                             const string& value)
 {
   if (false) {}
-  else if (path.endsWith("<mean>"))
+  else if (endsWith(path, "<mean>"))
   {
     if (!_meanIndexFound)
       eventError("Index missing for mean");
     if (!_distribTypeDefined)
       eventError("unknown mixture type");
     if (_distribType == DistribType_GD)
-      getDistribGD().setMean(value.toDouble(), _meanIndex);
+      getDistribGD().setMean(stod(value), _meanIndex);
     else if (_distribType == DistribType_GF)
-      getDistribGF().setMean(value.toDouble(), _meanIndex);
+      getDistribGF().setMean(stod(value), _meanIndex);
     _meanIndexFound = false;
   }
-  else if (path.endsWith("<covInv>"))
+  else if (endsWith(path, "<covInv>"))
   {
     if (!_covInvIndexFound)
       eventError("Index i missing for covInv");
     if (!_distribTypeDefined)
       eventError("unknown mixture type");
     if (_distribType == DistribType_GD)
-      getDistribGD().setCovInv(K::k, value.toDouble(), _covInvIndex);
+      getDistribGD().setCovInv(K::k, stod(value), _covInvIndex);
     else if (_distribType == DistribType_GF)
     {
       if (!_covInvIndexJFound)
         eventError("Index j missing for covInv");
-      getDistribGF().setCovInv(K::k, value.toDouble(), _covInvIndex, _covInvIndexJ);
+      getDistribGF().setCovInv(K::k, stod(value), _covInvIndex, _covInvIndexJ);
     }
   }
-  else if (path.endsWith("<cov>"))
+  else if (endsWith(path, "<cov>"))
   {
     if (!_covIndexFound)
       eventError("Index missing for cov");
@@ -224,67 +226,67 @@ void R::eventClosingElement(const String& path,
       eventError("unknown mixture type");
     if (_distribType == DistribType_GD)
     {
-      getDistribGD().setCov(value.toDouble(), _covIndex);
+      getDistribGD().setCov(stod(value), _covIndex);
     }
     else if (_distribType == DistribType_GF)
     {
       if (!_covIndexFound)
         eventError("Index j missing for cov");
-      getDistribGF().setCov(value.toDouble(), _covIndex, _covIndexJ);
+      getDistribGF().setCov(stod(value), _covIndex, _covIndexJ);
     }
   }
-  else if (path.endsWith("<mean><i>"))
+  else if (endsWith(path, "<mean><i>"))
   {
-    _meanIndex = value.toLong();
+    _meanIndex = stol(value);
     _meanIndexFound = true;
   }
-  else if (path.endsWith("<covInv><i>"))
+  else if (endsWith(path, "<covInv><i>"))
   {
-    _covInvIndex = value.toLong();
+    _covInvIndex = stol(value);
     _covInvIndexFound = true;
   }
-  else if (path.endsWith("<covInv><j>"))
+  else if (endsWith(path, "<covInv><j>"))
   {
-    _covInvIndexJ = value.toLong();
+    _covInvIndexJ = stol(value);
     _covInvIndexJFound = true;
   }
-  else if (path.endsWith("<cov><i>"))
+  else if (endsWith(path, "<cov><i>"))
   {
-    _covIndex = value.toLong();
+    _covIndex = stol(value);
     _covIndexFound = true;
   }
-  else if (path.endsWith("<cov><j>"))
+  else if (endsWith(path, "<cov><j>"))
   {
-    _covIndexJ = value.toLong();
+    _covIndexJ = stol(value);
     _covIndexJFound = true;
   }
 
   // -----------------------------------------------
 
-  else if (path.endsWith("<MixtureServer><DistribGD><i>")) {}
-  else if (path.endsWith("<MixtureServer><DistribGF><i>")) {}
-  else if (path.endsWith("<MixtureServer><DistribGD>") ||
-           path.endsWith("<MixtureServer><DistribGF>"))
+  else if (endsWith(path, "<MixtureServer><DistribGD><i>")) {}
+  else if (endsWith(path, "<MixtureServer><DistribGF><i>")) {}
+  else if (endsWith(path, "<MixtureServer><DistribGD>") ||
+           endsWith(path, "<MixtureServer><DistribGF>"))
     _distribTypeDefined = false;
 
   // -----------------------------------------------
 
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><i>"))     {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><DistribGF><i>"))     {}
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><dictIdx>") ||
-           path.endsWith("<MixtureServer><MixtureGF><DistribGF><dictIdx>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><i>"))     {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><DistribGF><i>"))     {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><dictIdx>") ||
+           endsWith(path, "<MixtureServer><MixtureGF><DistribGF><dictIdx>"))
   {
-    _distribIndex = value.toLong();
+    _distribIndex = stol(value);
     _distribIndexFound = true;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD><weight>") ||
-           path.endsWith("<MixtureServer><MixtureGF><DistribGF><weight>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD><weight>") ||
+           endsWith(path, "<MixtureServer><MixtureGF><DistribGF><weight>"))
   {
-    _weight = value.toDouble();
+    _weight = stod(value);
     _weightFound = true;
   }
-  else if (path.endsWith("<MixtureServer><MixtureGD><DistribGD>") ||
-           path.endsWith("<MixtureServer><MixtureGF><DistribGF>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><DistribGD>") ||
+           endsWith(path, "<MixtureServer><MixtureGF><DistribGF>"))
   {
     if (!_distribIndexFound)
       eventError("dict index missing to assign a distrib to a mixture");
@@ -297,54 +299,54 @@ void R::eventClosingElement(const String& path,
 
   // -----------------------------------------------
 
-  else if (path.endsWith("<MixtureServer><MixtureGD>") ||
-           path.endsWith("<MixtureServer><MixtureGF>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD>") ||
+           endsWith(path, "<MixtureServer><MixtureGF>"))
     _mixtTypeDefined = false;
-  else if (path.endsWith("<MixtureServer><MixtureGD><id>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGD><id>"))
   {
     _pMixtureServer->setMixtureId(getMixtureGD(), value);
   }
-  else if (path.endsWith("<MixtureServer><MixtureGF><id>"))
+  else if (endsWith(path, "<MixtureServer><MixtureGF><id>"))
   {
     _pMixtureServer->setMixtureId(getMixtureGF(), value);
   }
-  else if (path.endsWith("<MixtureServer><MixtureGD><distribCount>")) {}
-  else if (path.endsWith("<MixtureServer><MixtureGF><distribCount>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGD><distribCount>")) {}
+  else if (endsWith(path, "<MixtureServer><MixtureGF><distribCount>")) {}
 
   // -----------------------------------------------
 
-  else if (path.endsWith("<MixtureServer><version>"))
+  else if (endsWith(path, "<MixtureServer><version>"))
   {
     if (value != "1")
       eventError("invalid version");
   }
-  else if (path.endsWith("<MixtureServer><name>"))
+  else if (endsWith(path, "<MixtureServer><name>"))
   {
     _pMixtureServer->setServerName(value);
   }
-  else if (path.endsWith("<MixtureServer><vectSize>"))
+  else if (endsWith(path, "<MixtureServer><vectSize>"))
   {
-    _vectSize = value.toLong();
+    _vectSize = stol(value);
     _vectSizeFound = true;
   }
-  else if (path.endsWith("<MixtureServer><mixtureCount>"))  {}
-  else if (path.endsWith("<MixtureServer><distribCount>"))  {}
+  else if (endsWith(path, "<MixtureServer><mixtureCount>"))  {}
+  else if (endsWith(path, "<MixtureServer><distribCount>"))  {}
 }
 //-------------------------------------------------------------------------
-void R::eventError(const String& msg)
+void R::eventError(const string& msg)
 {
   assert(_pReader != NULL);
   _pReader->close();
   _pMixtureServer->reset();
   _pMixtureServer->setServerName("");
-  throw InvalidDataException("Error line " + String::valueOf(_line)
+  throw InvalidDataException("Error line " + std::to_string(_line)
            + " : " + msg, __FILE__, __LINE__, _pReader->getFullFileName());
 }
 //-------------------------------------------------------------------------
-const String& R::readOneChar()
+const string& R::readOneChar()
 {
   assert(_pReader != NULL);
-  const String& s = _pReader->readString(1);
+  const string& s = _pReader->readString(1);
   if (s == "\n")
     _line++;
   return s;
@@ -387,7 +389,7 @@ DistribGD& R::getDistribGD()
 DistribGF& R::getDistribGF()
 { return static_cast<DistribGF&>(getDistrib()); }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureServerFileReaderXml"; }
+string R::getClassName() const { return "MixtureServerFileReaderXml"; }
 //-------------------------------------------------------------------------
 R::~MixtureServerFileReaderXml() {}
 //-------------------------------------------------------------------------

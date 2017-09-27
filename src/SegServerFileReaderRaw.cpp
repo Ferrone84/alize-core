@@ -63,6 +63,7 @@
 #include "ULongVector.h"
 //#include <iostream>
 
+using namespace std; 
 using namespace alize;
 //using namespace std;
 typedef SegServerFileReaderRaw R;
@@ -92,8 +93,8 @@ void R::readSegServer(SegServer& ss)
     unsigned long b = _pReader->readUInt4(); // begin
     unsigned long l = _pReader->readUInt4(); // length
     unsigned long lc = _pReader->readUInt4(); // label code
-    const String st = _pReader->readString(_pReader->readUInt4()); // string
-    const String sn = _pReader->readString(_pReader->readUInt4()); // source name
+    const string st = _pReader->readString(_pReader->readUInt4()); // string
+    const string sn = _pReader->readString(_pReader->readUInt4()); // source name
     Seg& seg = ss.createSeg(b, l, lc, st, sn);
     nbLines = _pReader->readUInt4();
     XList& list = seg.list();
@@ -112,8 +113,8 @@ void R::readSegServer(SegServer& ss)
   {
     unsigned long id = _pReader->readUInt4(); // id
     unsigned long lc = _pReader->readUInt4(); // label code
-    const String st = _pReader->readString(_pReader->readUInt4()); // string
-    const String sn = _pReader->readString(_pReader->readUInt4()); // source name
+    const string st = _pReader->readString(_pReader->readUInt4()); // string
+    const string sn = _pReader->readString(_pReader->readUInt4()); // source name
     SegCluster& cl = ss.createCluster(lc, st, sn);
     ss.setClusterId(cl, id);
 
@@ -150,7 +151,7 @@ void R::readSegServer(SegServer& ss)
   _pReader->close();
 }
 //-------------------------------------------------------------------------
-void R::error(const String& msg)
+void R::error(const string& msg)
 {
   assert(_pReader != NULL);
   _pReader->close();
@@ -158,7 +159,7 @@ void R::error(const String& msg)
                              _pReader->getFullFileName());
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "SegServerFileReaderRaw"; }
+string R::getClassName() const { return "SegServerFileReaderRaw"; }
 //-------------------------------------------------------------------------
 R::~SegServerFileReaderRaw() {}
 //-------------------------------------------------------------------------

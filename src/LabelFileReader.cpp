@@ -61,6 +61,7 @@
 #include "Config.h"
 #include "LabelSet.h"
 
+using namespace std; 
 using namespace alize;
 typedef LabelFileReader R;
 
@@ -84,28 +85,28 @@ void R::readLabels(LabelSet& set)
   for (unsigned long i=0; i<list.getLineCount(); i++)
   {
     const XLine& line = list.getLine(i);
-    const String& s0 = line.getElement(0);
-    const String& s1 = line.getElement(1);
+    const string& s0 = line.getElement(0);
+    const string& s1 = line.getElement(1);
     double d0, d1;
-    try { d0 = s0.toDouble(); d1 = s1.toDouble(); }
+    try { d0 = stod(s0); d1 = stod(s1); }
     catch (Exception&)
     { throw IOException("Wrong data in label file. Line "
-                        + String::valueOf(i+1) + "", __FILE__,
+                        + std::to_string(i+1) + "", __FILE__,
                         __LINE__, _pReader->getFullFileName()); }
-    const String& s2 = line.getElement(2);
-    if (s2.isEmpty())
+    const string& s2 = line.getElement(2);
+    if (s2.empty())
       throw IOException("Wrong data in label file. Line "
-                        + String::valueOf(i+1) + "", __FILE__,
+                        + std::to_string(i+1) + "", __FILE__,
                         __LINE__, _pReader->getFullFileName());
     set.addLabel(d0, d1, line.getElement(2));
   }
 
-  /* // périmé le 14 jan 2005
+  /* // pÃ©rimÃ© le 14 jan 2005
   try
   {
     while (true)
     {
-      String s = readLine(); // can throw IOException
+      string s = readLine(); // can throw IOException
       set.addLabel(s.getToken(0).toDouble(),
                    s.getToken(1).toDouble(),
                    s.getToken(2));
@@ -115,7 +116,7 @@ void R::readLabels(LabelSet& set)
   close();*/
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "LabelFileReader"; }
+string R::getClassName() const { return "LabelFileReader"; }
 //-------------------------------------------------------------------------
 R::~LabelFileReader()
 {

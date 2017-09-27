@@ -89,6 +89,7 @@ static const int Z = 004000; // has zero mean static coef
 static const int K = 010000; // has CRC checksum
 static const int O = 020000; // has 0'th cepstral coef
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderHTK R;
 
@@ -150,7 +151,7 @@ real_t R::getSampleRate()
   return _sampleRate;
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "FeatureFileReaderHTK"; }
+string R::getClassName() const { return "FeatureFileReaderHTK"; }
 //-------------------------------------------------------------------------
 bool R::readHeader()
 {

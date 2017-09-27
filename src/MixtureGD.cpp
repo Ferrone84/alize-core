@@ -62,14 +62,15 @@
 #include "MixtureStat.h"
 #include "MixtureGDStat.h"
 //#include "Config.h"
-#include "alizeString.h"
+
 //#include <iostream>
 #include "StatServer.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
-MixtureGD::MixtureGD(const String& id, unsigned long vs, unsigned long dc)
+MixtureGD::MixtureGD(const string& id, unsigned long vs, unsigned long dc)
 :Mixture(id, dc, vs)
 {
   for (unsigned long c=0; c<dc; c++)
@@ -90,7 +91,7 @@ MixtureGD::MixtureGD(const MixtureGD& m)
 :Mixture(m._id, m.getDistribCount(), m._vectSize)
 {
   // Attention : les distributions ne sont pas copiees, la copie pointe sur
-  // les mêmes distributions que l'original <FRANCAIS>
+  // les mÃªmes distributions que l'original <FRANCAIS>
   unsigned long n = m.getDistribCount();
   for (unsigned long i=0; i< n; i++)
   { Mixture::addDistrib(K::k, m.getDistrib(i), m.weight(i)); }
@@ -118,7 +119,7 @@ bool MixtureGD::operator==(const Mixture& m) const
   return true;
 }
 //-------------------------------------------------------------------------
-MixtureGD& MixtureGD::create(const K&, const String& id,
+MixtureGD& MixtureGD::create(const K&, const string& id,
             unsigned long vectSize, unsigned long distribCount)
 {
   MixtureGD* p = new (std::nothrow) MixtureGD(id, vectSize, distribCount);
@@ -179,9 +180,9 @@ DistribGD& MixtureGD::getDistrib(unsigned long i) const
 void MixtureGD::setDistrib(const K&, DistribGD& d, unsigned long i)
 {
   if (d.getVectSize() != _vectSize)
-    throw Exception("mixture vectSize (" + String::valueOf(_vectSize)
+    throw Exception("mixture vectSize (" + std::to_string(_vectSize)
             + ") <> distrib vectSize ("
-            + String::valueOf(d.getVectSize()) + ")",
+            + std::to_string(d.getVectSize()) + ")",
             __FILE__, __LINE__);
   Mixture::setDistrib(K::k, d, i);
 }
@@ -198,9 +199,9 @@ void MixtureGD::setDistrib(const K&, Distrib& d, unsigned long i)
 void MixtureGD::addDistrib(const K&, DistribGD& d, weight_t w)
 {
   if (d.getVectSize() != _vectSize)
-    throw Exception("mixture vectSize (" + String::valueOf(_vectSize)
+    throw Exception("mixture vectSize (" + std::to_string(_vectSize)
             + ") <> distrib vectSize ("
-            + String::valueOf(d.getVectSize()) + ")",
+            + std::to_string(d.getVectSize()) + ")",
             __FILE__, __LINE__);
   Mixture::addDistrib(K::k, d, w);
 }
@@ -220,19 +221,19 @@ MixtureStat& MixtureGD::createNewMixtureStatObject(const K&,
 //-------------------------------------------------------------------------
 DistribType MixtureGD::getType() const { return DistribType_GD; }
 //-------------------------------------------------------------------------
-String MixtureGD::getClassName() const { return "MixtureGD"; }
+string MixtureGD::getClassName() const { return "MixtureGD"; }
 //-------------------------------------------------------------------------
-String MixtureGD::toString() const
+string MixtureGD::toString() const
 {
-  String s = Object::toString()
+  string s = Object::toString()
     + "\n  id      = '" + _id + "'"
-    + "\n  distribCount  = " + String::valueOf(getDistribCount())
-    + "\n  vectSize    = " + String::valueOf(_vectSize);
+    + "\n  distribCount  = " + std::to_string(getDistribCount())
+    + "\n  vectSize    = " + std::to_string(_vectSize);
   for (unsigned long i=0; i<getDistribCount(); i++)
   {
-    s += "\n  weight[" + String::valueOf(i) + "] = "
-      + String::valueOf(weight(i))
-      + "  distrib[" + String::valueOf(i) + "] = [ "
+    s += "\n  weight[" + std::to_string(i) + "] = "
+      + std::to_string(weight(i))
+      + "  distrib[" + std::to_string(i) + "] = [ "
       + getDistrib(i).getClassName()
       + " " + getDistrib(i).getAddress() + " ]";
   }

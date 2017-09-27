@@ -97,7 +97,7 @@ namespace alize
 
     virtual void reset();
     virtual void seekFeature(unsigned long featureNbr,
-                             const String& srcName = "");
+                             const std::string& srcName = "");
 
 
   protected :

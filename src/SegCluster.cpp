@@ -62,16 +62,17 @@
 #include "limits.h"
 #include <iostream>
 
+using namespace std; 
 using namespace alize;
 using namespace std;
 typedef SegCluster C;
 //-------------------------------------------------------------------------
-C::SegCluster(SegServer& ss, unsigned long lc, const String& s,
-                                                          const String& sn)
+C::SegCluster(SegServer& ss, unsigned long lc, const std::string& s,
+                                                          const std::string& sn)
 :SegAbstract(ss, lc, s, sn), _pCurrentSeg(NULL) { rewind(); }
 //-------------------------------------------------------------------------
 SegCluster& C::create(const K&, SegServer& ss, unsigned long lc,
-                      const String& s, const String& sn)
+                      const std::string& s, const std::string& sn)
 {
   SegCluster* p = new (std::nothrow) SegCluster(ss, lc, s, sn);
   assertMemoryIsAllocated(p, __FILE__, __LINE__);
@@ -172,7 +173,7 @@ Seg& C::addCopy(const Seg& s, unsigned long pos)
 }
 //-------------------------------------------------------------------------
 Seg& C::addNewSeg(unsigned long b, unsigned long l, unsigned long lc,
-                  const String& s, const String& sn)
+                  const std::string& s, const std::string& sn)
 {
   Seg& seg = getServer().createSeg(b, l, lc, s, sn);
   _vect.addObject(seg);
@@ -264,19 +265,19 @@ void C::getExtremeBoundaries(const K&, unsigned long& b,
   { get(i).getExtremeBoundaries(K::k, b, e, isDefined); }
 }
 //-------------------------------------------------------------------------
-String C::getClassName() const { return "SegCluster"; }
+std::string C::getClassName() const { return "SegCluster"; }
 //-------------------------------------------------------------------------
-String C::toString() const
+std::string C::toString() const
 {
-  String b("undefined");
-  String l("undefined");
-  try { b = String::valueOf(begin()); } catch (Exception&) {}
-  try { l = String::valueOf(length()); } catch (Exception&) {}
+  std::string b("undefined");
+  std::string l("undefined");
+  try { b = std::to_string(begin()); } catch (Exception&) {}
+  try { l = std::to_string(length()); } catch (Exception&) {}
   return Object::toString()
     + "\n  server name = '" + getServer().getServerName() + "'"
     + "\n  begin = " + b
     + "\n  length   = " + l
-    + "\n  labelCode = " + String::valueOf(_labelCode)
+    + "\n  labelCode = " + std::to_string(_labelCode)
     + "\n  string = '" + _string + "'"
     + "\n  sourceName = '" + _srcName + "'";
   // TODO : ajouter l'affichage de _list

@@ -143,8 +143,8 @@ namespace alize
     ///
     _type* getArray() const;
 
-    virtual String toString() const;
-    virtual String getClassName() const;
+    virtual std::string toString() const;
+    virtual std::string getClassName() const;
 
     real_t upperCholesky(DoubleSquareMatrix& m);
 

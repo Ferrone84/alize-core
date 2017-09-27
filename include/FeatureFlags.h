@@ -88,7 +88,7 @@ namespace alize
     ///
     /// @throw Exception if one of the caracters is not "0", "1" or "-"
     ///
-    explicit FeatureFlags(const String& s);
+    explicit FeatureFlags(const std::string& s);
     explicit FeatureFlags();
 
     FeatureFlags(const FeatureFlags&);
@@ -102,7 +102,7 @@ namespace alize
     ///
     /// @throw Exception if one of the caracters is not "0", "1" or "-"
     ///
-    void set(const String& flags);
+    void set(const std::string& flags);
 
     /// Returns the flags in a SPRO4 format
     /// @return the flags in a unsigned long value
@@ -120,10 +120,10 @@ namespace alize
     /// @return a string that contains the flags (ex: "100101")
     ///     1 = true, 0 = false
     ///
-    String getString() const;
+    std::string getString() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     bool useS;  /*!< static */
     bool useE;  /*!< energy */ 

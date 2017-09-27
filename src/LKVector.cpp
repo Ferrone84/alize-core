@@ -60,9 +60,10 @@
 #include <memory.h>
 #include <cstdlib>
 #include "LKVector.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -193,15 +194,15 @@ void LKVector::clear() { _size = 0; }
 //-------------------------------------------------------------------------
 unsigned long LKVector::size() const { return _size; }
 //-------------------------------------------------------------------------
-String LKVector::getClassName() const { return "LKVector"; }
+string LKVector::getClassName() const { return "LKVector"; }
 //-------------------------------------------------------------------------
-String LKVector::toString() const
+string LKVector::toString() const
 {
-  String s = Object::toString() + "Size = " + String::valueOf(_size);
+  string s = Object::toString() + "Size = " + std::to_string(_size);
   for (unsigned long i=0; i<_size; i++)
   {
-    s += "\n  idx = " + String::valueOf(_array[i].idx)
-      +  " lk = " + String::valueOf(_array[i].lk);
+    s += "\n  idx = " + std::to_string(_array[i].idx)
+      +  " lk = " + std::to_string(_array[i].lk);
   }
 
   return s;

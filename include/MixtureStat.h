@@ -262,8 +262,8 @@ namespace alize
 
     // -----------------------------------------------------
 
-    virtual String getClassName() const = 0;
-    virtual String toString() const;
+    virtual std::string getClassName() const = 0;
+    virtual std::string toString() const;
 
   protected :
   

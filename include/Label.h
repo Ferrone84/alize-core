@@ -66,7 +66,7 @@
 #endif
 
 #include "Object.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -87,8 +87,8 @@ namespace alize
 
   public :
 
-    Label(const String& = "");
-    static Label& create(const String& = "");
+    Label(const std::string& = "");
+    static Label& create(const std::string& = "");
     Label(const Label&);
     Label& duplicate() const;
     const Label& operator=(const Label&);
@@ -97,21 +97,21 @@ namespace alize
     virtual ~Label();
 
     virtual void reset();
-    void setString(const String&);
-    const String& getString() const;
-    void setSourceName(const String&);
-    const String& getSourceName() const;
+    void setString(const std::string&);
+    const std::string& getString() const;
+    void setSourceName(const std::string&);
+    const std::string& getSourceName() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
 
   private :
 
     virtual Label& clone() const;
 
-    String _string;
-    String _srcName; /*! source of the feature (file, microphone...) */
+    std::string _string;
+    std::string _srcName; /*! source of the feature (file, microphone...) */
   };
 
 } // end namespace alize

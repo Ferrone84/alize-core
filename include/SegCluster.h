@@ -88,19 +88,19 @@ namespace alize
     virtual ~SegCluster();
 
     //<FRANCAIS>
-    /// Recherche dans le cluster le segment dont le numéro de 1ere trame
+    /// Recherche dans le cluster le segment dont le numÃ©ro de 1ere trame
     /// (begin) est le plus petit parmis tous les segments du cluster et
-    /// retourne ce numéro. Cette fonction nécessite de parcourir tous les 
+    /// retourne ce numÃ©ro. Cette fonction nÃ©cessite de parcourir tous les 
     /// segments donc est couteuse en temps.
     /// @return see description
     ///
     virtual unsigned long begin() const;
 
     //<FRANCAIS>
-    /// Retourne le nombre de features du cluster par différence entre
-    /// la 1ere feature (méthode begin()) et la dernière (même principe 
-    /// que la méthode begin()).
-    /// @warning La méthode ne vérifie pas si les segments sont contiguës.
+    /// Retourne le nombre de features du cluster par diffÃ©rence entre
+    /// la 1ere feature (mÃ©thode begin()) et la derniÃ¨re (mÃªme principe 
+    /// que la mÃ©thode begin()).
+    /// @warning La mÃ©thode ne vÃ©rifie pas si les segments sont contiguÃ«s.
     /// @return see description
     ///
     virtual unsigned long length() const;
@@ -140,8 +140,8 @@ namespace alize
     /// @return a reference to the new segment
     ///
     Seg& addNewSeg(unsigned long b = 0, unsigned long l = 0,
-             unsigned long lc = 0, const String& s = "",
-             const String& sn = "");
+             unsigned long lc = 0, const std::string& s = "",
+             const std::string& sn = "");
 
     /// Removes a segment or sub-cluster from this cluster
     /// @param s the segment or sub-cluster to add
@@ -167,16 +167,16 @@ namespace alize
 
     // <FRANCAIS>
     /// Recherche dans le cluster le 1er segment qui contient une feature
-    /// (identifiée par son n°) et renvoi true s'il existe. La
-    /// méthode parcours tous les segments du cluster et regarde si
-    /// begin >= n°feature < begin + length\n
-    /// Après appel de la méthode, la variable lc contient le code label
-    /// du segment trouvé.\n
-    /// De plus, les booléens first et last permettent de savoir si
-    /// la feature est la dernière du segment ou la première
-    /// METHODE PROVISOIRE. Sera remplacé par une méthode
-    /// qui accepte directement pour paramètre une feature (Feature&)
-    /// et non plus le n° de la feature
+    /// (identifiÃ©e par son nÂ°) et renvoi true s'il existe. La
+    /// mÃ©thode parcours tous les segments du cluster et regarde si
+    /// begin >= nÂ°feature < begin + length\n
+    /// AprÃ¨s appel de la mÃ©thode, la variable lc contient le code label
+    /// du segment trouvÃ©.\n
+    /// De plus, les boolÃ©ens first et last permettent de savoir si
+    /// la feature est la derniÃ¨re du segment ou la premiÃ¨re
+    /// METHODE PROVISOIRE. Sera remplacÃ© par une mÃ©thode
+    /// qui accepte directement pour paramÃ¨tre une feature (Feature&)
+    /// et non plus le nÂ° de la feature
     /// @param n feature number
     /// @param lc a variable to store the label code
     /// @param isFirst a boolean to indicate that the feature is or is not
@@ -190,9 +190,9 @@ namespace alize
 
     /// Like other same-name method but without needing parameters
     /// isFirst and isLast
-    /// METHODE PROVISOIRE. Sera remplacé par une méthode
-    /// qui accepte directement pour paramètre une feature (Feature&)
-    /// et non plus le n° de la feature
+    /// METHODE PROVISOIRE. Sera remplacÃ© par une mÃ©thode
+    /// qui accepte directement pour paramÃ¨tre une feature (Feature&)
+    /// et non plus le nÂ° de la feature
     /// @param n feature number
     /// @param lc a variable to store the label code
     /// @return true if a segment was find; false otherwise
@@ -223,16 +223,16 @@ namespace alize
     ///
     virtual void rewind() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     // internal usage
 
     SegCluster& duplicate(const K&, SegServer&) const;
     void setId(const K&, unsigned long id);
     static SegCluster& create(const K&, SegServer& ss,
-                  unsigned long lc = 0, const String& s = "",
-                  const String& sn = "");
+                  unsigned long lc = 0, const std::string& s = "",
+                  const std::string& sn = "");
     virtual void getExtremeBoundaries(const K&, unsigned long& b,
                  unsigned long& e, bool& isDefined) const;
 
@@ -252,7 +252,7 @@ namespace alize
     mutable unsigned long  _lc;
 
     explicit SegCluster(SegServer& ss, unsigned long lc = 0,
-                const String& s= "", const String& sn = "");
+                const std::string& s= "", const std::string& sn = "");
     SegCluster(const SegCluster&); /* not implemented */
     const SegCluster& operator=(const SegCluster& c); /* not implemented */
     bool operator==(const SegCluster& c) const; /* not implemented */

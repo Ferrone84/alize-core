@@ -82,6 +82,7 @@
 #include "FrameAccGD.h"
 #include "FrameAccGF.h"
 
+using namespace std; 
 using namespace alize;
 using namespace std;
 
@@ -403,7 +404,7 @@ MixtureGDStat& S::getMixtureGDStat(unsigned long idx)
   MixtureGDStat* p = dynamic_cast<MixtureGDStat*>(
                                     &_mixtureStatVect.getObject(idx));
   if (p == NULL)
-    throw Exception("No mixtureGDStat object for index "+String::valueOf(idx),
+    throw Exception("No mixtureGDStat object for index "+std::to_string(idx),
                     __FILE__, __LINE__);
   return *p;
 }
@@ -413,7 +414,7 @@ MixtureGFStat& S::getMixtureGFStat(unsigned long idx)
   MixtureGFStat* p = dynamic_cast<MixtureGFStat*>(
                                     &_mixtureStatVect.getObject(idx));
   if (p == NULL)
-    throw Exception("No mixtureGFStat object for index "+String::valueOf(idx),
+    throw Exception("No mixtureGFStat object for index "+std::to_string(idx),
                     __FILE__, __LINE__);
   return *p;
 }
@@ -481,15 +482,15 @@ FrameAccGF S::createFrameAccGF()
 
 
 //-------------------------------------------------------------------------
-const String& S::getServerName() const { return _serverName; }
+const string& S::getServerName() const { return _serverName; }
 //-------------------------------------------------------------------------
-void S::setServerName(const String& s) { _serverName = s; }
+void S::setServerName(const string& s) { _serverName = s; }
 //-------------------------------------------------------------------------
-String S::getClassName() const { return "StatServer"; }
+string S::getClassName() const { return "StatServer"; }
 //-------------------------------------------------------------------------
-String S::toString() const
+string S::toString() const
 {
-  String s(Object::toString()
+  string s(Object::toString()
     + "\n  serverName = '" + _serverName + "'");
   if (_pMixtureServer != NULL)
     return s

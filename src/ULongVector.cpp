@@ -62,9 +62,10 @@
 #include <iostream>
 #include <fstream>
 #include "ULongVector.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 using namespace std;
 
@@ -205,15 +206,15 @@ void ULongVector::clear() { _size = 0; }
 //-------------------------------------------------------------------------
 unsigned long ULongVector::size() const { return _size; }
 //-------------------------------------------------------------------------
-String ULongVector::getClassName() const { return "ULongVector"; }
+string ULongVector::getClassName() const { return "ULongVector"; }
 //-------------------------------------------------------------------------
-String ULongVector::toString() const
+string ULongVector::toString() const
 {
-  String s = Object::toString() + " size = " + String::valueOf(_size);
+  string s = Object::toString() + " size = " + std::to_string(_size);
   for (unsigned long i=0; i<_size; i++)
   {
-    s += "  \n  [" + String::valueOf(i) + "] = "
-    + String::valueOf(_array[i]);
+    s += "  \n  [" + std::to_string(i) + "] = "
+    + std::to_string(_array[i]);
   }
   return s;
 }

@@ -66,6 +66,7 @@
 #include "MixtureStat.h"
 #include "StatServer.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -496,30 +497,30 @@ lk_t ViterbiAccum::computeStateLLK(unsigned long i, const Feature& f) const
 
 
 //-------------------------------------------------------------------------
-String ViterbiAccum::getClassName() const { return "ViterbiAccum"; }
+string ViterbiAccum::getClassName() const { return "ViterbiAccum"; }
 //-------------------------------------------------------------------------
-String ViterbiAccum::toString() const
+string ViterbiAccum::toString() const
 {
     unsigned long i, nbStates = getStateCount();
-    String s = Object::toString()
-               + " Nb States = " + String::valueOf(nbStates)
-               + " Nb features = " + String::valueOf(_featureCount);
+    string s = Object::toString()
+               + " Nb States = " + std::to_string(nbStates)
+               + " Nb features = " + std::to_string(_featureCount);
     for (i=0; i<nbStates; i++)
     {
         for (unsigned long j=0; j<nbStates; j++)
-        s += "\n  Log transition " + String::valueOf(i) + "->"
-           + String::valueOf(j) + " = "
-           + String::valueOf(logTransition(i, j));
+        s += "\n  Log transition " + std::to_string(i) + "->"
+           + std::to_string(j) + " = "
+           + std::to_string(logTransition(i, j));
     }
     if (_llpDefined)
-        s += "\n  llp = " + String::valueOf(_llp);
+        s += "\n  llp = " + std::to_string(_llp);
     else
         s += "\n  llp = undefined";
 
     if (_pathDefined)
         for (i=0; i<_featureCount; i++)
-            s += "\n  path[" + String::valueOf(i) + "]"
-            + " = " + String::valueOf(_path[i]);
+            s += "\n  path[" + std::to_string(i) + "]"
+            + " = " + std::to_string(_path[i]);
     else
         s += "\n  path = undefined";
     return s;

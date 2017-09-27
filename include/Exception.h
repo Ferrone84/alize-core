@@ -66,7 +66,7 @@
 #endif
 
 #include "Object.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -88,14 +88,14 @@ namespace alize
       ///    exception
       /// @param line line number in the souce file
       ///
-      explicit Exception(const String& msg,
-                         const String& sourceFile, int line);
-      explicit Exception(const String& msg,
-                         const String& sourceFile, int line, const String callerName);
+      explicit Exception(const std::string& msg,
+                         const std::string& sourceFile, int line);
+      explicit Exception(const std::string& msg,
+                         const std::string& sourceFile, int line, const std::string callerName);
       Exception(const Exception&);
       virtual ~Exception();
-      virtual String toString() const;
-      virtual String getClassName() const;
+      virtual std::string toString() const;
+      virtual std::string getClassName() const;
 
       //void OBS__storeStackTrace() ;
       /*! \brief  Tries to get the stack trace of current point
@@ -114,12 +114,12 @@ namespace alize
        *    Idea to call gdb from within exception/crash handler to get a correct stack trace comes from:
        *     Mark Kretschmann markey, prominent Amarok hacker / C++ guru
        */
-      String stackTrace( const String callerName) const ;
+      std::string stackTrace( const std::string callerName) const ;
 
-      const String msg; // message of the exception
-      const String sourceFile; // name of the source file
+      const std::string msg; // message of the exception
+      const std::string sourceFile; // name of the source file
       const int  line; // line number of the source file
-      String trace ;  ///< gets filled by sTrace upon throwing time to fetch current stack trace
+      std::string trace ;  ///< gets filled by sTrace upon throwing time to fetch current stack trace
     private:
       bool operator==(const Exception&) const;   /*!Not implemented*/
       bool operator!=(const Exception& e) const;   /*!Not implemented*/
@@ -137,14 +137,14 @@ namespace alize
   class IndexOutOfBoundsException : public Exception
   {
     public :
-      explicit IndexOutOfBoundsException(const String& msg,
-                const String& sourceFile, int line,
+      explicit IndexOutOfBoundsException(const std::string& msg,
+                const std::string& sourceFile, int line,
                 long index, long limit);
       IndexOutOfBoundsException(
         const IndexOutOfBoundsException&);
       virtual ~IndexOutOfBoundsException();
-      virtual String getClassName() const;
-      virtual String toString() const;
+      virtual std::string getClassName() const;
+      virtual std::string toString() const;
       const long index;
       const long limit;
     private:
@@ -168,14 +168,14 @@ namespace alize
   class ALIZE_API IOException : public Exception
   {
     public :
-      explicit IOException(const String& msg,
-            const String& sourceFile, int line, const FileName& f);
-      explicit IOException(const String& msg,
-            const String& sourceFile, int line, const FileName& f, const String callerName);
+      explicit IOException(const std::string& msg,
+            const std::string& sourceFile, int line, const FileName& f);
+      explicit IOException(const std::string& msg,
+            const std::string& sourceFile, int line, const FileName& f, const std::string callerName);
       IOException(const IOException&);
       virtual ~IOException();
-      virtual String toString() const;
-      virtual String getClassName() const;
+      virtual std::string toString() const;
+      virtual std::string getClassName() const;
       const FileName fileName;
     private:
       bool operator==(const IOException&) const;   /*!Not implemented*/
@@ -194,12 +194,12 @@ namespace alize
   class IdAlreadyExistsException : public Exception
   {
     public :
-      explicit IdAlreadyExistsException(const String& msg,
-          const String& sourceFile, int line);
+      explicit IdAlreadyExistsException(const std::string& msg,
+          const std::string& sourceFile, int line);
       IdAlreadyExistsException(
         const IdAlreadyExistsException&);
       virtual ~IdAlreadyExistsException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const IdAlreadyExistsException&)
                           const; /*!Not implemented*/
@@ -219,11 +219,11 @@ namespace alize
   class InvalidDataException : public IOException
   {
     public :
-      explicit InvalidDataException(const String& msg,
-        const String& sourceFile, int line, const FileName& f);
+      explicit InvalidDataException(const std::string& msg,
+        const std::string& sourceFile, int line, const FileName& f);
       InvalidDataException(const InvalidDataException&);
       virtual ~InvalidDataException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const InvalidDataException&)
                         const; /*!Not implemented*/
@@ -241,11 +241,11 @@ namespace alize
   class FileNotFoundException : public IOException
   {
     public :
-      explicit FileNotFoundException(const String& msg,
-         const String& sourceFile, int line, const FileName& f);
+      explicit FileNotFoundException(const std::string& msg,
+         const std::string& sourceFile, int line, const FileName& f);
       FileNotFoundException(const FileNotFoundException&);
       virtual ~FileNotFoundException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const FileNotFoundException&)
                         const; /*!Not implemented*/
@@ -264,11 +264,11 @@ namespace alize
   class EOFException : public IOException
   {
     public :
-      explicit EOFException(const String& msg,
-        const String& sourceFile, int line, const FileName& f);
+      explicit EOFException(const std::string& msg,
+        const std::string& sourceFile, int line, const FileName& f);
       EOFException(const EOFException&);
       virtual ~EOFException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const EOFException&) const; /*!Not implemented*/
       bool operator!=(const EOFException& e)
@@ -285,11 +285,11 @@ namespace alize
   class OutOfMemoryException : public Exception
   {
     public :
-      explicit OutOfMemoryException(const String& msg,
-          const String& sourceFile, int line);
+      explicit OutOfMemoryException(const std::string& msg,
+          const std::string& sourceFile, int line);
       OutOfMemoryException(const OutOfMemoryException&);
       virtual ~OutOfMemoryException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const OutOfMemoryException&)
                         const; /*!Not implemented*/
@@ -307,11 +307,11 @@ namespace alize
   class ParamNotFoundInConfigException : public Exception
   {
     public :
-      explicit ParamNotFoundInConfigException(const String& msg,
-          const String& sourceFile, int line);
+      explicit ParamNotFoundInConfigException(const std::string& msg,
+          const std::string& sourceFile, int line);
       ParamNotFoundInConfigException(const ParamNotFoundInConfigException&);
       virtual ~ParamNotFoundInConfigException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const ParamNotFoundInConfigException&)
                         const; /*!Not implemented*/
@@ -329,11 +329,11 @@ namespace alize
   class ConfigCheckException : public Exception
   {
     public :
-      explicit ConfigCheckException(const String& msg,
-          const String& sourceFile, int line);
+      explicit ConfigCheckException(const std::string& msg,
+          const std::string& sourceFile, int line);
       ConfigCheckException(const ConfigCheckException&);
       virtual ~ConfigCheckException();
-      virtual String getClassName() const;
+      virtual std::string getClassName() const;
     private:
       bool operator==(const ConfigCheckException&)
                         const; /*!Not implemented*/

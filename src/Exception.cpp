@@ -58,24 +58,25 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "Exception.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
-Exception::Exception(const String& msg, const String& sourceFile, int line)
+Exception::Exception(const string& msg, const string& sourceFile, int line)
 :Object(), msg(msg), sourceFile(sourceFile), line(line) {}
 //-------------------------------------------------------------------------
 Exception::Exception(const Exception& e)
 :Object(),msg(e.msg),sourceFile(e.sourceFile),line(e.line) {}
 //-------------------------------------------------------------------------
-String Exception::toString() const
+string Exception::toString() const
 {
   return Object::toString()
     + "\n  message   = \"" + msg + "\""
     + "\n  source file = " + sourceFile
-    + "\n  line number = " + String::valueOf(line);
+    + "\n  line number = " + std::to_string(line);
 }
 //-------------------------------------------------------------------------
-String Exception::getClassName() const { return "Exception"; }
+string Exception::getClassName() const { return "Exception"; }
 //-------------------------------------------------------------------------
 Exception::~Exception() {}
 //-------------------------------------------------------------------------
@@ -83,8 +84,8 @@ Exception::~Exception() {}
 
 
 //-------------------------------------------------------------------------
-IndexOutOfBoundsException::IndexOutOfBoundsException(const String& msg,
-        const String& sourceFile, int line, long index, long limit)
+IndexOutOfBoundsException::IndexOutOfBoundsException(const string& msg,
+        const string& sourceFile, int line, long index, long limit)
 :Exception(msg, sourceFile, line), index(index), limit(limit) {}
 //-------------------------------------------------------------------------
 IndexOutOfBoundsException::IndexOutOfBoundsException(
@@ -92,14 +93,14 @@ IndexOutOfBoundsException::IndexOutOfBoundsException(
 :Exception(e.msg, e.sourceFile, e.line),
  index(e.index), limit(e.limit) {}
 //-------------------------------------------------------------------------
-String IndexOutOfBoundsException::toString() const
+string IndexOutOfBoundsException::toString() const
 {
   return Exception::toString()
-    + "\n  index " + String::valueOf(index)
-    + " >= limit " + String::valueOf(limit);
+    + "\n  index " + std::to_string(index)
+    + " >= limit " + std::to_string(limit);
 }
 //-------------------------------------------------------------------------
-String IndexOutOfBoundsException::getClassName() const
+string IndexOutOfBoundsException::getClassName() const
 { return "IndexOutOfBoundsException"; }
 //-------------------------------------------------------------------------
 IndexOutOfBoundsException::~IndexOutOfBoundsException() {}
@@ -109,17 +110,17 @@ IndexOutOfBoundsException::~IndexOutOfBoundsException() {}
 
 
 //-------------------------------------------------------------------------
-IOException::IOException(const String& msg, const String& sourceFile,
+IOException::IOException(const string& msg, const string& sourceFile,
                      int line, const FileName& f)
 :Exception(msg, sourceFile, line), fileName(f) {}
 //-------------------------------------------------------------------------
 IOException::IOException(const IOException& e)
 :Exception(e.msg, e.sourceFile, e.line) {}
 //-------------------------------------------------------------------------
-String IOException::toString() const
+string IOException::toString() const
 { return Exception::toString() + "\n  fileName =  " + fileName; }
 //-------------------------------------------------------------------------
-String IOException::getClassName() const { return "IOException"; }
+string IOException::getClassName() const { return "IOException"; }
 //-------------------------------------------------------------------------
 IOException::~IOException() {}
 //-------------------------------------------------------------------------
@@ -128,15 +129,15 @@ IOException::~IOException() {}
 
 
 //-------------------------------------------------------------------------
-IdAlreadyExistsException::IdAlreadyExistsException(const String& msg,
-                    const String& sourceFile, int line)
+IdAlreadyExistsException::IdAlreadyExistsException(const string& msg,
+                    const string& sourceFile, int line)
 :Exception(msg, sourceFile, line) {}
 //-------------------------------------------------------------------------
 IdAlreadyExistsException::IdAlreadyExistsException(
                   const IdAlreadyExistsException& e)
 :Exception(e.msg, e.sourceFile, e.line) {}
 //-------------------------------------------------------------------------
-String IdAlreadyExistsException::getClassName() const
+string IdAlreadyExistsException::getClassName() const
 { return "IdAlreadyExistsException"; }
 //-------------------------------------------------------------------------
 IdAlreadyExistsException::~IdAlreadyExistsException() {}
@@ -146,14 +147,14 @@ IdAlreadyExistsException::~IdAlreadyExistsException() {}
 
 
 //-------------------------------------------------------------------------
-InvalidDataException::InvalidDataException(const String& msg,
-        const String& sourceFile, int line, const FileName& f)
+InvalidDataException::InvalidDataException(const string& msg,
+        const string& sourceFile, int line, const FileName& f)
 :IOException(msg, sourceFile, line, f) {}
 //-------------------------------------------------------------------------
 InvalidDataException::InvalidDataException(const InvalidDataException& e)
 :IOException(e.msg, e.sourceFile, e.line, e.fileName) {}
 //-------------------------------------------------------------------------
-String InvalidDataException::getClassName() const
+string InvalidDataException::getClassName() const
 { return "InvalidDataException"; }
 //-------------------------------------------------------------------------
 InvalidDataException::~InvalidDataException() {}
@@ -163,14 +164,14 @@ InvalidDataException::~InvalidDataException() {}
 
 
 //-------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException(const String& msg,
-                    const String& sourceFile, int line)
+OutOfMemoryException::OutOfMemoryException(const string& msg,
+                    const string& sourceFile, int line)
 :Exception(msg, sourceFile, line) {}
 //-------------------------------------------------------------------------
 OutOfMemoryException::OutOfMemoryException(const OutOfMemoryException& e)
 :Exception(e.msg, e.sourceFile, e.line) {}
 //-------------------------------------------------------------------------
-String OutOfMemoryException::getClassName() const
+string OutOfMemoryException::getClassName() const
 { return "OutOfMemoryException"; }
 //-------------------------------------------------------------------------
 OutOfMemoryException::~OutOfMemoryException() {}
@@ -180,15 +181,15 @@ OutOfMemoryException::~OutOfMemoryException() {}
 
 
 //-------------------------------------------------------------------------
-FileNotFoundException::FileNotFoundException(const String& msg,
-        const String& sourceFile, int line, const FileName& f)
+FileNotFoundException::FileNotFoundException(const string& msg,
+        const string& sourceFile, int line, const FileName& f)
 :IOException(msg, sourceFile, line, f) {}
 //-------------------------------------------------------------------------
 FileNotFoundException::FileNotFoundException(
                   const FileNotFoundException& e)
 :IOException(e.msg, e.sourceFile, e.line, e.fileName) {}
 //-------------------------------------------------------------------------
-String FileNotFoundException::getClassName() const
+string FileNotFoundException::getClassName() const
 { return "FileNotFoundException"; }
 //-------------------------------------------------------------------------
 FileNotFoundException::~FileNotFoundException() {}
@@ -198,15 +199,15 @@ FileNotFoundException::~FileNotFoundException() {}
 
 
 //-------------------------------------------------------------------------
-ParamNotFoundInConfigException::ParamNotFoundInConfigException(const String& msg,
-        const String& sourceFile, int line)
+ParamNotFoundInConfigException::ParamNotFoundInConfigException(const string& msg,
+        const string& sourceFile, int line)
 :Exception(msg, sourceFile, line) {}
 //-------------------------------------------------------------------------
 ParamNotFoundInConfigException::ParamNotFoundInConfigException(
                   const ParamNotFoundInConfigException& e)
 :Exception(e.msg, e.sourceFile, e.line) {}
 //-------------------------------------------------------------------------
-String ParamNotFoundInConfigException::getClassName() const
+string ParamNotFoundInConfigException::getClassName() const
 { return "ParamNotFoundInConfigException"; }
 //-------------------------------------------------------------------------
 ParamNotFoundInConfigException::~ParamNotFoundInConfigException() {}
@@ -216,15 +217,15 @@ ParamNotFoundInConfigException::~ParamNotFoundInConfigException() {}
 
 
 //-------------------------------------------------------------------------
-ConfigCheckException::ConfigCheckException(const String& msg,
-        const String& sourceFile, int line)
+ConfigCheckException::ConfigCheckException(const string& msg,
+        const string& sourceFile, int line)
 :Exception(msg, sourceFile, line) {}
 //-------------------------------------------------------------------------
 ConfigCheckException::ConfigCheckException(
                   const ConfigCheckException& e)
 :Exception(e.msg, e.sourceFile, e.line) {}
 //-------------------------------------------------------------------------
-String ConfigCheckException::getClassName() const
+string ConfigCheckException::getClassName() const
 { return "ConfigCheckException"; }
 //-------------------------------------------------------------------------
 ConfigCheckException::~ConfigCheckException() {}
@@ -234,14 +235,14 @@ ConfigCheckException::~ConfigCheckException() {}
 
 
 //-------------------------------------------------------------------------
-EOFException::EOFException(const String& msg, const String& sourceFile,
+EOFException::EOFException(const string& msg, const string& sourceFile,
                                                int line, const FileName& f)
 :IOException(msg, sourceFile, line, f) {}
 //-------------------------------------------------------------------------
 EOFException::EOFException(const EOFException& e)
 :IOException(e.msg, e.sourceFile, e.line, e.fileName) {}
 //-------------------------------------------------------------------------
-String EOFException::getClassName() const { return "EOFException"; }
+string EOFException::getClassName() const { return "EOFException"; }
 //-------------------------------------------------------------------------
 EOFException::~EOFException() {}
 //-------------------------------------------------------------------------

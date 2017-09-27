@@ -143,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\alizeString.cpp" />
+    <ClCompile Include="..\src\string_util.cpp" />
     <ClCompile Include="..\src\AudioFileReader.cpp" />
     <ClCompile Include="..\src\AudioFrame.cpp" />
     <ClCompile Include="..\src\AudioInputStream.cpp" />
@@ -226,7 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\alize.h" />
-    <ClInclude Include="..\include\alizeString.h" />
+    <ClInclude Include="..\include\string_util.h" />
     <ClInclude Include="..\include\AudioFileReader.h" />
     <ClInclude Include="..\include\AudioFrame.h" />
     <ClInclude Include="..\include\AudioInputStream.h" />

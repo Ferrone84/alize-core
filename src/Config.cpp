@@ -61,7 +61,9 @@
 #include "ConfigFileReaderXml.h"
 #include "ConfigFileReaderRaw.h"
 #include "Exception.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -181,7 +183,7 @@ bool Config::operator==(const Config& c) const
   unsigned long i;
   for (i=0; i<getParamCount(); i++)
   {
-    const String& name = getParamName(i);
+    const string& name = getParamName(i);
     if (!c.existsParam(name))
       return false;
     if (getParamContent(i) != c.getParam(name))
@@ -189,7 +191,7 @@ bool Config::operator==(const Config& c) const
   }
   for (i=0; i<c.getParamCount(); i++)
   {
-    const String& name = c.getParamName(i);
+    const string& name = c.getParamName(i);
     if (!existsParam(name))
       return false;
     if (c.getParamContent(i) != getParam(name))
@@ -248,7 +250,7 @@ void Config::reset()
 //-------------------------------------------------------------------------
 void Config::load(const FileName& f)
 {
-  if (f.endsWith(".xml"))
+  if (endsWith(f, ".xml"))
     ConfigFileReaderXml(f).readConfig(*this);
   else
     ConfigFileReaderRaw(f).readConfig(*this);
@@ -260,13 +262,13 @@ void Config::save(const FileName& f) const
 //-------------------------------------------------------------------------
 unsigned long Config::getParamCount() const { return _set.getLineCount(); }
 //-------------------------------------------------------------------------
-const String& Config::getParamName(unsigned long i) const
+const string& Config::getParamName(unsigned long i) const
 { return _set.getLine(i).getElement(0); }
 //-------------------------------------------------------------------------
-const String& Config::getParamContent(unsigned long i) const
+const string& Config::getParamContent(unsigned long i) const
 { return _set.getLine(i).getElement(1); }
 //-------------------------------------------------------------------------
-const String& Config::getParam(const String& name) const
+const string& Config::getParam(const string& name) const
 {
   XLine* p =_set.findLine(name);
   if (p == NULL)
@@ -274,21 +276,21 @@ const String& Config::getParam(const String& name) const
   return p->getElement(1);
 }
 //-------------------------------------------------------------------------
-long Config::getIntegerParam(const String& name) const
-{ return getParam(name).toLong(); }
+long Config::getIntegerParam(const string& name) const
+{ return stol(getParam(name)); }
 //-------------------------------------------------------------------------
-double Config::getFloatParam(const String& name) const
-{ return getParam(name).toDouble(); }
+double Config::getFloatParam(const string& name) const
+{ return stod(getParam(name)); }
 //-------------------------------------------------------------------------
-bool Config::getBooleanParam(const String& name) const
+bool Config::getBooleanParam(const string& name) const
 {
-  const String& s = getParam(name);
+  const string& s = getParam(name);
   if (s == "")
     return true;
-  return s.toBool();
+  return toBool(s);
 }
 //-------------------------------------------------------------------------
-bool Config::existsParam(const String& name) const
+bool Config::existsParam(const string& name) const
 { return _set.findLine(name) != NULL; }
 //-------------------------------------------------------------------------
 real_t Config::getParam_minCov() const
@@ -339,7 +341,7 @@ unsigned long Config::getParam_topDistribsCount() const
   return _param_topDistribsCount;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_featureServerBufferSize() const
+const string& Config::getParam_featureServerBufferSize() const
 {
   if (!existsParam_featureServerBufferSize)
     throw ParamNotFoundInConfigException("featureServerBufferSize' in the config",
@@ -347,7 +349,7 @@ const String& Config::getParam_featureServerBufferSize() const
   return _param_featureServerBufferSize;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_featureServerMask() const
+const string& Config::getParam_featureServerMask() const
 {
   if (!existsParam_featureServerMask)
     throw ParamNotFoundInConfigException("featureServermask' in the config",
@@ -473,7 +475,7 @@ SegServerFileReaderFormat Config::getParam_loadSegServerFileFormat() const
   return _param_loadSegServerFileFormat;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_saveMixtureFileExtension() const
+const string& Config::getParam_saveMixtureFileExtension() const
 {
   if (!existsParam_saveMixtureFileExtension)
     throw ParamNotFoundInConfigException("saveMixtureFileExtension' in the config",
@@ -481,7 +483,7 @@ const String& Config::getParam_saveMixtureFileExtension() const
   return _param_saveMixtureFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_saveMixtureServerFileExtension() const
+const string& Config::getParam_saveMixtureServerFileExtension() const
 {
   if (!existsParam_saveMixtureServerFileExtension)
     throw ParamNotFoundInConfigException("saveMixtureServerFileExtension' in the config",
@@ -489,7 +491,7 @@ const String& Config::getParam_saveMixtureServerFileExtension() const
   return _param_saveMixtureServerFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_saveSegServerFileExtension() const
+const string& Config::getParam_saveSegServerFileExtension() const
 {
   if (!existsParam_saveSegServerFileExtension)
     throw ParamNotFoundInConfigException("saveSegServerFileExtension' in the config",
@@ -497,7 +499,7 @@ const String& Config::getParam_saveSegServerFileExtension() const
   return _param_saveSegServerFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_saveFeatureFileExtension() const
+const string& Config::getParam_saveFeatureFileExtension() const
 {
   if (!existsParam_saveFeatureFileExtension)
     throw ParamNotFoundInConfigException("saveFeatureFileExtension' in the config",
@@ -505,7 +507,7 @@ const String& Config::getParam_saveFeatureFileExtension() const
   return _param_saveFeatureFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_loadFeatureFileExtension() const
+const string& Config::getParam_loadFeatureFileExtension() const
 {
   if (!existsParam_loadFeatureFileExtension)
     throw ParamNotFoundInConfigException("loadFeatureFileExtension' in the config",
@@ -513,7 +515,7 @@ const String& Config::getParam_loadFeatureFileExtension() const
   return _param_loadFeatureFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_loadAudioFileExtension() const
+const string& Config::getParam_loadAudioFileExtension() const
 {
   if (!existsParam_loadAudioFileExtension)
     throw ParamNotFoundInConfigException("loadAudioFileExtension' in the config",
@@ -537,7 +539,7 @@ bool Config::getParam_loadAudioFileBigEndian() const
   return _param_loadAudioFileBigEndian;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_featureServerMode() const
+const string& Config::getParam_featureServerMode() const
 {
   if (!existsParam_featureServerMode)
     throw ParamNotFoundInConfigException("featureServerMode' in the config",
@@ -553,7 +555,7 @@ bool Config::getParam_loadMixtureFileBigEndian() const
   return _param_loadMixtureFileBigEndian;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_loadMixtureFileExtension() const
+const string& Config::getParam_loadMixtureFileExtension() const
 {
   if (!existsParam_loadMixtureFileExtension)
     throw ParamNotFoundInConfigException("loadMixtureFileExtension' in the config",
@@ -561,7 +563,7 @@ const String& Config::getParam_loadMixtureFileExtension() const
   return _param_loadMixtureFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_loadSegServerFileExtension() const
+const string& Config::getParam_loadSegServerFileExtension() const
 {
   if (!existsParam_loadSegServerFileExtension)
     throw ParamNotFoundInConfigException("loadSegServerFileExtension' in the config",
@@ -569,7 +571,7 @@ const String& Config::getParam_loadSegServerFileExtension() const
   return _param_loadSegServerFileExtension;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_featureFilesPath() const
+const string& Config::getParam_featureFilesPath() const
 {
   if (!existsParam_featureFilesPath)
     throw ParamNotFoundInConfigException("featureFilesPath' in the config",
@@ -577,7 +579,7 @@ const String& Config::getParam_featureFilesPath() const
   return _param_featureFilesPath;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_audioFilesPath() const
+const string& Config::getParam_audioFilesPath() const
 {
   if (!existsParam_audioFilesPath)
     throw ParamNotFoundInConfigException("audioFilesPath' in the config",
@@ -585,7 +587,7 @@ const String& Config::getParam_audioFilesPath() const
   return _param_audioFilesPath;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_segServerFilesPath() const
+const string& Config::getParam_segServerFilesPath() const
 {
   if (!existsParam_segServerFilesPath)
     throw ParamNotFoundInConfigException("segServerFilesPath' in the config",
@@ -593,7 +595,7 @@ const String& Config::getParam_segServerFilesPath() const
   return _param_segServerFilesPath;
 }
 //-------------------------------------------------------------------------
-const String& Config::getParam_mixtureFilesPath() const
+const string& Config::getParam_mixtureFilesPath() const
 {
   if (!existsParam_mixtureFilesPath)
     throw ParamNotFoundInConfigException("mixtureFilesPath' in the config",
@@ -617,11 +619,11 @@ real_t Config::getParam_sampleRate() const
   return _param_sampleRate;
 }
 //-------------------------------------------------------------------------
-void Config::setParam(const String& name, const String& content)
+void Config::setParam(const string& name, const string& content)
 {
   if (name == "minCov")
   {
-    _param_minCov = content.toDouble();
+    _param_minCov = stod(content);
     if (_param_minCov <= 0.0)
       throw Exception("parameter '"+name+"' cannot be <= 0.0",
                __FILE__, __LINE__);
@@ -629,7 +631,7 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "vectSize")
   {
-    _param_vectSize = content.toULong();
+    _param_vectSize = stoull(content);
     if (_param_vectSize == 0)
       throw Exception("parameter '"+name+"' cannot be 0",
               __FILE__, __LINE__);
@@ -637,12 +639,12 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "loadFeatureFileMemAlloc")
   {
-    _param_loadFeatureFileMemAlloc = content.toULong();
+    _param_loadFeatureFileMemAlloc = stoull(content);
     existsParam_loadFeatureFileMemAlloc = true;
   }
   else if (name == "featureServerMemAlloc")
   {
-    _param_featureServerMemAlloc = content.toULong();
+    _param_featureServerMemAlloc = stoull(content);
     existsParam_featureServerMemAlloc = true;
   }
   else if (name == "computeLLKWithTopDistribs")
@@ -659,7 +661,7 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "topDistribsCount")
   {
-    _param_topDistribsCount = content.toULong();
+    _param_topDistribsCount = stoull(content);
     if (_param_topDistribsCount == 0)
       throw Exception("parameter '"+name+"' cannot be 0",
               __FILE__, __LINE__);
@@ -669,12 +671,12 @@ void Config::setParam(const String& name, const String& content)
   {
     if (content != "ALL_FEATURES")
     {
-      if (content.isEmpty())
+      if (content.empty())
         throw Exception("parameter '"+name+"' cannot be empty",
                         __FILE__, __LINE__);
       for (unsigned long i=0; i<content.length(); i++)
       {
-        if (content[i]<"0" || content[i]>"9")
+        if (content[i]<'0' || content[i]>'9')
           throw Exception("parameter '"+name+"' cannot be empty",
                         __FILE__, __LINE__);
       }
@@ -694,17 +696,17 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "mixtureDistribCount")
   {
-    _param_mixtureDistribCount = content.toULong();
+    _param_mixtureDistribCount = stoull(content);
     existsParam_mixtureDistribCount = true;
   }
   else if (name == "minLLK")
   {
-    _param_minLLK = content.toDouble();
+    _param_minLLK = stod(content);
     existsParam_minLLK = true;
   }
   else if (name == "maxLLK")
   {
-    _param_maxLLK = content.toDouble();
+    _param_maxLLK = stod(content);
     existsParam_maxLLK = true;
   }
   else if (name == "distribType")
@@ -714,12 +716,12 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "bigEndian")
   {
-    _param_bigEndian = content.toBool();
+    _param_bigEndian = toBool(content);
     existsParam_bigEndian = true;
   }
   else if (name == "sampleRate")
   {
-    _param_sampleRate = content.toDouble();
+    _param_sampleRate = stod(content);
     existsParam_sampleRate = true;
   }
   else if (name == "saveMixtureFileFormat")
@@ -755,13 +757,13 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "loadFeatureFileVectSize")
   {
-    _param_loadFeatureFileVectSize = content.toULong();
+    _param_loadFeatureFileVectSize = stoull(content);
     existsParam_loadFeatureFileVectSize = true;
   }
   else if (name == "loadAudioFileChannel")
   {
     _param_loadAudioFileChannel
-      = content.toULong();
+      = stoull(content);
     existsParam_loadAudioFileChannel = true;
   }
   else if (name == "loadMixtureFileFormat")
@@ -806,12 +808,12 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "loadFeatureFileBigEndian")
   {
-    _param_loadFeatureFileBigEndian = content.toBool();
+    _param_loadFeatureFileBigEndian = toBool(content);
     existsParam_loadFeatureFileBigEndian = true;
   }
   else if (name == "loadAudioFileBigEndian")
   {
-    _param_loadAudioFileBigEndian = content.toBool();
+    _param_loadAudioFileBigEndian = toBool(content);
     existsParam_loadAudioFileBigEndian = true;
   }
   else if (name == "featureServerMode")
@@ -826,7 +828,7 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "loadMixtureFileBigEndian")
   {
-    _param_loadMixtureFileBigEndian = content.toBool();
+    _param_loadMixtureFileBigEndian = toBool(content);
     existsParam_loadMixtureFileBigEndian = true;
   }
   else if (name == "loadMixtureFileExtension")
@@ -861,10 +863,10 @@ void Config::setParam(const String& name, const String& content)
   }
   else if (name == "debug")
   {
-    if (content.getToken(0).isEmpty())
+    if (getToken(content, 0).empty())
       _param_debug = true;
     else
-      _param_debug = content.toBool();
+      _param_debug = toBool(content);
     existsParam_debug = true;
   }
 
@@ -884,11 +886,11 @@ void Config::setParam(const Config& c)
     setParam(c.getParamName(i), c.getParamContent(i));
 }
 //-------------------------------------------------------------------------
-String Config::getClassName() const { return "Config"; }
+string Config::getClassName() const { return "Config"; }
 //-------------------------------------------------------------------------
-String Config::toString() const
+string Config::toString() const
 {
-  String s = Object::toString();
+  string s = Object::toString();
   _set.rewind();
   XLine* p;
   while( (p = _set.getLine()) != NULL)

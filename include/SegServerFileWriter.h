@@ -98,7 +98,7 @@ namespace alize
     ///
     virtual void writeSegServer(const SegServer& ss);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
@@ -112,7 +112,7 @@ namespace alize
     void writeSubSegRaw(const SegCluster& cl, const SegServer& ss); 
     void writeListXml(const XList& l);
     void writeListRaw(const XList& l);
-    String getFullFileName(const Config&, const FileName&) const;
+    std::string getFullFileName(const Config&, const FileName&) const;
     typedef struct
     {
       unsigned long begin;
@@ -122,7 +122,7 @@ namespace alize
     } _type;
 
     static int compare(const void *s1, const void *s2);
-    void writeTime(const String& n, unsigned long t);
+    void writeTime(const std::string& n, unsigned long t);
 
     SegServerFileWriter(
              const SegServerFileWriter&); /*!Not implemented*/

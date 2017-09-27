@@ -63,7 +63,9 @@
 #include "LabelServer.h"
 #include "Label.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderSPro4 R;
 
@@ -133,7 +135,7 @@ unsigned long R::getHeaderLength()
   return _headerLength;
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "FeatureFileReaderSPro4";}
+string R::getClassName() const { return "FeatureFileReaderSPro4";}
 //-------------------------------------------------------------------------
 bool R::readHeader()
 {
@@ -149,14 +151,14 @@ bool R::readHeader()
   if (_pReader->readString(9) == "<header>\n")
     while(true)
     {
-      String line = _pReader->readLine();
+      string line = _pReader->readLine();
       unsigned long l = line.length();
       if (l == 0)
         continue;
-      if (line.getToken(0) == "</header>")
+      if (getToken(line, 0) == "</header>")
         break;
       const char* s = line.c_str();
-      String name, value;
+      string name, value;
       unsigned long i;
       for (i=0; i<l&&s[i]!=';'&&s[i]!='='&&(s[i]==' '||s[i]=='\t'); i++)
         ;
@@ -170,7 +172,7 @@ bool R::readHeader()
       {
         value += line[i];
       }
-      if (name.isEmpty() && value.isEmpty())
+      if (name.empty() && value.empty())
         return false;
       // ... use name & value
     }

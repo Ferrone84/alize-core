@@ -61,6 +61,7 @@
 #include <new>
 #include <cmath>
 
+using namespace std; 
 using namespace alize;
 typedef FrameAccGF A;
 
@@ -136,8 +137,8 @@ void A::accumulate(const Feature& f)
   }
   else if (vectSize != _vectSize)
     throw Exception("Incompatible vectSize ("
-          + String::valueOf(vectSize) + "/"
-          + String::valueOf(_vectSize) + ")", __FILE__, __LINE__);
+          + std::to_string(vectSize) + "/"
+          + std::to_string(_vectSize) + ")", __FILE__, __LINE__);
   const double* dataVect = f.getDataVector();
   double* xaccMatrix = _xaccMatrix.getArray();
   unsigned long i,j, ii;
@@ -167,8 +168,8 @@ void A::add(const FrameAccGF& f)
   }
   else if (vectSize != _vectSize)
     throw Exception("Incompatible vectSize ("
-          + String::valueOf(vectSize) + "/"
-          + String::valueOf(_vectSize) + ")", __FILE__, __LINE__);
+          + std::to_string(vectSize) + "/"
+          + std::to_string(_vectSize) + ")", __FILE__, __LINE__);
 
   const DoubleVector& accVect =  f.getAccVect();
   const DoubleSquareMatrix& xaccMatrix = f.getxAccMatrix();
@@ -196,8 +197,8 @@ void A::deaccumulate(const Feature& f)
 		return;
 	} else if (vectSize != _vectSize) {
 	    throw Exception("Incompatible vectSize ("
-		  + String::valueOf(vectSize) + "/"
-		  + String::valueOf(_vectSize) + ")", __FILE__, __LINE__);
+		  + std::to_string(vectSize) + "/"
+		  + std::to_string(_vectSize) + ")", __FILE__, __LINE__);
 	}
 
 	const double* dataVect = f.getDataVector();
@@ -253,7 +254,7 @@ void A::computeAll() // private
   _computed = true;
 }
 //-------------------------------------------------------------------------
-String A::getClassName() const { return "FrameAccGF"; }
+string A::getClassName() const { return "FrameAccGF"; }
 //-------------------------------------------------------------------------
 A::~FrameAccGF() {}
 //-------------------------------------------------------------------------

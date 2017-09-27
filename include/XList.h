@@ -126,14 +126,14 @@ namespace alize
     /// @return a reference to the XLine object
     /// @author richard.dufour@lium.univ-lemans.fr
     ///
-    XLine& addLine(String& key, String& value);
+    XLine& addLine(std::string& key, std::string& value);
 
     /// Search the value of an index
     /// @param index the index of the line
     /// @return the value
     /// @author richard.dufour@lium.univ-lemans.fr
     ///
-    String searchValue(String& index);
+    std::string searchValue(std::string& index);
 
     /// Appends a new line to the list. The line becomes the current line
     /// @return a reference to the XLine object
@@ -182,19 +182,19 @@ namespace alize
     /// @param idx the index of the key
     /// @return a pointer to the line if it exists; NULL otherwise
     /// 
-    XLine* findLine(const String& key, unsigned long idx = 0) const;
+    XLine* findLine(const std::string& key, unsigned long idx = 0) const;
 
 	/// Sort the Xlines by 
 	/// @param order could be 'ascend' or 'descend'. Default value is 'descend'
 	/// 
-	void sortByElementNumber(String order = "descend");
+	void sortByElementNumber(std::string order = "descend");
 
     /// Remove all lines
     ///
     void reset();
 
-    virtual String toString() const;
-    virtual String getClassName() const;
+    virtual std::string toString() const;
+    virtual std::string getClassName() const;
 
   private :
 

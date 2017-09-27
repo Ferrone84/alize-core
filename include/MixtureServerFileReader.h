@@ -95,7 +95,7 @@ namespace alize
     ///
     virtual void readMixtureServer(MixtureServer& ms);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
     MixtureServerFileReaderAbstract* _pServerReader;

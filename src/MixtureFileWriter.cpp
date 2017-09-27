@@ -62,8 +62,10 @@
 #include "DistribGF.h"
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 #include <cmath>
 
+using namespace std; 
 using namespace alize;
 typedef MixtureFileWriter W;
 
@@ -71,9 +73,9 @@ typedef MixtureFileWriter W;
 W::MixtureFileWriter(const FileName& f, const Config& c)
 :FileWriter(getFullFileName(c, f)), _config(c) {}
 //-------------------------------------------------------------------------
-String W::getFullFileName(const Config& c, const FileName& f) const
+string W::getFullFileName(const Config& c, const FileName& f) const
 {   // protected
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return f;
   return c.getParam_mixtureFilesPath() + f
        + c.getParam_saveMixtureFileExtension();
@@ -83,7 +85,7 @@ void W::writeMixture(const Mixture& m)
 {
   MixtureFileWriterFormat format;
   if (!_config.existsParam_saveMixtureFileFormat
-       && _fileName.endsWith(".xml"))
+       && endsWith(_fileName, ".xml"))
     format = MixtureFileWriterFormat_XML;
   else 
     format = _config.getParam_saveMixtureFileFormat();
@@ -157,14 +159,14 @@ void W::writeMixtureGD_XML(const MixtureGD& m)
     {
       writeString("\n\t\t<covInv");
       writeAttribute("i", c);
-      writeString(">" + String::valueOf(d.getCovInv(c)) + "</covInv>");
+      writeString(">" + std::to_string(d.getCovInv(c)) + "</covInv>");
     }
 
     for (c=0; c<vectSize; c++)
     {
       writeString("\n\t\t<mean");
       writeAttribute("i", c);
-      writeString(">" + String::valueOf(d.getMean(c)) + "</mean>");
+      writeString(">" + std::to_string(d.getMean(c)) + "</mean>");
     }
 
     writeString("\n\t</DistribGD>");
@@ -199,14 +201,14 @@ void W::writeMixtureGF_XML(const MixtureGF& m)
         writeString("\n\t\t<covInv");
         writeAttribute("i", c);
         writeAttribute("j", cc);
-        writeString(">" + String::valueOf(d.getCovInv(c, cc)) + "</covInv>");
+        writeString(">" + std::to_string(d.getCovInv(c, cc)) + "</covInv>");
       }
 
     for (c=0; c<vectSize; c++)
     {
       writeString("\n\t\t<mean");
       writeAttribute("i", c);
-      writeString(">" + String::valueOf(d.getMean(c)) + "</mean>");
+      writeString(">" + std::to_string(d.getMean(c)) + "</mean>");
     }
 
     writeString("\n\t</DistribGF>");
@@ -241,7 +243,7 @@ void W::writeMixtureGD_ETAT(const MixtureGD& m)
   unsigned long i,d, c;
   // tag = file name ?
   for (i=0; i<_fileName.length() && i<63; i++)
-    writeString(_fileName[i]);
+    writeString(std::to_string(_fileName[i]));
   for (; i<64; i++)
     writeChar('\0');
   writeUInt4(0); // num = unknown
@@ -291,7 +293,7 @@ void W::writeMixtureGF_RAW(const MixtureGF& m)
   }
 }
 //-------------------------------------------------------------------------
-String W::getClassName() const { return "MixtureFileWriter"; }
+string W::getClassName() const { return "MixtureFileWriter"; }
 //-------------------------------------------------------------------------
 W::~MixtureFileWriter() {}
 //-------------------------------------------------------------------------

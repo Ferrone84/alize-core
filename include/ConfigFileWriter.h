@@ -96,7 +96,7 @@ namespace alize
     ///
     virtual void writeConfig(const Config& c);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

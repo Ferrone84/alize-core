@@ -91,7 +91,7 @@ namespace alize
     static XLine& create();
     /// Create a line with key / value - richard.dufour@lium.univ-lemans.fr
     ///
-    static XLine& create(String& key, String& value);
+    static XLine& create(std::string& key, std::string& value);
     XLine(const XLine&);
     XLine& duplicate() const;
     const XLine& operator=(const XLine& c);
@@ -103,12 +103,12 @@ namespace alize
     /// the current element
     /// @return this line
     ///
-    XLine& addElement(const String& e);
+    XLine& addElement(std::string e);
 
     /// Removes and deletes an element
     /// @param e the element to delete
     ///   
-    void deleteElement(const String& e);
+    void deleteElement(const std::string& e);
 
     /// Sets the first element to become the current element
     ///
@@ -120,14 +120,14 @@ namespace alize
     /// @param becomeCurrent if is true the element becomes the current element
     /// @exception IndexOutOfBoundsException    
     ///
-    String& getElement(const unsigned long idx,
+    std::string& getElement(const unsigned long idx,
                        const bool becomeCurrent = true) const;
 
     /// Gets the current element. The next element become the current
     /// element
     /// @return a pointer to the element if it exists; NULL otherwise
     ///
-    String* getElement() const;
+    std::string getElement() const;
 
     /// Gets the elements from the current element to the last one.
     /// The current element does not change.
@@ -139,7 +139,7 @@ namespace alize
     /// @param e the element to search
     /// @return the index of the element if it exists; -1 otherwise
     ///
-    long getIndex(const String& e) const;
+    long getIndex(const std::string& e) const;
 
     /// Gets the number of elements in the line
     /// @return  the number of elements in the line
@@ -150,12 +150,12 @@ namespace alize
     ///
     void reset();
 
-    virtual String toString() const;
-    virtual String getClassName() const;
+    virtual std::string toString() const;
+    virtual std::string getClassName() const;
 
   private :
 
-    RefVector<String>     _vector;
+    RefVector<std::string>     _vector;
     mutable unsigned long _current;
     mutable XLine*        _pLine;
   };

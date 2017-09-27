@@ -97,8 +97,8 @@ namespace alize
   protected :
 
     FileReader* _pReader; // may be NULL;
-    String getPath(const FileName&, const Config&) const;
-    String getExt(const FileName&, const Config&) const;
+    std::string getPath(const FileName&, const Config&) const;
+    std::string getExt(const FileName&, const Config&) const;
   
   private :
    

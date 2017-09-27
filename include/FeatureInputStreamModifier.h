@@ -66,16 +66,16 @@
 #endif
 
 #include "FeatureInputStream.h"
-#include "alizeString.h"
+
 #include "Feature.h"
 #include "ULongVector.h"
 
 namespace alize
 {
   /*!
-  <FRANCAIS>Cette classe représente un flux de features sur lequel il est
-  possible d'agir de différentes façons :<br>
-  - sélection des parametres acoustiques à l'aide d'un masque<br>
+  <FRANCAIS>Cette classe reprÃ©sente un flux de features sur lequel il est
+  possible d'agir de diffÃ©rentes faÃ§ons :<br>
+  - sÃ©lection des parametres acoustiques Ã  l'aide d'un masque<br>
   - autres... TODO<br>
 
   TODO : to complete...
@@ -97,9 +97,9 @@ namespace alize
     /// @param is the input feature stream
     ///
     FeatureInputStreamModifier(FeatureInputStream& is,
-                     const String& m = "NO_MASK", bool ownStream = false);
+                     const std::string& m = "NO_MASK", bool ownStream = false);
     static FeatureInputStreamModifier& create(FeatureInputStream& is,
-                     const String& m = "NO_MASK", bool ownStream = false);
+                     const std::string& m = "NO_MASK", bool ownStream = false);
 
     /// Defines the mask to select acoustic parameters<br>
     /// Examples :<br>
@@ -110,7 +110,7 @@ namespace alize
     /// To remove the mask, set m to "NO_MASK"
     /// @exception Exception if the mask is invalid
     ///
-    void setMask(const String& m);
+    void setMask(const std::string& m);
     
     virtual bool addFeature(const Feature& f);
 
@@ -165,7 +165,7 @@ namespace alize
     /// @param src name of the source
     /// @return the feature count of the source
     ///
-    virtual unsigned long getFeatureCountOfASource(const String& src);
+    virtual unsigned long getFeatureCountOfASource(const std::string& src);
 
     /// Returns the number of the first feature of a feature source. Useful
     /// for a multiple source stream.
@@ -179,35 +179,35 @@ namespace alize
     /// @param src name of the source
     /// @return the number of the first feature
     ///
-    virtual unsigned long getFirstFeatureIndexOfASource(const String& srcName);
+    virtual unsigned long getFirstFeatureIndexOfASource(const std::string& srcName);
 
     /// Returns the a particular feature source. Useful
     /// for a multiple source stream.
     /// @param srcIdx index of the source
     /// @return the name of the source
     ///
-    virtual const String& getNameOfASource(unsigned long srcIdx);
+    virtual const std::string& getNameOfASource(unsigned long srcIdx);
 
     virtual void seekFeature(unsigned long featureNbr,
-                             const String& srcName);
+                             const std::string& srcName);
 
     virtual ~FeatureInputStreamModifier();
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
   private:
 
     FeatureInputStream* _pInput;
     Feature             _feature;
-    String              _mask;
-    String              _tmpMask;
+    std::string              _mask;
+    std::string              _tmpMask;
     ULongVector         _selection;
     unsigned long       _selectionSize;
     bool                _useMask;
     bool                _ownStream;
 
-    void updateMask(const String& begin, const String& end);
+    void updateMask(const std::string& begin, const std::string& end);
   };
 
 } // end namespace alize

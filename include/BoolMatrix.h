@@ -82,14 +82,15 @@
 
 //#include "RealVector.h"
 //#include "DoubleSquareMatrix.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 //#include "Feature.h"
 
 //#define TINY 1.0e-20 
 
-// Définition du Rand pour Windows
+// DÃ©finition du Rand pour Windows
 //#if defined(_WIN32)
 //	#define drand48()((double)rand()/RAND_MAX)
 //	#define srand48(n)srand((n));
@@ -265,13 +266,13 @@ namespace alize
     void saveDT(const FileName& f, const Config& c)
     {
       XList l;
-      l.addLine().addElement(String::valueOf(_rows))
-                 .addElement(String::valueOf(_cols));
+      l.addLine().addElement(std::to_string(_rows))
+                 .addElement(std::to_string(_cols));
       for (unsigned long j=0; j<_rows; j++)
       {
         XLine& li = l.addLine();
         for (unsigned long i=0; i<_cols; i++)
-          li.addElement(String::valueOf((*this)(j,i)));
+          li.addElement(std::to_string((*this)(j,i)));
       }
       l.save(f, c);
     }
@@ -333,20 +334,20 @@ namespace alize
     void loadDT(const FileName& f, const Config& c)
     {
       XList l(f, c);
-      unsigned long rows = l.getLine(0).getElement(0).toLong();
-      unsigned long cols = l.getLine(0).getElement(1).toLong();
+      unsigned long rows = std::stol(l.getLine(0).getElement(0));
+      unsigned long cols = std::stol(l.getLine(0).getElement(1));
       setDimensions(rows,cols);
       l.rewind();
       l.getLine();
       XLine* p;
-      String* s;
+      std::string s;
       unsigned long j = 0;
       while ((p = l.getLine()))
       {
         unsigned long i = 0;
-        while ((s = p->getElement()))
+        while ((s = p->getElement()) != "")
         {
-          (*this)(j, i) = s->toBool();
+          (*this)(j, i) = toBool(s);
           i++;
         }
         j++;
@@ -396,22 +397,22 @@ namespace alize
     ///
     bool* getArray() const { return _array.getArray(); }
 
-    virtual String toString() const
+    virtual std::string toString() const
     {
-      String s = Object::toString()
-        + "\n  dimensions  = " + String::valueOf(_rows)+"x"+String::valueOf(_cols);
+      std::string s = Object::toString()
+        + "\n  dimensions  = " + std::to_string(_rows)+"x"+std::to_string(_cols);
       for (unsigned long j=0; j<_rows; j++)
       {
          for (unsigned long i=0; i<_cols; i++)
-         s += "\n  [" + String::valueOf(j)
-            + "," + String::valueOf(i)
-            + "] = " + String::valueOf((*this)(j,i));
+         s += "\n  [" + std::to_string(j)
+            + "," + std::to_string(i)
+            + "] = " + std::to_string((*this)(j,i));
         s += "\n";
       }
       return s;
     }
 
-    virtual String getClassName() const { return "BoolMatrix"; }
+    virtual std::string getClassName() const { return "BoolMatrix"; }
 
     /// Extract a sub BoolMatrix from  the current one
     /// @return a submatrix

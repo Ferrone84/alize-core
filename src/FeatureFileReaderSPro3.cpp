@@ -72,6 +72,7 @@ static const int WITHD = 0x08; /* Data as delta coefficients      */
 static const int WITHA = 0xa0; /* Data contains delta-delta coeffs    */
 static const int WITHNODE = 0x10; /* */
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderSPro3 R;
 
@@ -131,7 +132,7 @@ const FeatureFlags& R::getFeatureFlags()
 real_t R::getSampleRate()
 { return getConfig().getParam_sampleRate(); } // TODO : or 100 ?
 //-------------------------------------------------------------------------
-String R::getClassName() const
+string R::getClassName() const
 { return "FeatureFileReaderSPro3"; }
 //-------------------------------------------------------------------------
 unsigned long R::getHeaderLength()

@@ -59,6 +59,7 @@
 #include "Mixture.h"
 #include "Exception.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureDict D;
 
@@ -72,19 +73,19 @@ Mixture& D::getMixture(unsigned long i) const
 unsigned long D::addMixture(Mixture& m)
 { return _map[m.getId()] = _vect.addObject(m); }
 //-------------------------------------------------------------------------
-long D::getIndexOfId(const String& id) const
+long D::getIndexOfId(const string& id) const
 {
   /*for (unsigned long i=0; i<_vect.size(); i++)
     if (getMixture(i).getId() == id)
       return (long)i;
   return -1;*/
-  std::map<String, unsigned long>::const_iterator it = _map.find(id);
+  std::map<string, unsigned long>::const_iterator it = _map.find(id);
   if (it != _map.end())
     return it->second;
   return -1;
 }
 //-------------------------------------------------------------------------
-void D::setMixtureId(Mixture& m, const String& newId)
+void D::setMixtureId(Mixture& m, const string& newId)
 {
   _it = _map.find(newId);
   if (_it != _map.end() && &_vect.getObject(_it->second) != &m)
@@ -129,15 +130,15 @@ void D::clear()
 //-------------------------------------------------------------------------
 unsigned long D::size() const { return _vect.size(); }
 //-------------------------------------------------------------------------
-String D::getClassName() const { return "MixtureDict"; }
+string D::getClassName() const { return "MixtureDict"; }
 //-------------------------------------------------------------------------
-String D::toString() const
+string D::toString() const
 {
-  String s(Object::toString());
+  string s(Object::toString());
   for (unsigned long i=0; i<_vect.size(); i++)
   {
     Mixture& m = getMixture(i);
-    s += "\n  Mixture #" + String::valueOf(i) + " id=" + m.getId();
+    s += "\n  Mixture #" + std::to_string(i) + " id=" + m.getId();
   }
   return s;
 }

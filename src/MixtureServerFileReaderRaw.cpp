@@ -64,6 +64,7 @@
 #include "Config.h"
 #include "FileReader.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServerFileReaderRaw R;
 
@@ -92,7 +93,7 @@ void R::readMixtureServer(MixtureServer& ms)
   unsigned long distribCount = _pReader->readUInt4();
   for (i = 0; i<distribCount; i++) // loads distributions dict
   {
-    const String type = _pReader->readString(2);
+    const string type = _pReader->readString(2);
     if (type == "GD")
     {
       DistribGD& d = static_cast<DistribGD&>
@@ -124,7 +125,7 @@ void R::readMixtureServer(MixtureServer& ms)
   }
   for (i = 0; i<mixtureCount; i++) // loads mixtures
   {
-    const String type = _pReader->readString(2);
+    const string type = _pReader->readString(2);
     if (type == "GD")
     {
       MixtureGD& m = ms.createMixtureGD(0);
@@ -153,7 +154,7 @@ void R::readMixtureServer(MixtureServer& ms)
   _pReader->close();
 }
 //-------------------------------------------------------------------------
-void R::error(const String& msg)
+void R::error(const string& msg)
 {
   assert(_pReader != NULL);
   _pReader->close();
@@ -161,7 +162,7 @@ void R::error(const String& msg)
                              _pReader->getFullFileName());
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureServerFileReaderRaw"; }
+string R::getClassName() const { return "MixtureServerFileReaderRaw"; }
 //-------------------------------------------------------------------------
 R::~MixtureServerFileReaderRaw() {}
 //-------------------------------------------------------------------------

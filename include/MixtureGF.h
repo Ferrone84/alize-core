@@ -88,11 +88,11 @@ namespace alize
 
     //explicit MixtureGF(const Config& config);
     MixtureGF(const MixtureGF&);
-    explicit MixtureGF(const String& id, unsigned long vectSize,
+    explicit MixtureGF(const std::string& id, unsigned long vectSize,
                       unsigned long distribCount = 0);
     virtual bool operator==(const Mixture&) const;
 
-    static MixtureGF& create(const K&, const String& id,
+    static MixtureGF& create(const K&, const std::string& id,
           unsigned long vectSize, unsigned long distribCount = 0);
     //static MixtureGF& create(const Config& config);
 
@@ -157,8 +157,8 @@ namespace alize
 
     virtual DistribType getType() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
         
 
   private :

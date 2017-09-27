@@ -65,9 +65,11 @@
 #include "XmlParser.h"
 #include "Config.h"
 #include "FileReader.h"
+#include "string_util.h"
 
 // see http://babel.alis.com/web_ml/xml/REC-xml.fr.html#NT-XMLDecl
 
+using namespace std; 
 using namespace alize;
 typedef MixtureFileReaderXml R;
 
@@ -114,62 +116,62 @@ const MixtureGF& R::readMixtureGF()
   return *p;
 }
 //-------------------------------------------------------------------------
-void R::eventOpeningElement(const String& path)
+void R::eventOpeningElement(const string& path)
 {
   if (false) {}
-  else if (path.endsWith("<mean><i>"))
+  else if (endsWith(path, "<mean><i>"))
   {
     if (_meanIndexFound)
       eventError("More than one tag " + path + " !");
     _meanIndexFound = true;
   }
-  else if (path.endsWith("<mean>"))
+  else if (endsWith(path, "<mean>"))
   {
     _meanIndexFound = false;
   }
-  else if (path.endsWith("<covInv><i>"))
+  else if (endsWith(path, "<covInv><i>"))
   {
     if (_covInvIndexFound)
       eventError("More than one tag " + path + " !");
     _covInvIndexFound = true;
   }
-  else if (path.endsWith("<covInv><j>"))
+  else if (endsWith(path, "<covInv><j>"))
   {
     _covInvIndexJFound = true;
   }
-  else if (path.endsWith("<covInv>"))
+  else if (endsWith(path, "<covInv>"))
   {
     _covInvIndexFound = false;
   }
-  else if (path.endsWith("<cov><i>"))
+  else if (endsWith(path, "<cov><i>"))
   {
     if (_covIndexFound)
       eventError("More than one tag " + path + " !");
   }
-  else if (path.endsWith("<cov><j>"))
+  else if (endsWith(path, "<cov><j>"))
   {
     if (_covIndexFound)
       eventError("More than one tag " + path + " !");
   }
-  else if (path.endsWith("<cov>"))
+  else if (endsWith(path, "<cov>"))
   {
     _covIndexFound = false;
   }
-  else if (path.endsWith("<DistribGD><i>") || path.endsWith("<DistribGF><i>"))
+  else if (endsWith(path, "<DistribGD><i>") || endsWith(path, "<DistribGF><i>"))
   {
     if (_distribIndexFound)
       eventError("More than one tag " + path + " !");
     _distribIndexFound = true;
   }
-  else if (path.endsWith("<weight>"))
+  else if (endsWith(path, "<weight>"))
   {
     if (_weightFound)
       eventError("More than one tag " + path + " !");
     _weightFound = true;
   }
-  else if (path.endsWith("<cst>")) {}
-  else if (path.endsWith("<det>")) {}
-  else if (path.endsWith("<DistribGD>") || path.endsWith("<DistribGF>"))
+  else if (endsWith(path, "<cst>")) {}
+  else if (endsWith(path, "<det>")) {}
+  else if (endsWith(path, "<DistribGD>") || endsWith(path, "<DistribGF>"))
   {
     if (!_distribCountFound)
       eventError("Dont't know distribCount to create the mixture");
@@ -178,33 +180,33 @@ void R::eventOpeningElement(const String& path)
     _distribIndexFound = false;
     _weightFound = false;
   }
-  else if (path.endsWith("<distribCount>"))
+  else if (endsWith(path, "<distribCount>"))
   {
     if (_distribCountFound)
       eventError("More than one tag " + path + " !");
     _distribCountFound = true;
   }
-  else if (path.endsWith("<vectSize>"))
+  else if (endsWith(path, "<vectSize>"))
   {
     if (_vectSizeFound)
       eventError("More than one tag " + path + " !");
     _vectSizeFound = true;
   }
-  else if (path.endsWith("<MixtureGD><id>") || path.endsWith("<MixtureGF><id>"))
+  else if (endsWith(path, "<MixtureGD><id>") || endsWith(path, "<MixtureGF><id>"))
   {
     if (_idFound)
       eventError("More than one tag " + path + " !");
     _idFound = true;
   }
-  else if (path.endsWith("<version>")) {}
-  else if (path.endsWith("<MixtureGD>"))
+  else if (endsWith(path, "<version>")) {}
+  else if (endsWith(path, "<MixtureGD>"))
   {
     if (_pMixture != NULL)
       eventError("More than one tag " + path + " !");
     _type = DistribType_GD;
     _typeFound = true;
   }
-  else if (path.endsWith("<MixtureGF>"))
+  else if (endsWith(path, "<MixtureGF>"))
   {
     if (_pMixture != NULL)
       eventError("More than one tag " + path + " !");
@@ -215,91 +217,76 @@ void R::eventOpeningElement(const String& path)
     eventError("Unknown tag in the path " + path);
 }
 //-------------------------------------------------------------------------
-void R::eventClosingElement(const String& path, const String& value)
+void R::eventClosingElement(const string& path, const string& value)
 {
   if (false)
   {
   }
-  else if (path.endsWith("<mean><i>"))
+  else if (endsWith(path, "<mean><i>"))
   {
-    _meanIndex = value.toULong();
+    _meanIndex = stol(value);
   }
-  else if (path.endsWith("<mean>"))
+  else if (endsWith(path, "<mean>"))
   {
     if (_meanIndexFound == false)
       eventError("Index missing for mean");
     switch (type())
     {
     case DistribType_GD:
-      distribGD().setMean(value.toDouble(), _meanIndex);
+      distribGD().setMean(stod(value), _meanIndex);
       break;
     case DistribType_GF:
-      distribGF().setMean(value.toDouble(), _meanIndex);
+      distribGF().setMean(stod(value), _meanIndex);
     }
   }
-  else if (path.endsWith("<covInv><i>"))
+  else if (endsWith(path, "<covInv><i>"))
   {
-    _covInvIndex = value.toULong();
+    _covInvIndex = stoull(value);
   }
-  else if (path.endsWith("<covInv><j>"))
+  else if (endsWith(path, "<covInv><j>"))
   {
-    _covInvIndexJ = value.toULong();
+    _covInvIndexJ = stoull(value);
   }
-  else if (path.endsWith("<covInv>"))
+  else if (endsWith(path, "<covInv>"))
   {
     if (_covInvIndexFound == false)
       eventError("Index missing for covInv");
     switch (type())
     {
     case DistribType_GD:
-      distribGD().setCovInv(K::k, value.toDouble(),_covInvIndex);
+      distribGD().setCovInv(K::k, stod(value),_covInvIndex);
       break;
     case DistribType_GF:
-      distribGF().setCovInv(K::k, value.toDouble(), _covInvIndex,
+      distribGF().setCovInv(K::k, stod(value), _covInvIndex,
                                                        _covInvIndexJ);
     }
   }
-  else if (path.endsWith("<cov><i>"))
+  else if (endsWith(path, "<cov><i>"))
   {
-    _covIndex = value.toULong();
+    _covIndex = stoull(value);
     _covIndexFound = true;
   }
-  else if (path.endsWith("<cov>"))
+  else if (endsWith(path, "<cov>"))
   {
     if (!_covIndexFound)
       eventError("Index missing for cov");
     if (type() == DistribType_GD)
-      distribGD().setCov(value.toDouble(), _covIndex);
+      distribGD().setCov(stod(value), _covIndex);
     else
       ; // no cov matrix for GF
   }
-  else if (path.endsWith("<DistribGD><i>") || path.endsWith("<DistribGF><i>"))
+  else if (endsWith(path, "<DistribGD><i>") || endsWith(path, "<DistribGF><i>"))
   {
-    _distribIndex = value.toULong();
+    _distribIndex = stoull(value);
     _distribIndexFound = true;
   }
-  else if (path.endsWith("<weight>"))
+  else if (endsWith(path, "<weight>"))
   {
     if (!_distribIndexFound)
       eventError("Don't know distrib index");
-    mixture().weight(_distribIndex) = value.toDouble();
+    mixture().weight(_distribIndex) = stod(value);
   }
-  else if (path.endsWith("<cst>"))
-  {
-    if (!_distribIndexFound)
-      eventError("Don't know distrib index");
-    switch (type())
-    {
-    case DistribType_GD:
-      mixtureGD().getDistrib(_distribIndex).
-                     setCst(K::k, value.toDouble());
-      break;
-    case DistribType_GF:
-      mixtureGF().getDistrib(_distribIndex).
-                     setCst(K::k, value.toDouble());
-    }
-  }
-  else if (path.endsWith("<det>"))
+  else if (endsWith(path, "<cst>"))
   {
     if (!_distribIndexFound)
       eventError("Don't know distrib index");
@@ -307,54 +294,69 @@ void R::eventClosingElement(const String& path, const String& value)
     {
     case DistribType_GD:
       mixtureGD().getDistrib(_distribIndex).
-                     setDet(K::k, value.toDouble());
+                     setCst(K::k, stod(value));
       break;
     case DistribType_GF:
       mixtureGF().getDistrib(_distribIndex).
-                     setDet(K::k, value.toDouble());
+                     setCst(K::k, stod(value));
     }
   }
-  else if (path.endsWith("<DistribGD>"))
+  else if (endsWith(path, "<det>"))
+  {
+    if (!_distribIndexFound)
+      eventError("Don't know distrib index");
+    switch (type())
+    {
+    case DistribType_GD:
+      mixtureGD().getDistrib(_distribIndex).
+                     setDet(K::k, stod(value));
+      break;
+    case DistribType_GF:
+      mixtureGF().getDistrib(_distribIndex).
+                     setDet(K::k, stod(value));
+    }
+  }
+  else if (endsWith(path, "<DistribGD>"))
   {
     if (!_weightFound)
       eventError("Unknow weight");
   }
-  else if (path.endsWith("<distribCount>"))
+  else if (endsWith(path, "<distribCount>"))
   {
-    _distribCount = value.toULong();
+    _distribCount = stoull(value);
   }
-  else if (path.endsWith("<vectSize>"))
+  else if (endsWith(path, "<vectSize>"))
   {
-    _vectSize = value.toULong();
+    _vectSize = stoull(value);
   }
-  else if (path.endsWith("<MixtureGD><id>"))
+  else if (endsWith(path, "<MixtureGD><id>"))
   {
     _id = value;
   }
-  else if (path.endsWith("<MixtureGD><version>"))
+  else if (endsWith(path, "<MixtureGD><version>"))
   {
     if (value != "1")
       eventError("invalid version");
   }
-  else if (path.endsWith("<MixtureGD>"))
+  else if (endsWith(path, "<MixtureGD>"))
   {
     if (_idFound)
       mixture().setId(K::k, _id);
   }
 }
 //-------------------------------------------------------------------------
-void R::eventError(const String& msg)
+void R::eventError(const string& msg)
 {
   assert(_pReader != NULL);
   _pReader->close();
-  throw InvalidDataException("Error line " + String::valueOf(_line)
+  throw InvalidDataException("Error line " + std::to_string(_line)
     + " : " + msg, __FILE__, __LINE__, _pReader->getFullFileName());
 }
 //-------------------------------------------------------------------------
-const String& R::readOneChar()
+const string& R::readOneChar()
 {
   assert(_pReader != NULL);
-  const String& s = _pReader->readString(1);
+  const string& s = _pReader->readString(1);
   if (s == "\n")
     _line++;
   return s;
@@ -407,7 +409,7 @@ const DistribType& R::type() // private
   return _type;
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureFileReaderXml"; }
+string R::getClassName() const { return "MixtureFileReaderXml"; }
 //-------------------------------------------------------------------------
 R::~MixtureFileReaderXml()
 {

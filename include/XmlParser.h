@@ -86,19 +86,19 @@ namespace alize
   protected :
 
     void parse();
-    virtual const String& readOneChar() = 0;
-    virtual void eventOpeningElement(const String& path) = 0;
-    virtual void eventClosingElement(const String& path,
-               const String& value) = 0;
-    virtual void eventError(const String& msg) = 0;
+    virtual const std::string& readOneChar() = 0;
+    virtual void eventOpeningElement(const std::string& path) = 0;
+    virtual void eventClosingElement(const std::string& path,
+               const std::string& value) = 0;
+    virtual void eventError(const std::string& msg) = 0;
 
   private :
 
-    const String& readNextChar();
-    void test(bool, const String& msg);
-    void parseElement(String path, String s);
-    void parseAttribute(String path, String s);
-    bool isASeparator(String s) const;
+    const std::string& readNextChar();
+    void test(bool, const std::string& msg);
+    void parseElement(std::string path, std::string s);
+    void parseAttribute(std::string path, std::string s);
+    bool isASeparator(std::string s) const;
 
     bool operator==(const XmlParser&) const;    /*!Not implemented*/
     bool operator!=(const XmlParser&) const;    /*!Not implemented*/

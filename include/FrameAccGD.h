@@ -114,7 +114,7 @@ namespace alize
     ///
     void add(const FrameAccGD& f);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private:
     DoubleVector _xaccVect;

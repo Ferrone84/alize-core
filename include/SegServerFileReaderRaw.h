@@ -95,11 +95,11 @@ namespace alize
     ///
     virtual void readSegServer(SegServer& ss);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
-    void error(const String& msg);
+    void error(const std::string& msg);
     bool operator==(const SegServerFileReaderRaw&)
                           const; /*!Not implemented*/
     bool operator!=(const SegServerFileReaderRaw&)

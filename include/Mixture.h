@@ -68,7 +68,7 @@
 #include "Object.h"
 #include "DistribRefVector.h"
 #include "RealVector.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -89,7 +89,7 @@ namespace alize
 
   public :
    
-    explicit Mixture(const String& id, unsigned long distribCount,
+    explicit Mixture(const std::string& id, unsigned long distribCount,
                      unsigned long vectSize);
 
     virtual bool operator==(const Mixture&) const = 0;
@@ -151,7 +151,7 @@ namespace alize
     /// Returns the identifier of the mixture
     /// @return a string that identify the mixture
     ///
-    String getId() const;
+    std::string getId() const;
 
     /// Returns the dimension of the distributions
     /// @return the dimension of the distributions
@@ -165,7 +165,7 @@ namespace alize
     /// @exception FileNotFoundException
     /// @exception InvalidDataException
     ///
-    void save(const String& n, const Config& c) const;
+    void save(const std::string& n, const Config& c) const;
 
     /// Returns the number of distribution
     /// @return the number of distribution
@@ -198,8 +198,8 @@ namespace alize
     /// Sets the identifier of the mixture. Internal usage
     /// @param id the identifier
     ///
-    void setId(const K&, const String& id);
-    void setId(const String& id);
+    void setId(const K&, const std::string& id);
+    void setId(const std::string& id);
 
     virtual DistribType getType() const = 0;
 
@@ -209,11 +209,11 @@ namespace alize
                            StatServer& ss, const Config&) const = 0;
     void removeAllDistrib(const K&);
 
-    virtual String toString() const;
+    virtual std::string toString() const;
 
-    virtual String getClassName() const = 0;
+    virtual std::string getClassName() const = 0;
     static Mixture& create(const K&, const unsigned long dc,
-                          const DistribType, const String& id,
+                          const DistribType, const std::string& id,
                           const unsigned long vectSize);
 
   protected :
@@ -228,7 +228,7 @@ namespace alize
     unsigned long _vectSize; /*! dimension of the distributions */
     DoubleVector   _weightVect;  // a vector for weights
     DistribRefVector _distribVect; // a vector for distributions
-    String       _id;      // identifier of the mixture
+    std::string       _id;      // identifier of the mixture
     
     virtual Mixture& clone(DuplDistrib) const = 0;
   };

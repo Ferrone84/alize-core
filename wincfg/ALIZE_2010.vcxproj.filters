@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\src\alizeString.cpp">
+    <ClCompile Include="..\src\string_util.cpp">
       <Filter>sources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\DistribGD.cpp">
@@ -246,7 +246,7 @@
     <ClInclude Include="..\include\alize.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\alizeString.h">
+    <ClInclude Include="..\include\string_util.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="..\include\AudioFileReader.h">

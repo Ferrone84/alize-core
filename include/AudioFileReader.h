@@ -133,13 +133,13 @@ namespace alize
     ///
     virtual unsigned long getSourceCount();
 
-    virtual String getClassName() const;
-    String toString() const;
+    virtual std::string getClassName() const;
+    std::string toString() const;
 
   private :
     
-    String getPath(const FileName&, const Config&) const;
-    String getExt(const FileName&, const Config&) const;
+    std::string getPath(const FileName&, const Config&) const;
+    std::string getExt(const FileName&, const Config&) const;
     unsigned long getChannel(const Config&) const;
     bool getBigEndian(const Config&, BigEndian) const;
     void readParams();

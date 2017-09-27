@@ -59,11 +59,12 @@
 #include "Exception.h"
 #include "SegCluster.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
-SegAbstract::SegAbstract(SegServer& ss, unsigned long lc, const String& s,
-             const String& sn)
+SegAbstract::SegAbstract(SegServer& ss, unsigned long lc, const std::string& s,
+             const std::string& sn)
 :Object(), _labelCode(lc), _string(s), _srcName(sn), _pServer(&ss)
 { rewind(); }
 //-------------------------------------------------------------------------
@@ -78,21 +79,21 @@ SegAbstract::SegAbstract(SegServer& ss, unsigned long lc, const String& s,
 //------------------------------------------------------------------------
 unsigned long SegAbstract::labelCode() const { return _labelCode; }
 //-------------------------------------------------------------------------
-const String& SegAbstract::string() const { return _string; }
+const std::string& SegAbstract::string() const { return _string; }
 //-------------------------------------------------------------------------
 XList& SegAbstract::list() { return _list; }
 //-------------------------------------------------------------------------
 const XList& SegAbstract::list() const { return _list; }
 //-------------------------------------------------------------------------
-const String& SegAbstract::sourceName() const { return _srcName; }
+const std::string& SegAbstract::sourceName() const { return _srcName; }
 //-------------------------------------------------------------------------
 SegServer& SegAbstract::getServer() const { return *_pServer; }
 //-------------------------------------------------------------------------
 void SegAbstract::setLabelCode(unsigned long lc) { _labelCode = lc; }
 //-------------------------------------------------------------------------
-void SegAbstract::setString(const String& s) { _string = s; }
+void SegAbstract::setString(const std::string& s) { _string = s; }
 //-------------------------------------------------------------------------
-void SegAbstract::setSourceName(const String& sn) { _srcName = sn; }
+void SegAbstract::setSourceName(const std::string& sn) { _srcName = sn; }
 //-------------------------------------------------------------------------
 void SegAbstract::addOwner(const K&, SegAbstract& o)
 { _ownersVect.addObject(o); }
@@ -102,14 +103,14 @@ void SegAbstract::removeOwner(const K&, SegAbstract& o)
 //-------------------------------------------------------------------------
 void SegAbstract::removeAllOwners(const K&)
 {
-  /* on retrouve les propriétaires pour couper le lien avec cet objet */
+  /* on retrouve les propriÃ©taires pour couper le lien avec cet objet */
   while(_ownersVect.size() != 0)
     static_cast<SegCluster&>(_ownersVect.getObject(0)).remove(*this);
 }
 //-------------------------------------------------------------------------
 void SegAbstract::rewind() const { _current = 0; }
 //-------------------------------------------------------------------------
-String SegAbstract::getClassName() const { return "SegAbstract"; }
+std::string SegAbstract::getClassName() const { return "SegAbstract"; }
 //-------------------------------------------------------------------------
 SegAbstract::~SegAbstract() {}
 //-------------------------------------------------------------------------

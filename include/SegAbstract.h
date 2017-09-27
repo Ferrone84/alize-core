@@ -66,7 +66,7 @@
 #endif
 
 #include "Object.h"
-#include "alizeString.h"
+
 #include "RefVector.h"
 #include "XList.h"
 
@@ -91,7 +91,7 @@ namespace alize
   public :
 
     explicit SegAbstract(SegServer& ss, unsigned long lc, 
-               const String& s, const String& sn);
+               const std::string& s, const std::string& sn);
     virtual ~SegAbstract();
 
     virtual unsigned long begin() const = 0;
@@ -105,7 +105,7 @@ namespace alize
     /// Returns the string associated to this object (segment or cluster)
     /// @return the string associated to this object (segment or cluster)
     ///
-    const String& string() const;
+    const std::string& string() const;
 
     /// Returns a reference to the list associated to this object
     /// (segment or cluster)
@@ -124,7 +124,7 @@ namespace alize
     /// Returns the srcName data of this object (segment or cluster)
     /// @return the srcName data of this object (segment or cluster)
     ///
-    const String& sourceName() const;
+    const std::string& sourceName() const;
 
     /// Sets the label code of this object (segment or cluster)
     /// @param lc the label code
@@ -134,12 +134,12 @@ namespace alize
     /// Sets the string data of this object (segment or cluster)
     /// @param s the string
     ///
-    void setString(const String& s);
+    void setString(const std::string& s);
 
     /// Sets the source name of this object (segment or cluster)
     /// @param sn the source name (a string)
     ///
-    void setSourceName(const String& sn);
+    void setSourceName(const std::string& sn);
 
     /// Returns a reference to the owner (a segment server) of this object
     /// @return a reference to the owner (a segment server) of this object
@@ -157,8 +157,8 @@ namespace alize
     ///
     virtual Seg* getSeg() const = 0;
 
-    virtual String getClassName() const = 0;
-    virtual String toString() const = 0;
+    virtual std::string getClassName() const = 0;
+    virtual std::string toString() const = 0;
 
     // internal usage
 
@@ -170,8 +170,8 @@ namespace alize
   protected :
 
     unsigned long          _labelCode;
-    String                 _string;
-    String                 _srcName;
+    std::string            _string;
+    std::string            _srcName;
     XList                  _list;
     mutable unsigned long  _current;
 

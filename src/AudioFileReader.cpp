@@ -57,11 +57,13 @@
 #include <new>
 #include "AudioFileReader.h"
 #include "AudioFrame.h"
-#include "alizeString.h"
+#include "string_util.h"
+
 #include "Config.h"
 #include "FileReader.h"
 
 using namespace alize;
+using namespace std;
 typedef AudioFileReader R;
 
 //-------------------------------------------------------------------------
@@ -82,16 +84,16 @@ R& R::create(const FileName& f, const Config& c, BigEndian be)
   return *p;
 }
 //-------------------------------------------------------------------------
-String R::getPath(const FileName& f, const Config& c) const
+string R::getPath(const FileName& f, const Config& c) const
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_audioFilesPath();
 }
 //-------------------------------------------------------------------------
-String R::getExt(const FileName& f, const Config& c) const
+string R::getExt(const FileName& f, const Config& c) const
 {
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return "";
   return c.getParam_loadAudioFileExtension();
 }
@@ -141,7 +143,7 @@ bool R::readFrame(AudioFrame& f)
     return false;
   if (_selectedChannel > _channelCount)
     throw Exception("Unavailable selected channel #"
-          + String::valueOf(_selectedChannel), __FILE__, __LINE__);
+          + to_string(_selectedChannel), __FILE__, __LINE__);
   if (_sampleBytes == 2) // 16 bits
   {
     if (_channelCount == 1)
@@ -226,8 +228,8 @@ void R::readParams() // private
   long sampleRate = -1;
   while (true)
   {
-    const String& s = _pReader->readLine();
-    if (s.beginsWith("end_head"))
+    const string& s = _pReader->readLine();
+    if (beginsWith(s, "end_head"))
       break;
     lineCount++;
     // on saute la 1ere ligne
@@ -235,21 +237,22 @@ void R::readParams() // private
       continue;
     if (lineCount == 2)
     {
-      headerLength = s.toLong();
+      headerLength = stod(s);
       continue;
     }
     // on saute les comentaires
-    if (s.beginsWith(";"))
+    if (beginsWith(s, ";"))
       continue;
-    if (s.beginsWith("channel_count -i "))
-      channelCount = s.getToken(2).toLong();
-    if (s.beginsWith("sample_rate -i "))
-      sampleRate = s.getToken(2).toLong();
-    else if (s.beginsWith("sample_n_bytes -i "))
-      sampleBytes = s.getToken(2).toLong();
-    else if (s.beginsWith("sample_count -i "))
-      frameCount = s.getToken(2).toLong();
-    else if (s.beginsWith("sample_byte_format -s2 01"))
+
+    if (beginsWith(s, "channel_count -i "))
+      channelCount = stol(getToken(s, 2));
+    if (beginsWith(s, "sample_rate -i "))
+      sampleRate = stol(getToken(s, 2));
+    else if (beginsWith(s, "sample_n_bytes -i "))
+      sampleBytes = stol(getToken(s, 2));
+    else if (beginsWith(s, "sample_count -i "))
+      frameCount = stol(getToken(s, 2));
+    else if (beginsWith(s, "sample_byte_format -s2 01"))
       _pReader->swap() = false;
   }
   // tests whether everything is ok
@@ -303,16 +306,16 @@ real_t R::getFrameRate()
   return _frameRate;
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "AudioFileReader"; }
+string R::getClassName() const { return "AudioFileReader"; }
 //-------------------------------------------------------------------------
-String R::toString() const
+string R::toString() const
 {
   AudioFileReader& r = const_cast<AudioFileReader&>(*this);
   return Object::toString()
-    +"\n frame count      = " + String::valueOf(r.getFrameCount())
-    +"\n channel count    = " + String::valueOf(r.getChannelCount())
-    +"\n selected channel = " + String::valueOf(r.getSelectedChannel())
-    +"\n sample bytes     = " + String::valueOf(r.getSampleBytes());
+    +"\n frame count      = " + to_string(r.getFrameCount())
+    +"\n channel count    = " + to_string(r.getChannelCount())
+    +"\n selected channel = " + to_string(r.getSelectedChannel())
+    +"\n sample bytes     = " + to_string(r.getSampleBytes());
 }
 //-------------------------------------------------------------------------
 R::~AudioFileReader()

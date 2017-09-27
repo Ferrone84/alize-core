@@ -179,8 +179,8 @@ namespace alize
     ///
     virtual void computeAll() = 0;
 
-    virtual String getClassName() const = 0;
-    virtual String toString() const = 0;
+    virtual std::string getClassName() const = 0;
+    virtual std::string toString() const = 0;
  
     // internal usage
 

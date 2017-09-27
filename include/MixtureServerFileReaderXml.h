@@ -103,7 +103,7 @@ namespace alize
     ///
     virtual void readMixtureServer(MixtureServer& ms);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
@@ -145,11 +145,11 @@ namespace alize
     DistribGD& getDistribGD();
     MixtureGF& getMixtureGF();
     DistribGF& getDistribGF();
-    virtual const String& readOneChar();
-    virtual void eventOpeningElement(const String& path);
-    virtual void eventClosingElement(const String& path,
-                     const String& value);
-    virtual void eventError(const String& msg);
+    virtual const std::string& readOneChar();
+    virtual void eventOpeningElement(const std::string& path);
+    virtual void eventClosingElement(const std::string& path,
+                     const std::string& value);
+    virtual void eventError(const std::string& msg);
 
     bool operator==(const MixtureServerFileReaderXml&)
                           const; /*!Not implemented*/

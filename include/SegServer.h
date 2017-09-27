@@ -66,8 +66,7 @@
 #endif
 
 #include "Object.h"
-#include "alizeString.h"
-using alize::String; // before #include <map>
+
 #include <map>
 #include "RefVector.h"
 #include "Seg.h"
@@ -114,8 +113,8 @@ namespace alize
     /// @return a reference to the new segment
     ///
     Seg& createSeg(unsigned long b = 0, unsigned long l = 0,
-             unsigned long lc = 0, const String& s = "",
-             const String& sn = "");
+             unsigned long lc = 0, const std::string& s = "",
+             const std::string& sn = "");
 
     /// Duplicates a segment.
     /// @param s the seg to duplicate
@@ -129,8 +128,8 @@ namespace alize
     /// @param sn = source name (free). Ex: file name
     /// @return a reference to the new cluster
     ///
-    SegCluster& createCluster(unsigned long lc = 0, const String& s = "",
-               const String& sn = "");
+    SegCluster& createCluster(unsigned long lc = 0, const std::string& s = "",
+               const std::string& sn = "");
 
     /// Removes (deletes) a segment or a cluster from the server and
     /// from all the clusters (hierarchical clusters)
@@ -204,12 +203,12 @@ namespace alize
     /// Returns the name of the server
     /// @return  the name of the server
     ///
-    const String& getServerName() const;
+    const std::string& getServerName() const;
 
     /// Sets the name of the server
     /// @param s the name of the server
     ///
-    void setServerName(const String& s);
+    void setServerName(const std::string& s);
 
     /// Saves the server in a file
     /// @param f the name of the file
@@ -229,15 +228,15 @@ namespace alize
     ///
     static SegServer& create();
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     // internal usage
     void deleteDeletableSeg(const K&);
 
   private :
 
-    String          _serverName;
+    std::string          _serverName;
     RefVector<Seg> _segVect;
     RefVector<SegCluster> _clusterVect;
     unsigned long   _nextClusterId;

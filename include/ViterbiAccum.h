@@ -177,8 +177,8 @@ namespace alize
         ///
         real_t getLlp() const;
 
-        virtual String getClassName() const;
-        virtual String toString() const;
+        virtual std::string getClassName() const;
+        virtual std::string toString() const;
 
         // inaccessible for user
         static ViterbiAccum& create(StatServer&, const Config&, const K&);

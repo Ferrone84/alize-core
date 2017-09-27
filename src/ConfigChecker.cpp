@@ -58,9 +58,11 @@
 #include "ConfigChecker.h"
 #include "Config.h"
 #include "Exception.h"
-#include <new>
+#include "string_util.h"
+//#include <new>
 
 using namespace alize;
+using namespace std;
 typedef ConfigChecker CC;
 
 //-------------------------------------------------------------------------
@@ -80,14 +82,14 @@ void CC::check(const Config& config)
     }
     else
     {
-      const String& content = config.getParam(c.name);
+      const string& content = config.getParam(c.name);
       if (c.type != PARAMTYPE_BOOLEAN && c.argIsRequired
-          && content.getToken(0) == "")
+          && getToken(content, 0) == "")
         err("Parameter '" + c.name + "' argument required");
 
       if (c.type == PARAMTYPE_INTEGER)
       {
-        try { content.toLong(); }
+        try { stol(content); }
         catch (Exception&)
         {
           err("Value '" + content + "' of parameter '"
@@ -96,7 +98,7 @@ void CC::check(const Config& config)
       }
       else if (c.type == PARAMTYPE_FLOAT)
       {
-        try { content.toDouble(); }
+        try { stod(content); }
         catch (Exception&)
         {
           err("Value '" + content + "' of parameter '"
@@ -107,9 +109,9 @@ void CC::check(const Config& config)
       {
         try
         {
-          String l = content;
+          string l = content;
           if (l != "")
-            l.toBool();
+            toBool(l);
         }
         catch (Exception&)
         {
@@ -125,17 +127,17 @@ void CC::check(const Config& config)
   }
 }
 //-------------------------------------------------------------------------
-void CC::err(const String& e) const
+void CC::err(const string& e) const
 { throw ConfigCheckException(e, __FILE__, __LINE__); }
 //-------------------------------------------------------------------------
-void CC::checkName(const String& name) const
+void CC::checkName(const string& name) const
 {
-  if (name.getToken(0) == "")
+  if (getToken(name, 0) == "")
     throw Exception("parameter name cannot be empty", __FILE__, __LINE__);
 }
 //-------------------------------------------------------------------------
-void CC::addIntegerParam(const String& name, bool mandatory,
-                         bool argIsRequired, const String& desc)
+void CC::addIntegerParam(const string& name, bool mandatory,
+                         bool argIsRequired, const string& desc)
 {
   checkName(name);
   Param* p = new (std::nothrow) Param();
@@ -148,8 +150,8 @@ void CC::addIntegerParam(const String& name, bool mandatory,
   _vect.addObject(*p);
 }
 //-------------------------------------------------------------------------
-void CC::addFloatParam(const String& name, bool mandatory,
-                       bool argIsRequired, const String& desc)
+void CC::addFloatParam(const string& name, bool mandatory,
+                       bool argIsRequired, const string& desc)
 {
   checkName(name);
   Param* p = new (std::nothrow) Param();
@@ -162,8 +164,8 @@ void CC::addFloatParam(const String& name, bool mandatory,
   _vect.addObject(*p);
 }
 //-------------------------------------------------------------------------
-void CC::addBooleanParam(const String& name, bool mandatory,
-                         bool argIsRequired, const String& desc)
+void CC::addBooleanParam(const string& name, bool mandatory,
+                         bool argIsRequired, const string& desc)
 {
   checkName(name);
   Param* p = new (std::nothrow) Param();
@@ -176,8 +178,8 @@ void CC::addBooleanParam(const String& name, bool mandatory,
   _vect.addObject(*p);
 }
 //-------------------------------------------------------------------------
-void CC::addStringParam(const String& name, bool mandatory,
-                        bool argIsRequired, const String& desc)
+void CC::addStringParam(const string& name, bool mandatory,
+                        bool argIsRequired, const string& desc)
 {
   checkName(name);
   Param* p = new (std::nothrow) Param();
@@ -190,7 +192,7 @@ void CC::addStringParam(const String& name, bool mandatory,
   _vect.addObject(*p);
 }
 //-------------------------------------------------------------------------
-String CC::getParamList()
+string CC::getParamList()
 {
   unsigned long i;
   unsigned long length = 9;
@@ -200,7 +202,7 @@ String CC::getParamList()
     if (l > length)
       length = l;
   }
-  String s, n;
+  string s, n;
   n = "--help";
   while (n.length() < length) n += " ";
   s += n + " Show this help\n";
@@ -214,7 +216,7 @@ String CC::getParamList()
     n = "--" + c.name;
     while (n.length() < length) n += " ";
     s += n + " "
-//      +  String(c.mandatory?"(mandatory)":"(optional)") + " "
+//      +  string(c.mandatory?"(mandatory)":"(optional)") + " "
       +  c.description + " "
       +  "<" + getParamTypeName(c.type) + ">"
       +  "\n";
@@ -224,10 +226,10 @@ String CC::getParamList()
 //-------------------------------------------------------------------------
 //unsigned long CC::getCount() const { return _vect.size(); }
 //-------------------------------------------------------------------------
-String CC::getClassName() const { return "ConfigChecker";}
+string CC::getClassName() const { return "ConfigChecker";}
 //-------------------------------------------------------------------------
 CC::~ConfigChecker() { _vect.deleteAllObjects(); }
 //-------------------------------------------------------------------------
-String CC::Param::getClassName() const { return "Param"; }
+string CC::Param::getClassName() const { return "Param"; }
 //-------------------------------------------------------------------------
 #endif // !defined(ALIZE_ConfigChecker_cpp)

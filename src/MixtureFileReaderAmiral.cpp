@@ -64,6 +64,7 @@
 #include "Config.h"
 #include "FileReader.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureFileReaderAmiral R;
 
@@ -278,7 +279,7 @@ void R::readDistribGD(DistribGD& distrib)
   distrib.computeAll();
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureFileReaderAmiral"; }
+string R::getClassName() const { return "MixtureFileReaderAmiral"; }
 //-------------------------------------------------------------------------
 R::~MixtureFileReaderAmiral() {}
 //-------------------------------------------------------------------------

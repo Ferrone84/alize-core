@@ -67,7 +67,7 @@
 
 #include <cstdio>
 #include "Object.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -91,8 +91,8 @@ namespace alize
     ///
     virtual void close();
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
 
   protected:
@@ -135,13 +135,13 @@ namespace alize
 
     /// @exception IOException if an I/O error occurs
     ///
-    void writeString(const String& string);
+    void writeString(const std::string& string);
 
     /// @exception IOException if an I/O error occurs
     ///
-    void writeAttribute(const String& name, const String& value);
-    void writeAttribute(const String& name, unsigned long value);
-    void writeAttribute(const String& name, double value);
+    void writeAttribute(const std::string& name, const std::string& value);
+    void writeAttribute(const std::string& name, unsigned long value);
+    void writeAttribute(const std::string& name, double value);
 
 
     void swap2Bytes(void *src, void *dest);

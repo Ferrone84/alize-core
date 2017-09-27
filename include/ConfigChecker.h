@@ -65,7 +65,8 @@
 #define ALIZE_API
 #endif
 
-#include "alizeString.h"
+#include <string>
+
 #include "Object.h"
 #include "RefVector.h"
 
@@ -98,7 +99,7 @@ namespace alize
     /// Returns the list of parameters. Useful for --help on command line
     /// @return the list of parameters
     ///
-    String getParamList();
+    std::string getParamList();
 
     /// Adds an integer parameter
     /// @param name name of the parameter
@@ -107,8 +108,8 @@ namespace alize
     /// @param desc description. Useful for --help
     /// @exception Exception  throw if name is empty
     /// 
-    void addIntegerParam(const String& name, bool mandatory,
-      bool argIsRequired, const String& desc = "");
+    void addIntegerParam(const std::string& name, bool mandatory,
+      bool argIsRequired, const std::string& desc = "");
 
     /// Adds a float parameter
     /// @param name name of the parameter
@@ -117,8 +118,8 @@ namespace alize
     /// @param desc description. Useful for --help
     /// @exception Exception  throw if name is empty
     /// 
-    void addFloatParam(const String& name, bool mandatory,
-      bool argIsRequired, const String& desc = "");
+    void addFloatParam(const std::string& name, bool mandatory,
+      bool argIsRequired, const std::string& desc = "");
 
     /// Adds a boolean parameter
     /// @param name name of the parameter
@@ -127,8 +128,8 @@ namespace alize
     /// @param desc description. Useful for --help
     /// @exception Exception  throw if name is empty
     /// 
-    void addBooleanParam(const String& name, bool mandatory,
-      bool argIsRequired, const String& desc = "");
+    void addBooleanParam(const std::string& name, bool mandatory,
+      bool argIsRequired, const std::string& desc = "");
 
     /// Adds a string parameter
     /// @param name name of the parameter
@@ -137,33 +138,32 @@ namespace alize
     /// @param desc description. Useful for --help
     /// @exception Exception  throw if name is empty
     /// 
-    void addStringParam(const String& name, bool mandatory,
-      bool argIsRequired, const String& desc = "");
+    void addStringParam(const std::string& name, bool mandatory,
+      bool argIsRequired, const std::string& desc = "");
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
     /// Internal class. Do not use
     
     class Param : public Object
     {
     public :
-      String    name;
+      std::string    name;
       bool      mandatory;
       bool      argIsRequired;
       ParamType type;
-      String    description;
-      virtual String getClassName() const;
+      std::string    description;
+      virtual std::string getClassName() const;
     };
 
   private :
 
     RefVector<Param> _vect;
 
-    void err(const String& e) const;
-    void checkName(const String& name) const;
+    void err(const std::string& e) const;
+    void checkName(const std::string& name) const;
     ConfigChecker(const ConfigChecker&);     /*!not implemented*/
-    const ConfigChecker& operator=(
-                const ConfigChecker& c);/*!not implemented*/
+    const ConfigChecker& operator=(const ConfigChecker& c);/*!not implemented*/
     bool operator==(const ConfigChecker& c) const;/*!not implemented*/
     bool operator!=(const ConfigChecker& c) const;/*!not implemented*/
   };

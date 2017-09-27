@@ -66,6 +66,7 @@
 #include "Config.h"
 #include "RealVector.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileReaderAbstract R;
 
@@ -80,7 +81,7 @@ R::FeatureFileReaderAbstract(FileReader* r, const Config& c,
 //-------------------------------------------------------------------------
 void R::reset() { seekFeature(0); }
 //-------------------------------------------------------------------------
-void R::seekFeature(unsigned long featureNbr, const String& srcName)
+void R::seekFeature(unsigned long featureNbr, const string& srcName)
 {
   _seekWanted = true;
   _seekWantedIdx = featureNbr;

@@ -1,7 +1,6 @@
 lib_LIBRARIES=libalize.a
 
-libalize_a_SOURCES=alizeString.cpp\
-AudioFileReader.cpp\
+libalize_a_SOURCES=AudioFileReader.cpp\
 AudioFrame.cpp\
 AudioInputStream.cpp\
 AutoDestructor.cpp\
@@ -72,6 +71,7 @@ SegServerFileReaderAbstract.cpp\
 SegServerFileReaderRaw.cpp\
 SegServerFileWriter.cpp\
 StatServer.cpp\
+string_util.cpp\
 ULongVector.cpp\
 ViterbiAccum.cpp\
 XLine.cpp\

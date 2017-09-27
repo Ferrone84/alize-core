@@ -57,7 +57,7 @@
 
 #include <new>
 #include "MixtureGFStat.h"
-#include "alizeString.h"
+
 #include "Feature.h"
 #include "DistribGF.h"
 #include "Mixture.h"
@@ -67,6 +67,7 @@
 #include "Exception.h"
 #include "StatServer.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureGFStat M;
 
@@ -216,7 +217,7 @@ MixtureGF& M::getInternalAccumEM()
   return *_pMixForAccumulation;
 }
 //-------------------------------------------------------------------------
-String M::getClassName() const { return "MixtureGFStat"; }
+string M::getClassName() const { return "MixtureGFStat"; }
 //-------------------------------------------------------------------------
 M::~MixtureGFStat()
 {

@@ -200,7 +200,7 @@ namespace alize
     /// server.\n
     /// @return the number of features in the stream if possible
     /// @exception Exception if the stream cannot give it's features count
-    // TODO : gérer une exception particulière - la même que pour les param
+    // TODO : gÃ©rer une exception particuliÃ¨re - la mÃªme que pour les param
     /// 
     virtual unsigned long getFeatureCount();
 
@@ -219,8 +219,8 @@ namespace alize
     ///
     virtual real_t getSampleRate();
 
-    const String& getServerName() const;
-    void setServerName(const String& s);
+    const std::string& getServerName() const;
+    void setServerName(const std::string& s);
 
     /// Reads a feature
     /// @param f the feature to store the data read
@@ -249,7 +249,7 @@ namespace alize
     /// @param n index of the next feature to read or write in the source
     /// @param s name of the source. Default  is ""
     ///    
-    virtual void seekFeature(unsigned long n, const String& s = "");
+    virtual void seekFeature(unsigned long n, const std::string& s = "");
 
     /// Reset the server
     /// @exception Exception if the server cannot be reseted
@@ -276,7 +276,7 @@ namespace alize
     /// @param src name of the source
     /// @return the feature count of the source
     ///
-    virtual unsigned long getFeatureCountOfASource(const String& src);
+    virtual unsigned long getFeatureCountOfASource(const std::string& src);
 
     /// Returns the number of the first feature of a feature source. Useful
     /// for a multiple source stream.
@@ -290,23 +290,23 @@ namespace alize
     /// @param src name of the source
     /// @return the number of the first feature
     ///
-    virtual unsigned long getFirstFeatureIndexOfASource(const String& srcName);
+    virtual unsigned long getFirstFeatureIndexOfASource(const std::string& srcName);
 
     /// Returns the a particular feature source. Useful
     /// for a multiple file stream.
     /// @param srcIdx index of the source
     /// @return the name of the source
     ///
-    virtual const String& getNameOfASource(unsigned long srcIdx);
+    virtual const std::string& getNameOfASource(unsigned long srcIdx);
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
   private :
 
     bool                _ownInputStream;
     FeatureInputStream* _pInputStream;
-    String              _serverName;
+    std::string              _serverName;
 
     FeatureInputStream& inputStream();
     void init();

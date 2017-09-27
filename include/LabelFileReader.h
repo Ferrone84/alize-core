@@ -109,7 +109,7 @@ namespace alize
     ///
     virtual void readLabels(LabelSet& s);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

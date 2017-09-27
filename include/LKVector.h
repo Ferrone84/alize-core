@@ -140,8 +140,8 @@ namespace alize
     ///
     type* getArray() const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
     // for top distribs in MixtureStat
     real_t sumNonTopDistribWeights;

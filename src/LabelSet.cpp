@@ -56,11 +56,12 @@
 #define ALIZE_LabelSet_cpp
 
 #include "LabelSet.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 #include "LabelFileReader.h"
 #include "Config.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -74,7 +75,7 @@ LabelSet::LabelSet(const LabelSet& s)
 :Object(), _beginVect(s._beginVect), _endVect(s._endVect)
 {
   for (unsigned long i=0; i<s._nameVect.size(); i++)
-  { _nameVect.addObject(s.getName(i).duplicate()); }
+  { _nameVect.addObject(s.getName(i)); }
 }
 //-------------------------------------------------------------------------
 const LabelSet& LabelSet::operator=(const LabelSet& s)
@@ -82,7 +83,7 @@ const LabelSet& LabelSet::operator=(const LabelSet& s)
   _beginVect = s._beginVect;
   _endVect = s._endVect;
   for (unsigned long i=0; i<s._nameVect.size(); i++)
-  { _nameVect.addObject(s.getName(i).duplicate()); }
+  { _nameVect.addObject(s.getName(i)); }
   return *this;
 }
 //-------------------------------------------------------------------------
@@ -101,9 +102,9 @@ bool LabelSet::operator==(const LabelSet& s)
 //-------------------------------------------------------------------------
 bool LabelSet::operator!=(const LabelSet& s) { return !(*this==s); }
 //-------------------------------------------------------------------------
-void LabelSet::addLabel(real_t begin, real_t end, const String& label)
+void LabelSet::addLabel(real_t begin, real_t end, string& label)
 {
-  _nameVect.addObject(label.duplicate());
+  _nameVect.addObject(label);
   _beginVect.addValue(begin);
   _endVect.addValue(end);
 }
@@ -114,7 +115,7 @@ void LabelSet::load(const FileName& f, const Config& c)
   // can throw FileNotFoundException, IOException
 }
 //-------------------------------------------------------------------------
-const String& LabelSet::getName(unsigned long i) const
+string& LabelSet::getName(unsigned long i) const
 {
   return _nameVect.getObject(i);
   // can throw IndexOutOfBoundsException
@@ -126,17 +127,17 @@ real_t LabelSet::getBegin(unsigned long i) const
 real_t LabelSet::getEnd(unsigned long i) const
 { return _endVect[i]; /* can throw IndexOutOfBoundsException */ }
 //-------------------------------------------------------------------------
-String LabelSet::getClassName() const { return "LabelSet"; }
+string LabelSet::getClassName() const { return "LabelSet"; }
 //-------------------------------------------------------------------------
 unsigned long LabelSet::size() const { return _nameVect.size(); }
 //-------------------------------------------------------------------------
-String LabelSet::toString() const
+string LabelSet::toString() const
 {
-  String s = Object::toString() + "\n  Nb  = " + String::valueOf(size());
+  string s = Object::toString() + "\n  Nb  = " + std::to_string(size());
   for (unsigned long i=0; i< size(); i++)
   {
-    s += "\n  begin: " + String::valueOf(_beginVect[i])
-      +  " end: " + String::valueOf(_endVect[i])
+    s += "\n  begin: " + std::to_string(_beginVect[i])
+      +  " end: " + std::to_string(_endVect[i])
       +  " label: '" + getName(i);
   }
   return s;

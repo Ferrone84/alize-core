@@ -65,7 +65,9 @@
 #define ALIZE_API
 #endif
 
+#include <iostream>
 #include <cassert>
+#include <string>
 
 #ifndef NULL
   #define NULL 0
@@ -73,13 +75,11 @@
 
 namespace alize
 {
-  class String;
-
   typedef double real_t;
   typedef double lk_t;
   typedef double occ_t;
   typedef double weight_t;
-  typedef String FileName;
+  typedef std::string FileName;
 
   enum ParamType
   {
@@ -214,9 +214,9 @@ namespace alize
     virtual ~Object();
 
     /// Returns the name of the class
-    /// @returns the name of the class of the object as a String
+    /// @returns the name of the class of the object as a std::string
     ///
-    virtual String getClassName() const = 0;
+    virtual std::string getClassName() const = 0;
 
     /// This method is frequently overridden in the derived classes.
     /// If it is not, it returns the name of the class of the object and the
@@ -224,33 +224,33 @@ namespace alize
     ///
     /// @return a description of the object
     ///
-    virtual String toString() const;
+    virtual std::string toString() const;
 
     /// Returns the address
     ///
-    virtual String getAddress() const;
+    virtual std::string getAddress() const;
 
     bool isSameObject(const Object&) const;
 
-    static String getParamTypeName(ParamType t);
-    static ParamType getParamType(const String& s);
-    static String getDistribTypeName(DistribType);
-    static DistribType getDistribType(const String& name);
+    static std::string getParamTypeName(ParamType t);
+    static ParamType getParamType(const std::string& s);
+    static std::string getDistribTypeName(DistribType);
+    static DistribType getDistribType(const std::string& name);
     static FeatureFileReaderFormat getFeatureFileReaderFormat(
-             const String& name);
-    static SPRO3DataKind getSPro3DataKind(const String& name);
+             const std::string& name);
+    static SPRO3DataKind getSPro3DataKind(const std::string& name);
     static SegServerFileReaderFormat getSegServerFileReaderFormat(
-             const String& name);
+             const std::string& name);
     static SegServerFileWriterFormat getSegServerFileWriterFormat(
-             const String& name);
+             const std::string& name);
     static MixtureFileWriterFormat getMixtureFileWriterFormat(
-             const String& name);
+             const std::string& name);
     static FeatureFileWriterFormat getFeatureFileWriterFormat(
-             const String& name);
+             const std::string& name);
     static MixtureFileReaderFormat getMixtureFileReaderFormat(
-             const String& name);
+             const std::string& name);
     static MixtureServerFileWriterFormat getMixtureServerFileWriterFormat(
-             const String& name);
+             const std::string& name);
 
     /// Tests whether i <= size. Throws an exception if not. For debbuging.
     /// @exception IndexOutOfBoundsException
@@ -307,8 +307,8 @@ namespace alize
   The static object K::k is used as a key.\n
   INTERNAL USAGE
   <FRANCAIS>Attention : un membre de classe statique n'est detruit que
-  lorsque l'application se termine. Cette classe ne dérive pas de Object
-  pour ne pas fausser les compteurs internes de Object. En plus ça allège
+  lorsque l'application se termine. Cette classe ne dÃ©rive pas de Object
+  pour ne pas fausser les compteurs internes de Object. En plus Ã§a allÃ¨ge
   le code et il n'existe qu'une seule instance de cette classe dans
   tout alize...
   */

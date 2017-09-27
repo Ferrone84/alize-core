@@ -57,12 +57,13 @@
 
 #include "FeatureFlags.h"
 #include "Exception.h"
-#include "alizeString.h"
 
+
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
-FeatureFlags::FeatureFlags(const String& flags)
+FeatureFlags::FeatureFlags(const string& flags)
 :Object() { set(flags); }
 //-------------------------------------------------------------------------
 FeatureFlags::FeatureFlags()
@@ -85,9 +86,9 @@ bool FeatureFlags::operator==(const FeatureFlags& flags) const
 bool FeatureFlags::operator!=(const FeatureFlags& flags) const
 { return !(*this==flags); }
 //-------------------------------------------------------------------------
-void FeatureFlags::set(const String& s)
+void FeatureFlags::set(const string& s)
 {
-  char f = s[0].c_str()[0];
+  char f = s[0];
   if (f == '0')
     useS = false;
   else if (f == '1')
@@ -95,7 +96,7 @@ void FeatureFlags::set(const String& s)
   else if (f != '-')
     throw Exception("Wrong parameter : '" + s + "'",
                __FILE__, __LINE__);
-  f = s[1].c_str()[0];
+  f = s[1];
   if (f == '0')
     useE = false;
   else if (f == '1')
@@ -103,7 +104,7 @@ void FeatureFlags::set(const String& s)
   else if (f != '-')
     throw Exception("Wrong parameter : '" + s + "'",
                __FILE__, __LINE__);
-  f = s[2].c_str()[0];
+  f = s[2];
   if (f == '0')
     useD = false;
   else if (f == '1')
@@ -111,7 +112,7 @@ void FeatureFlags::set(const String& s)
   else if (f != '-')
     throw Exception("Wrong parameter : '" + s + "'",
                __FILE__, __LINE__);
-  f = s[3].c_str()[0];
+  f = s[3];
   if (f == '0')
     useDE = false;
   else if (f == '1')
@@ -119,7 +120,7 @@ void FeatureFlags::set(const String& s)
   else if (f != '-')
     throw Exception("Wrong parameter : '" + s + "'",
                __FILE__, __LINE__);
-  f = s[4].c_str()[0];
+  f = s[4];
   if (f == '0')
     useDD = false;
   else if (f == '1')
@@ -127,7 +128,7 @@ void FeatureFlags::set(const String& s)
   else if (f != '-')
     throw Exception("Wrong parameter : '" + s + "'",
                __FILE__, __LINE__);
-  f = s[5].c_str()[0];
+  f = s[5];
   if (f == '0')
     useDDE = false;
   else if (f == '1')
@@ -181,7 +182,7 @@ unsigned long FeatureFlags::toSPro4() const
   // TODO : lancer une exception pour les cas interdits
 }
 //-------------------------------------------------------------------------
-String FeatureFlags::getString() const
+string FeatureFlags::getString() const
 {
   char flags[] = "000000";
   if (useS)   flags[0] = '1';
@@ -194,17 +195,17 @@ String FeatureFlags::getString() const
   return flags;
 }
 //-------------------------------------------------------------------------
-String FeatureFlags::getClassName() const { return "FeatureFlags"; }
+string FeatureFlags::getClassName() const { return "FeatureFlags"; }
 //-------------------------------------------------------------------------
-String FeatureFlags::toString() const
+string FeatureFlags::toString() const
 {
   return Object::toString()
-    + "\n  S   = " + String::valueOf(useS)
-    + "\n  E   = " + String::valueOf(useE)
-    + "\n  D   = " + String::valueOf(useD)
-    + "\n  DE  = " + String::valueOf(useDE)
-    + "\n  DD  = " + String::valueOf(useDD)
-    + "\n  DDE = " + String::valueOf(useDDE);
+    + "\n  S   = " + std::to_string(useS)
+    + "\n  E   = " + std::to_string(useE)
+    + "\n  D   = " + std::to_string(useD)
+    + "\n  DE  = " + std::to_string(useDE)
+    + "\n  DD  = " + std::to_string(useDD)
+    + "\n  DDE = " + std::to_string(useDDE);
 }
 //-------------------------------------------------------------------------
 FeatureFlags::~FeatureFlags() {}

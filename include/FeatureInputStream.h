@@ -67,7 +67,7 @@
 
 #include "Object.h"
 #include "FeatureFlags.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -77,10 +77,10 @@ namespace alize
   
   /*!
   Abstract class for a feature input stream. <FRANCAIS> \n
-  Classe abstraite de base pour les classes dont le rôle est de fournir
+  Classe abstraite de base pour les classes dont le rÃ´le est de fournir
   des features a la demande (methode readFeature).
   Toutes ces classes peuvent etre connectees a un serveur de label.
-  Ainsi il leur est possible d'affecter un label à chaque feature.
+  Ainsi il leur est possible d'affecter un label Ã  chaque feature.
   L'adresse du serveur de label peut etre passee lors de la contruction
   La variable _error permet aux sous-classes de passer un
   message a l'utilisateur. Par exemple : signaler la cause d'un arret
@@ -184,7 +184,7 @@ namespace alize
     /// @param pos new position of the indicator
     /// @param srcName source name to seek in a particular source
     ///
-    virtual void seekFeature(unsigned long pos, const String& srcName = "") = 0;
+    virtual void seekFeature(unsigned long pos, const std::string& srcName = "") = 0;
 
     /// Returns the number of sources (files) read by the reader
     /// @return the number of sources
@@ -201,7 +201,7 @@ namespace alize
     /// @param srcName name of the source
     /// @return the feature count of the source
     ///
-    virtual unsigned long getFeatureCountOfASource(const String& srcName) = 0;
+    virtual unsigned long getFeatureCountOfASource(const std::string& srcName) = 0;
 
     /// Returns the number of the first feature of a feature source. Useful
     /// for a multiple source stream.
@@ -215,28 +215,28 @@ namespace alize
     /// @param srcName name of the source
     /// @return the number of the first feature
     ///
-    virtual unsigned long getFirstFeatureIndexOfASource(const String& srcName) = 0;
+    virtual unsigned long getFirstFeatureIndexOfASource(const std::string& srcName) = 0;
 
     /// Returns the a particular feature source. Useful
     /// for a multiple source stream.
     /// @param srcIdx index of the source
     /// @return the name of the source
     ///
-    virtual const String& getNameOfASource(unsigned long srcIdx) = 0;
+    virtual const std::string& getNameOfASource(unsigned long srcIdx) = 0;
 
     /// Gets the last feature error code from this stream
     /// @return the error.
     ///
     Error getError();
 
-    virtual String getClassName() const = 0;
+    virtual std::string getClassName() const = 0;
 
   protected :
     LabelServer*  _pLabelServer;
     Error         _error;
     bool          _seekWanted;
     unsigned long _seekWantedIdx;
-    String        _seekWantedSrcName;
+    std::string        _seekWantedSrcName;
     bool          _featuresAreWritable;
     void init(const Config& c, LabelServer* ls = NULL);
 

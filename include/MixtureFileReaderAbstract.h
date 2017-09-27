@@ -121,8 +121,8 @@ namespace alize
     const Config& _config;
     FileReader*   _pReader; // may be NULL
     Mixture*      _pMixture;
-    String getPath(const FileName&, const Config&) const;
-    String getExt(const FileName&, const Config&) const;
+    std::string getPath(const FileName&, const Config&) const;
+    std::string getExt(const FileName&, const Config&) const;
     bool getBigEndian(const Config&, BigEndian) const;
 
   private :

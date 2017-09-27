@@ -177,7 +177,7 @@ namespace alize
     ///
     unsigned long addObject(T& o, unsigned long i)
     {
-      // TODO : à optimiser
+      // TODO : Ã  optimiser
       if (i>=_size)
         return addObject(o);
       addObject(getObject(_size-1));
@@ -311,7 +311,7 @@ namespace alize
 		
     }
 
-    virtual String getClassName() const { return "RefVector"; }
+    virtual std::string getClassName() const { return "RefVector"; }
 
   private:
   

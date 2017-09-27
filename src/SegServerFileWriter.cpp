@@ -59,9 +59,11 @@
 #include "Exception.h"
 #include "SegServer.h"
 #include "Config.h"
+#include "string_util.h"
 
 #include <cstdlib>
 
+using namespace std; 
 using namespace alize;
 using namespace std;
 typedef SegServerFileWriter W;
@@ -70,15 +72,15 @@ typedef SegServerFileWriter W;
 W::SegServerFileWriter(const FileName& f,const Config& c)
 :FileWriter(getFullFileName(c, f)), _config(c)
 {
-  if (_fileName.endsWith(".xml"))
+  if (endsWith(_fileName, ".xml"))
     _format = SegServerFileWriterFormat_XML;
   else 
     _format = c.getParam_saveSegServerFileFormat();
 }
 //-------------------------------------------------------------------------
-String W::getFullFileName(const Config& c, const String& n) const // protected
+string W::getFullFileName(const Config& c, const string& n) const // protected
 {
-  if (n.beginsWith("/") || n.beginsWith("./"))
+  if (beginsWith(n, "/") || beginsWith(n, "./"))
     return n;
   return c.getParam_segServerFilesPath() + n
       + c.getParam_saveSegServerFileExtension();
@@ -241,7 +243,7 @@ void W::writeListRaw(const XList& l)
     writeUInt4(c);
     for (unsigned long j=0; j<c; j++)
     {
-      const String& e = line.getElement(j);
+      const string& e = line.getElement(j);
       writeUInt4(e.length());
       writeString(e);
     }
@@ -277,7 +279,7 @@ void W::writeSegServerTrs(const SegServer& ss)
     {
       const SegCluster& cl = ss.getCluster(i);
       writeString("\n\t\t<Speaker");
-      writeAttribute("id", "spk" + String::valueOf(cl.getId()));
+      writeAttribute("id", "spk" + std::to_string(cl.getId()));
       writeAttribute("name", cl.string());
       writeString("/>");
       Seg* p;
@@ -322,7 +324,7 @@ void W::writeSegServerTrs(const SegServer& ss)
             writeString("\n\t\t\t</Turn>");
           turnStarted = true;
           writeString("\n\t\t\t<Turn");
-          writeAttribute("speaker", "spk" + String::valueOf(seg.id));
+          writeAttribute("speaker", "spk" + std::to_string(seg.id));
           writeTime("startTime", seg.begin);
           writeTime("endTime", seg.endTurn);
           writeString(">");
@@ -349,10 +351,10 @@ void W::writeSegServerTrs(const SegServer& ss)
   }
 }
 //-------------------------------------------------------------------------
-void W::writeTime(const String& n, unsigned long t) // private
-{ writeAttribute(n, String::valueOf(t/1000.0)); }
+void W::writeTime(const string& n, unsigned long t) // private
+{ writeAttribute(n, std::to_string(t/1000.0)); }
 //-------------------------------------------------------------------------
-String W::getClassName() const { return "SegServerFileWriter"; }
+string W::getClassName() const { return "SegServerFileWriter"; }
 //-------------------------------------------------------------------------
 W::~SegServerFileWriter() {}
 //-------------------------------------------------------------------------

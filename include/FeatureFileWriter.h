@@ -122,7 +122,7 @@ namespace alize
     ///
     virtual void writeFeature(const Feature& feature);
 
-    virtual String getClassName() const;
+    virtual  std::string getClassName() const;
 
   private :
 
@@ -133,7 +133,7 @@ namespace alize
     bool                    _headerWritten; // for SPRO format
     const Config&           _config;
 
-    String getFullFileName(const Config& c, const String& n) const;
+     std::string getFullFileName(const Config& c, const  std::string& n) const;
     FeatureFileWriter(const FeatureFileWriter&);   /*!Not implemented*/
     const FeatureFileWriter& operator=(
                 const FeatureFileWriter&); /*!Not implemented*/

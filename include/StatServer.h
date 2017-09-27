@@ -66,7 +66,7 @@
 #endif
 
 #include "Object.h"
-#include "alizeString.h"
+
 #include "LKVector.h"
 #include "ViterbiAccum.h"
 #include "MixtureStat.h"
@@ -430,13 +430,13 @@ namespace alize
 
     //--------------------------------------------------------------------
     
-    const String& getServerName() const;
+    const std::string& getServerName() const;
 
-    void setServerName(const String& s);
+    void setServerName(const std::string& s);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
-    virtual String toString() const;
+    virtual std::string toString() const;
 
     // INTERNAL USAGE
     
@@ -450,7 +450,7 @@ namespace alize
                               const LKVector & lkVect);							  
   private :
 
-    String                  _serverName;
+    std::string                  _serverName;
     const Config&           _config;
     DoubleVector            _distribLKVect;
     MixtureServer*          _pMixtureServer;

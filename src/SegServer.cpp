@@ -61,7 +61,9 @@
 #include "SegServerFileWriter.h"
 #include "SegServerFileReaderRaw.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -131,7 +133,7 @@ SegServer& SegServer::create() // static
 }
 //-------------------------------------------------------------------------
 Seg& SegServer::createSeg(unsigned long b, unsigned long l,
-             unsigned long lc, const String& s, const String& sn)
+             unsigned long lc, const string& s, const string& sn)
 {
   Seg& seg = Seg::create(K::k, *this, b, l, lc, s, sn);
   _segVect.addObject(seg);
@@ -145,8 +147,8 @@ Seg& SegServer::duplicateSeg(const Seg& s)
   return seg;
 }
 //-------------------------------------------------------------------------
-SegCluster& SegServer::createCluster(unsigned long lc, const String& s,
-                                                          const String& sn)
+SegCluster& SegServer::createCluster(unsigned long lc, const string& s,
+                                                          const string& sn)
 {
   SegCluster& cluster = SegCluster::create(K::k, *this, lc, s, sn);
   while ( getClusterIndexById(_nextClusterId) > 0)
@@ -206,7 +208,7 @@ void SegServer::setClusterId(SegCluster& cl, unsigned long id)
 {
   it_t i = _map.find(id);
   if (i != _map.end() && !getCluster(i->second).isSameObject(cl))
-    throw Exception("Cluster with id='" + String::valueOf(id) +
+    throw Exception("Cluster with id='" + std::to_string(id) +
           "' already exists in the server", __FILE__, __LINE__);
   unsigned long oldId = cl.getId();
   unsigned long idx = _map.find(oldId)->second;
@@ -219,7 +221,7 @@ SegCluster& SegServer::getClusterById(unsigned long id) const
 {
   it_t i = _map.find(id);
   if (i == _map.end())
-    throw Exception("Cluster with id='" + String::valueOf(id) +
+    throw Exception("Cluster with id='" + std::to_string(id) +
           "' does not exist in the server", __FILE__, __LINE__);
   return getCluster(i->second);
 }
@@ -251,16 +253,16 @@ unsigned long SegServer::getIndex(const SegAbstract& s) const
 unsigned long SegServer::getClusterCount() const
 { return _clusterVect.size(); }
 //-------------------------------------------------------------------------
-void SegServer::setServerName(const String& s) { _serverName = s; }
+void SegServer::setServerName(const string& s) { _serverName = s; }
 //-------------------------------------------------------------------------
-const String& SegServer::getServerName() const { return _serverName; }
+const string& SegServer::getServerName() const { return _serverName; }
 //-------------------------------------------------------------------------
 void SegServer::save(const FileName& f, const Config& c) const
 { SegServerFileWriter(f, c).writeSegServer(*this); }
 //-------------------------------------------------------------------------
 void SegServer::load(const FileName& f, const Config& c)
 {
-  if (f.endsWith(".xml"))
+  if (endsWith(f, ".xml"))
   {
     //SegServerFileReaderXml r(f, c);
     //r.readSegServer(*this);
@@ -294,13 +296,13 @@ void SegServer::load(const FileName& f, const Config& c)
   }
 }
 //-------------------------------------------------------------------------
-String SegServer::getClassName() const { return "SegServer"; }
+string SegServer::getClassName() const { return "SegServer"; }
 //-------------------------------------------------------------------------
-String SegServer::toString() const
+string SegServer::toString() const
 {
   return Object::toString() + "\n  name = '" + _serverName + "'"
-    + "\n  seg count = " + String::valueOf(getSegCount())
-    + "\n  cluster count = " + String::valueOf(getClusterCount());
+    + "\n  seg count = " + std::to_string(getSegCount())
+    + "\n  cluster count = " + std::to_string(getClusterCount());
 }
 //-------------------------------------------------------------------------
 SegServer::~SegServer()

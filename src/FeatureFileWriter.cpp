@@ -60,7 +60,9 @@
 #include "Feature.h"
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureFileWriter W;
 
@@ -77,9 +79,9 @@ W& W::create(const FileName& f, const Config& c)
   return *p;
 }
 //-------------------------------------------------------------------------
-String W::getFullFileName(const Config& c, const FileName& f) const
+ string W::getFullFileName(const Config& c, const FileName& f) const
 { // private
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return f;
   return c.getParam_featureFilesPath() + f
        + c.getParam_saveFeatureFileExtension();
@@ -112,7 +114,7 @@ void W::writeFeature(const Feature& f)
     {
       const FeatureFlags flags = _config.getParam_featureFlags();
       unsigned long dim = 0;
-      const String& s = flags.getString();
+      const  string& s = flags.getString();
       if (s == "100000")
         dim = _vectSize;
       else if (s == "110000")
@@ -187,7 +189,7 @@ void W::close()
   FileWriter::close();
 }
 //-------------------------------------------------------------------------
-String W::getClassName() const {return "FeatureFileWriter";}
+ string W::getClassName() const {return "FeatureFileWriter";}
 //-------------------------------------------------------------------------
 W::~FeatureFileWriter() { close(); }
 //-------------------------------------------------------------------------

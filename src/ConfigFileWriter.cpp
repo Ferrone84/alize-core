@@ -58,7 +58,9 @@
 #include "ConfigFileWriter.h"
 #include "Exception.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -68,7 +70,7 @@ ConfigFileWriter::ConfigFileWriter(const FileName& f)
 void ConfigFileWriter::writeConfig(const Config& c)
 {
   open(); //can throw IOException
-  if (_fileName.endsWith(".xml"))
+  if (endsWith(_fileName, ".xml"))
   {
     writeString("<config");
     writeAttribute("version", "1");
@@ -92,7 +94,7 @@ void ConfigFileWriter::writeConfig(const Config& c)
   close();
 }
 //-------------------------------------------------------------------------
-String ConfigFileWriter::getClassName() const { return "ConfigFileWriter"; }
+string ConfigFileWriter::getClassName() const { return "ConfigFileWriter"; }
 //-------------------------------------------------------------------------
 ConfigFileWriter::~ConfigFileWriter() {}
 //-------------------------------------------------------------------------

@@ -64,18 +64,18 @@
 #include "Exception.h"
 #include "RealVector.h"
 //#include <iostream>
-//using namespace std;
+using namespace std;
 using namespace alize;
 typedef FileReader R;
 
 //-------------------------------------------------------------------------
-R::FileReader(const FileName& f, const String& path,
-              const String& extension, bool swap)
+R::FileReader(const FileName& f, const string& path,
+              const string& extension, bool swap)
 :Object(), _fullFileName(path + f + extension), _pFileStruct(NULL),
  _fileName(f), _path(path), _extension(extension), 
  _fileLengthDefined(false), _swap(swap) {}
 //-------------------------------------------------------------------------
-R& R::create(const FileName& f, const String& path, const String& ext,
+R& R::create(const FileName& f, const string& path, const string& ext,
              bool swap)
 {
   R* p = new (std::nothrow) R(f, path, ext, swap);
@@ -294,9 +294,9 @@ float R::readFloat()
   return s;
 }
 //-------------------------------------------------------------------------
-const String& R::readString(unsigned long length)
+const string& R::readString(unsigned long length)
 {
-  _string.reset();
+  _string.clear();
   if (length != 0)
   {
     char* str = new (std::nothrow) char[length+1];
@@ -314,12 +314,12 @@ const String& R::readString(unsigned long length)
   return _string;
 }
 //-------------------------------------------------------------------------
-const String& R::readLine()
+const string& R::readLine()
 {
 
   char t[2];
   t[1] = 0;
-  _string.reset();
+  _string.clear();
 
   while (true)
   {
@@ -411,13 +411,13 @@ void R::swap8Bytes(void *src, void *dest)
   }
 }
 //-------------------------------------------------------------------------
-String R::toString() const
+string R::toString() const
 {
   return Object::toString()
     + "\n  full file name = '" + getFullFileName();
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "FileReader"; }
+string R::getClassName() const { return "FileReader"; }
 //-------------------------------------------------------------------------
 R::~FileReader() { close(); }
 //-------------------------------------------------------------------------

@@ -71,7 +71,7 @@
 #include <cstdlib>
 #include <memory.h>
 #include "DistribGD.h"
-#include "alizeString.h"
+
 #include "Feature.h"
 #include "Exception.h"
 #include "Config.h"
@@ -131,8 +131,8 @@ const DistribGD& DistribGD::operator=(const DistribGD& d)
 {
   if (_vectSize != d.getVectSize())
     throw Exception("target distrib vectSize ("
-        + String::valueOf(_vectSize) + ") != source distrib vectSize ("
-        + String::valueOf(d._vectSize) + ")", __FILE__, __LINE__);
+        + std::to_string(_vectSize) + ") != source distrib vectSize ("
+        + std::to_string(d._vectSize) + ")", __FILE__, __LINE__);
   _meanVect = d._meanVect;
   _covInvVect = d._covInvVect;
   _covVect = d._covVect;
@@ -164,8 +164,8 @@ lk_t DistribGD::computeLK(const Feature& frame) const
 {
   if (frame.getVectSize() != _vectSize)
     throw Exception("distrib vectSize ("
-        + String::valueOf(_vectSize) + ") != feature vectSize ("
-      + String::valueOf(frame.getVectSize()) + ")", __FILE__, __LINE__);
+        + std::to_string(_vectSize) + ") != feature vectSize ("
+      + std::to_string(frame.getVectSize()) + ")", __FILE__, __LINE__);
   real_t tmp = 0.0;
   real_t*      m = _meanVect.getArray();
   real_t*      c = _covInvVect.getArray();
@@ -268,33 +268,33 @@ const DoubleVector& DistribGD::getCovVect() const
 }
 
 //-------------------------------------------------------------------------
-String DistribGD::getClassName() const { return "DistribGD"; }
+string DistribGD::getClassName() const { return "DistribGD"; }
 //-------------------------------------------------------------------------
-String DistribGD::toString() const
+string DistribGD::toString() const
 {
-  String s = Object::toString()
-  + "\n  vectSize  = " + String::valueOf(_vectSize)
-  + "\n  det     = " + String::valueOf(_det)
-  + "\n  cst     = " + String::valueOf(_cst);
+  string s = Object::toString()
+  + "\n  vectSize  = " + std::to_string(_vectSize)
+  + "\n  det     = " + std::to_string(_det)
+  + "\n  cst     = " + std::to_string(_cst);
   
   
   if (_covVect.size() != 0)
     for (unsigned long i=0; i<_vectSize; i++)
     {
-      s += "\n  cov[" + String::valueOf(i) + "] = "
-        + String::valueOf(_covVect[i])
-        + "  covInv[" + String::valueOf(i) + "] = "
-        + String::valueOf(_covInvVect[i])
-        + "  mean[" + String::valueOf(i) + "] = "
-        + String::valueOf(_meanVect[i]);
+      s += "\n  cov[" + std::to_string(i) + "] = "
+        + std::to_string(_covVect[i])
+        + "  covInv[" + std::to_string(i) + "] = "
+        + std::to_string(_covInvVect[i])
+        + "  mean[" + std::to_string(i) + "] = "
+        + std::to_string(_meanVect[i]);
     }
   else
     for (unsigned long i=0; i<_vectSize; i++)
     {
-      s += "\n  covInv[" + String::valueOf(i) + "] = "
-        + String::valueOf(_covInvVect[i])
-        + "  mean[" + String::valueOf(i) + "] = "
-        + String::valueOf(_meanVect[i]);
+      s += "\n  covInv[" + std::to_string(i) + "] = "
+        + std::to_string(_covInvVect[i])
+        + "  mean[" + std::to_string(i) + "] = "
+        + std::to_string(_meanVect[i]);
     }
   return s;
 }

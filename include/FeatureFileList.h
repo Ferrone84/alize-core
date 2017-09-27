@@ -101,11 +101,11 @@ namespace alize
     unsigned long getFeatureCount(const FileName&) const;
     unsigned long getIndexOfFirstFeature(unsigned long fileIdx) const;
     unsigned long getIndexOfFirstFeature(const FileName&) const;
-    const String& getFileName(unsigned long fileIdx) const;
+    const std::string& getFileName(unsigned long fileIdx) const;
     unsigned long getFileIndex(const FileName&) const;
     unsigned long getFileIndex(unsigned long featureNbr) const;
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

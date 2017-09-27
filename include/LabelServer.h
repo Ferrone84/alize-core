@@ -103,9 +103,9 @@ namespace alize
     /// parcours tous les labels du serveur a la recherche d'un label
     /// identique. S'il le trouve, il retourne son index sans ajouter de 
     /// nouveau label. Dans le cas contraire, il ajoute une copie de ce
-    /// label ‡ la fin de sa liste de label et retourne l'index.
+    /// label √† la fin de sa liste de label et retourne l'index.
     /// On peut forcer l'ajout d'un label dans le cas ou un exemplaire
-    /// existe dÈj‡
+    /// existe d√©j√†
     /// @param l The object to add. The Label object stored is a copy
     ///    of this parameter.\n
     /// @param forceAdd force the add of the label
@@ -133,7 +133,7 @@ namespace alize
     /// @param s the string used as a key to search the label
     /// @return the index of the label if it exists; -1 otherwise
     ///
-    long getLabelIndexByString(const String& s) const;
+    long getLabelIndexByString(const std::string& s) const;
 
     /// Delete all Label objects stored in the server except for the
     /// pre-defined labels.
@@ -147,7 +147,7 @@ namespace alize
     ///
     unsigned long size() const;
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
 
   private :

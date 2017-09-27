@@ -67,7 +67,7 @@
 
 #include "MixtureFileReaderAbstract.h"
 #include "XmlParser.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -96,7 +96,7 @@ namespace alize
     virtual const Mixture& readMixture();
     virtual const MixtureGD& readMixtureGD();
     virtual const MixtureGF& readMixtureGF();
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
@@ -108,7 +108,7 @@ namespace alize
     unsigned long _vectSize;
     bool          _vectSizeFound;
 
-    String        _id;
+    std::string        _id;
     bool          _idFound;
 
     unsigned long _distribIndex;
@@ -138,11 +138,11 @@ namespace alize
     DistribGD& distribGD();
     DistribGF& distribGF();
     const DistribType& type();
-    virtual const String& readOneChar();
-    virtual void eventOpeningElement(const String& path);
-    virtual void eventClosingElement(const String& path,
-                     const String& value);
-    virtual void eventError(const String& msg);
+    virtual const std::string& readOneChar();
+    virtual void eventOpeningElement(const std::string& path);
+    virtual void eventClosingElement(const std::string& path,
+                     const std::string& value);
+    virtual void eventError(const std::string& msg);
 
     bool operator==(const MixtureFileReaderXml&)
                           const; /*!Not implemented*/

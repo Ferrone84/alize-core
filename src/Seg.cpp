@@ -59,15 +59,16 @@
 #include "Exception.h"
 #include <new>
 
+using namespace std; 
 using namespace alize;
 
 //-------------------------------------------------------------------------
 Seg::Seg(SegServer& ss, unsigned long b, unsigned long l, unsigned long lc,
-     const String& s, const String& sn)  //private method
+     const std::string& s, const std::string& sn)  //private method
 :SegAbstract(ss, lc, s, sn), _begin(b), _length(l) {}
 //-------------------------------------------------------------------------
 Seg& Seg::create(const K&, SegServer& ss, unsigned long b, unsigned long l,
-    unsigned long lc, const String& s, const String& sn) // static
+    unsigned long lc, const std::string& s, const std::string& sn) // static
 {
   Seg* p = new (std::nothrow) Seg(ss, b, l, lc, s, sn);
   assertMemoryIsAllocated(p, __FILE__, __LINE__);
@@ -145,9 +146,9 @@ Seg& Seg::split(unsigned long i)
 {
   if (i >= _begin+_length)
     throw Exception("Cannot split a segment(begin="
-       + String::valueOf(_begin) + " length="
-       + String::valueOf(_length) + ") from feature #"
-       + String::valueOf(i), __FILE__, __LINE__);
+       + std::to_string(_begin) + " length="
+       + std::to_string(_length) + ") from feature #"
+       + std::to_string(i), __FILE__, __LINE__);
   Seg& newSeg = duplicate();
   newSeg.setBegin(i);
   newSeg.setLength(_length-i+_begin);
@@ -155,14 +156,14 @@ Seg& Seg::split(unsigned long i)
   return newSeg;
 }
 //-------------------------------------------------------------------------
-String Seg::getClassName() const { return "Seg"; }
+std::string Seg::getClassName() const { return "Seg"; }
 //-------------------------------------------------------------------------
-String Seg::toString() const
+std::string Seg::toString() const
 {
   return Object::toString()
-    + "\n  begin = " + String::valueOf(_begin)
-    + "\n  length = " + String::valueOf(_length)
-    + "\n  labelCode = " + String::valueOf(_labelCode)
+    + "\n  begin = " + std::to_string(_begin)
+    + "\n  length = " + std::to_string(_length)
+    + "\n  labelCode = " + std::to_string(_labelCode)
     + "\n  string = '" + _string + "'"
     + "\n  sourceName = '" + _srcName + "'";
   // TODO : ajouter l'affichage de _list

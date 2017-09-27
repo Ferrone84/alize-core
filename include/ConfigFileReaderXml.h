@@ -67,7 +67,7 @@
 
 #include "ConfigFileReaderAbstract.h"
 #include "XmlParser.h"
-#include "alizeString.h"
+
 
 namespace alize
 {
@@ -100,22 +100,22 @@ namespace alize
     ///
     virtual void readConfig(Config& c);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 
     unsigned long _line;
 
-    String    _paramName;
+    std::string    _paramName;
     bool      _paramNameDefined;
     
     Config* _pConfig;
 
-    virtual const String& readOneChar();
-    virtual void eventOpeningElement(const String& path);
-    virtual void eventClosingElement(const String& path,
-                     const String& value);
-    virtual void eventError(const String& msg);
+    virtual const std::string& readOneChar();
+    virtual void eventOpeningElement(const std::string& path);
+    virtual void eventClosingElement(const std::string& path,
+                     const std::string& value);
+    virtual void eventError(const std::string& msg);
 
     bool operator==(const ConfigFileReaderXml&)
                           const; /*!Not implemented*/

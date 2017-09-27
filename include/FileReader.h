@@ -67,7 +67,7 @@
 
 #include <cstdio>
 #include "Object.h"
-#include "alizeString.h"
+
 #include "RealVector.h"
 
 
@@ -94,10 +94,10 @@ namespace alize
   public :
 
 
-    explicit FileReader(const FileName&, const String& path,
-                                  const String& extension, bool swap);
-    static FileReader& create(const FileName& f, const String& path,
-                                  const String& extension, bool swap);
+    explicit FileReader(const FileName&, const std::string& path,
+                                  const std::string& extension, bool swap);
+    static FileReader& create(const FileName& f, const std::string& path,
+                                  const std::string& extension, bool swap);
 
     /// Close the opened file (if it is).
     ///
@@ -186,21 +186,21 @@ namespace alize
     
     /// Reads the next line of text from the input stream. It reads
     /// successive bytes until it encounters a line terminator or end of
-    /// file. The characters read are then returned as a String.
+    /// file. The characters read are then returned as a std::string.
     /// If end of file is encountered then a EOFException is thrown.
     /// If the character '\n' is encountered, it is discarded and reading
     /// ceases. If the character '\r' is encountered, it is discarded and,
     /// if the following byte converts to the character '\n', then that
     /// is discarded also; reading then ceases. If end of file is
     /// encountered before either of the characters '\n' and '\r' is
-    /// encountered, reading ceases. Once reading has ceased, a String is
+    /// encountered, reading ceases. Once reading has ceased, a std::string is
     /// returned that contains all the characters read and not discarded,
     /// taken in order.
     /// @return the next line of text from the input stream
     /// @exception IOException if an I/O error occurs
     /// @exception EOFException if the end of file is encountered
     ///
-    const String& readLine();
+    const std::string& readLine();
 
     /// Reads a sequence of 'length' characters.
     /// @param length number of characters to read
@@ -208,17 +208,17 @@ namespace alize
     /// @exception IOException if an I/O error occurs
     /// @exception EOFException if end of file has been reached
     ///
-    const String& readString(unsigned long length);
+    const std::string& readString(unsigned long length);
 
     /// Returns the full name of the file.
     /// @return the full name of the file.
     ///
-    const String& getFullFileName() const;
+    const std::string& getFullFileName() const;
 
     /// Returns the name of the file.
     /// @return the name of the file.
     ///
-    const String& getFileName() const;
+    const std::string& getFileName() const;
     
     /// Opens the file. If it is already opened, closes it beforehand.
     /// @exception FileNotFoundException
@@ -244,24 +244,24 @@ namespace alize
     void swap4Bytes(void *src);
     void swap8Bytes(void *src, void *dest);
 
-    virtual String toString() const;
-    virtual String getClassName() const;
+    virtual std::string toString() const;
+    virtual std::string getClassName() const;
 
 
   protected :
     
-    String _fullFileName;
+    std::string _fullFileName;
 
   private :
 
 
     FILE*          _pFileStruct; /*! current file descriptor. Can be NULL */
     FileName       _fileName;
-    String         _path;
-    String         _extension;
+    std::string         _path;
+    std::string         _extension;
     unsigned long  _fileLength;
     bool           _fileLengthDefined;
-    mutable String _string; /*! to store temporary data */
+    mutable std::string _string; /*! to store temporary data */
     bool           _swap; /*! flag for numeric data */
 
     /// Low-level method to read bytes from a file.

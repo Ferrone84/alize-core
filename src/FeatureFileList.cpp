@@ -58,6 +58,7 @@
 #include "FeatureFileList.h"
 #include "FeatureFileReader.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -186,7 +187,7 @@ unsigned long FeatureFileList::getFeatureCount(const FileName& f) const
   return 0; // never called
 }
 //-------------------------------------------------------------------------
-const String& FeatureFileList::getFileName(unsigned long fileIdx) const
+const string& FeatureFileList::getFileName(unsigned long fileIdx) const
 { return _fileNameVect.getElement(fileIdx); }
 //-------------------------------------------------------------------------
 unsigned long FeatureFileList::getFileIndex(const FileName& f) const
@@ -217,7 +218,7 @@ unsigned long FeatureFileList::getFileIndex(unsigned long featureNbr) const
   return i;
 }
 //-------------------------------------------------------------------------
-String FeatureFileList::getClassName() const { return "FeatureFileList"; }
+string FeatureFileList::getClassName() const { return "FeatureFileList"; }
 //-------------------------------------------------------------------------
 FeatureFileList::~FeatureFileList() {}
 //-------------------------------------------------------------------------

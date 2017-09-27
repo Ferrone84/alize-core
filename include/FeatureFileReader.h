@@ -142,7 +142,7 @@ namespace alize
     virtual ~FeatureFileReader();
 
     virtual void seekFeature(unsigned long featureNbr,
-                             const String& srcName = "");
+                             const std::string& srcName = "");
     virtual bool addFeature(const Feature& f);
     virtual bool readFeature(Feature& f, unsigned long s = 1);
 
@@ -191,7 +191,7 @@ namespace alize
     /// @param src name of the file
     /// @return the feature count of the file
     ///
-    virtual unsigned long getFeatureCountOfASource(const String& src);
+    virtual unsigned long getFeatureCountOfASource(const std::string& src);
 
     /// Returns the number of the first feature of a feature file. Useful
     /// for a multiple file stream.
@@ -205,14 +205,14 @@ namespace alize
     /// @param src name of the file
     /// @return the number of the first feature
     ///
-    virtual unsigned long getFirstFeatureIndexOfASource(const String& srcName);
+    virtual unsigned long getFirstFeatureIndexOfASource(const std::string& srcName);
 
     /// Returns the a particular feature file. Useful
     /// for a multiple file stream.
     /// @param srcIdx index of the file
     /// @return the name of the file
     ///
-    virtual const String& getNameOfASource(unsigned long srcIdx);
+    virtual const std::string& getNameOfASource(unsigned long srcIdx);
 
     /// Closes all opened files
     ///
@@ -237,7 +237,7 @@ namespace alize
                                             HistoricUsage,
                                             unsigned long historicSize);
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 

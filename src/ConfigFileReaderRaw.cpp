@@ -59,7 +59,9 @@
 #include "Exception.h"
 #include "Config.h"
 #include "FileReader.h"
+#include "string_util.h"
 
+using namespace std;
 using namespace alize; 
 
 //-------------------------------------------------------------------------
@@ -74,16 +76,16 @@ void ConfigFileReaderRaw::readConfig(Config& c)
   {     // TODO : tester les anomalies
     while (true)
     {
-      const String& s = _pReader->readLine(); // can throw IOException
-      if (!s.isEmpty())
-        c.setParam(s.getToken(0), s.getToken(1));
+      const string& s = _pReader->readLine(); // can throw IOException
+      if (!s.empty())
+        c.setParam(getToken(s, 0), getToken(s, 1));
     }
   }
   catch (EOFException&) {}
   _pReader->close();
 }
 //-------------------------------------------------------------------------
-String ConfigFileReaderRaw::getClassName() const 
+string ConfigFileReaderRaw::getClassName() const 
 { return "ConfigFileReaderRaw"; }
 //-------------------------------------------------------------------------
 ConfigFileReaderRaw::~ConfigFileReaderRaw() {}

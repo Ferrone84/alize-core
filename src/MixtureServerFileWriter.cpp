@@ -61,7 +61,9 @@
 #include "Exception.h"
 #include "MixtureServer.h"
 #include "Config.h"
+#include "string_util.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureServerFileWriter W;
 
@@ -69,7 +71,7 @@ typedef MixtureServerFileWriter W;
 W::MixtureServerFileWriter(const FileName& f, const Config& c)
 :FileWriter(getFullFileName(c, f))
 {
-  if (_fileName.endsWith(".xml"))
+  if (endsWith(_fileName, ".xml"))
     _format = MixtureServerFileWriterFormat_XML;
   else
   {
@@ -80,9 +82,9 @@ W::MixtureServerFileWriter(const FileName& f, const Config& c)
   }
 }
 //-------------------------------------------------------------------------
-String W::getFullFileName(const Config& c, const FileName& f) const
+string W::getFullFileName(const Config& c, const FileName& f) const
 {  // protected
-  if (f.beginsWith("/") || f.beginsWith("./"))
+  if (beginsWith(f, "/") || beginsWith(f, "./"))
     return f;
   return c.getParam_mixtureFilesPath() + f
        + c.getParam_saveMixtureFileExtension();
@@ -121,14 +123,14 @@ void W::writeMixtureServerXml(const MixtureServer& ms)
           writeString("\n\t\t\t<covInv");
           writeAttribute("i", c);
           writeString(">"
-            + String::valueOf(p->getCovInv(c)) + "</covInv>");
+            + std::to_string(p->getCovInv(c)) + "</covInv>");
       }
       for (c=0; c<p->getVectSize(); c++)
       {
           writeString("\n\t\t\t<mean");
           writeAttribute("i", c);
           writeString(">"
-            + String::valueOf(p->getMean(c)) + "</mean>");
+            + std::to_string(p->getMean(c)) + "</mean>");
       }
       writeString("\n\t\t</DistribGD>");
     }
@@ -235,7 +237,7 @@ void W::writeMixtureGDRaw(const MixtureGD& m)
   }
 }
 //-------------------------------------------------------------------------
-String W::getClassName() const { return "MixtureServerFileWriter"; }
+string W::getClassName() const { return "MixtureServerFileWriter"; }
 //-------------------------------------------------------------------------
 W::~MixtureServerFileWriter() {}
 //-------------------------------------------------------------------------

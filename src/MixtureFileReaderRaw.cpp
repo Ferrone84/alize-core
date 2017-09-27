@@ -65,6 +65,7 @@
 #include "Config.h"
 #include "FileReader.h"
 
+using namespace std; 
 using namespace alize;
 typedef MixtureFileReaderRaw R;
 
@@ -188,7 +189,7 @@ const MixtureGF& R::readMixtureGF()
   return *static_cast<MixtureGF*>(_pMixture);
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "MixtureFileReaderRaw"; }
+string R::getClassName() const { return "MixtureFileReaderRaw"; }
 //-------------------------------------------------------------------------
 R::~MixtureFileReaderRaw() {}
 //-------------------------------------------------------------------------

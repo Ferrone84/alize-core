@@ -99,14 +99,14 @@ namespace alize
     virtual bool writeFeature(const Feature& f, unsigned long step = 1);
     virtual unsigned long getSourceCount();
     virtual unsigned long getFeatureCountOfASource(unsigned long srcIdx);
-    virtual unsigned long getFeatureCountOfASource(const String& srcName);
+    virtual unsigned long getFeatureCountOfASource(const std::string& srcName);
     virtual unsigned long getFirstFeatureIndexOfASource(unsigned long srcIdx);
-    virtual unsigned long getFirstFeatureIndexOfASource(const String& srcName);
-    virtual const String& getNameOfASource(unsigned long srcIdx);
+    virtual unsigned long getFirstFeatureIndexOfASource(const std::string& srcName);
+    virtual const std::string& getNameOfASource(unsigned long srcIdx);
 
     virtual void setExternalBufferToUse(FloatVector& v);
     
-    virtual String toString() const;
+    virtual std::string toString() const;
 
   protected :
 
@@ -126,8 +126,8 @@ namespace alize
     FloatVector*    _pBuffer;
     Feature         _f;
 
-    String getPath(const FileName&, const Config&) const;
-    String getExt(const FileName&, const Config&) const;
+    std::string getPath(const FileName&, const Config&) const;
+    std::string getExt(const FileName&, const Config&) const;
     bool getBigEndian(const Config&, BigEndian) const;
 
   private :

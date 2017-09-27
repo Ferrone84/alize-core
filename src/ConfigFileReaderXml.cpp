@@ -59,9 +59,11 @@
 #include "Exception.h"
 #include "Config.h"
 #include "FileReader.h"
+#include "string_util.h"
 
 // see http://babel.alis.com/web_ml/xml/REC-xml.fr.html#NT-XMLDecl
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -78,32 +80,32 @@ void ConfigFileReaderXml::readConfig(Config& c)
   _pReader->close();
 }
 //-------------------------------------------------------------------------
-void ConfigFileReaderXml::eventOpeningElement(const String& path)
+void ConfigFileReaderXml::eventOpeningElement(const string& path)
 {
-  if (path.endsWith("<config>"))
+  if (endsWith(path, "<config>"))
   {
   }
-  else if (path.endsWith("<param>"))
+  else if (endsWith(path, "<param>"))
   {
     _paramNameDefined = false;
   }
-  else if (path.endsWith("<param><name>"))
+  else if (endsWith(path, "<param><name>"))
   {
   }
-  else if (path.endsWith("<version>"))
+  else if (endsWith(path, "<version>"))
   {
   }
   else
     eventError("Unknown tag in the path " + path);
 }
 //-------------------------------------------------------------------------
-void ConfigFileReaderXml::eventClosingElement(const String& path,
-                           const String& value)
+void ConfigFileReaderXml::eventClosingElement(const string& path,
+                           const string& value)
 {
-  if (path.endsWith("<config>"))
+  if (endsWith(path, "<config>"))
   {
   }
-  else if (path.endsWith("<param>"))
+  else if (endsWith(path, "<param>"))
   {
     if (_paramNameDefined)
     {
@@ -113,9 +115,9 @@ void ConfigFileReaderXml::eventClosingElement(const String& path,
       if (value != "")
         eventError("parameter name missing");
   }
-  else if (path.endsWith("<param><name>"))
+  else if (endsWith(path, "<param><name>"))
   {
-    if (value.getToken(0) != "")
+    if (getToken(value,0) != "")
     {
       _paramName = value;
       _paramNameDefined = true;
@@ -123,7 +125,7 @@ void ConfigFileReaderXml::eventClosingElement(const String& path,
     else
       eventError("parameter name is required");
   }
-  else if (path.endsWith("<version>"))
+  else if (endsWith(path, "<version>"))
   {
     if (value != "1")
       eventError("invalid version");
@@ -131,24 +133,24 @@ void ConfigFileReaderXml::eventClosingElement(const String& path,
   // TODO : more serious checking
 }
 //-------------------------------------------------------------------------
-void ConfigFileReaderXml::eventError(const String& msg)
+void ConfigFileReaderXml::eventError(const string& msg)
 {
   assert(_pReader != NULL);
   _pReader->close();
-  throw InvalidDataException("Error line " + String::valueOf(_line)
+  throw InvalidDataException("Error line " + std::to_string(_line)
     + " : " + msg, __FILE__, __LINE__, _pReader->getFullFileName());
 }
 //-------------------------------------------------------------------------
-const String& ConfigFileReaderXml::readOneChar()
+const string& ConfigFileReaderXml::readOneChar()
 {
   assert(_pReader != NULL);
-  const String& s = _pReader->readString(1);
+  const string& s = _pReader->readString(1);
   if (s == "\n")
     _line++;
   return s;
 }
 //-------------------------------------------------------------------------
-String ConfigFileReaderXml::getClassName() const
+string ConfigFileReaderXml::getClassName() const
 { return "ConfigFileReaderXml"; }
 //-------------------------------------------------------------------------
 ConfigFileReaderXml::~ConfigFileReaderXml() {}

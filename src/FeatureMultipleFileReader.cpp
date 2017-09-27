@@ -137,7 +137,7 @@ bool R::writeFeature(const Feature& f, unsigned long step)
 //-------------------------------------------------------------------------
 bool R::rw(bool read, Feature& f, unsigned long s) // private
 {
-  // _fileCounter = n° du PROCHAIN fichier à lire
+  // _fileCounter = nÂ° du PROCHAIN fichier Ã  lire
   unsigned long featureNbr = 0;
   unsigned long futureLastFeatureIndex = _lastFeatureIndex;
   bool seekWantedInCurrentFile = _seekWanted;
@@ -152,7 +152,7 @@ bool R::rw(bool read, Feature& f, unsigned long s) // private
     if (_fileCount != 0)
     {
       unsigned long featureNbrGlobal;
-      if (_seekWantedSrcName.isEmpty())
+      if (_seekWantedSrcName.empty())
       {
         _fileCounter     = _fileList.getFileIndex(_seekWantedIdx);
         featureNbr       = _seekWantedIdx
@@ -234,8 +234,8 @@ FeatureFileReader& R::getReader(unsigned long idx) // private
                  getConfig(), _pLabelServer, _bigEndian, BUFFER_USERDEFINE, 0);
   // <FRANCAIS>
   // Creer un buffer
-  // S'il ne reste pas assez de memoire disponible, détruit les
-  // readers les plus anciens pour récuperer la memoire des buffers
+  // S'il ne reste pas assez de memoire disponible, dÃ©truit les
+  // readers les plus anciens pour rÃ©cuperer la memoire des buffers
   //
   unsigned long memMax = 0;
   if (_bufferUsage == BUFFER_USERDEFINE)
@@ -313,7 +313,7 @@ unsigned long R::getFirstFeatureIndexOfASource(unsigned long srcIdx)
 unsigned long R::getFirstFeatureIndexOfASource(const FileName& f)
 { return _fileList.getIndexOfFirstFeature(f); }
 //-------------------------------------------------------------------------
-const String& R::getNameOfASource(unsigned long srcIdx)
+const string& R::getNameOfASource(unsigned long srcIdx)
 { return _fileList.getFileName(srcIdx); }
 //-------------------------------------------------------------------------
 void R::close()
@@ -323,23 +323,23 @@ void R::close()
       _readerPtrVect[i]->close();
 }
 //-------------------------------------------------------------------------
-String R::getClassName() const { return "FeatureMultipleFileReader"; }
+string R::getClassName() const { return "FeatureMultipleFileReader"; }
 //-------------------------------------------------------------------------
-String R::toString() const
+string R::toString() const
 {
   FeatureMultipleFileReader& r = const_cast<FeatureMultipleFileReader&>(*this);
   const FeatureFlags flags(r.getFeatureFlags());
   return Object::toString()
-    + "\n  file count   = '" + String::valueOf(_fileList.size())
-    + "\n  vectSize    = " + String::valueOf(r.getVectSize())
-    + "\n  feature count = " + String::valueOf(r.getFeatureCount())
-    + "\n  sample rate   = " + String::valueOf(r.getSampleRate())
-    + "\n  flag S    = " + String::valueOf(flags.useS)
-    + "\n  flag E    = " + String::valueOf(flags.useE)
-    + "\n  flag D    = " + String::valueOf(flags.useD)
-    + "\n  flag DE     = " + String::valueOf(flags.useDE)
-    + "\n  flag DD     = " + String::valueOf(flags.useDD)
-    + "\n  flag DDE    = " + String::valueOf(flags.useDDE);
+    + "\n  file count   = '" + std::to_string(_fileList.size())
+    + "\n  vectSize    = " + std::to_string(r.getVectSize())
+    + "\n  feature count = " + std::to_string(r.getFeatureCount())
+    + "\n  sample rate   = " + std::to_string(r.getSampleRate())
+    + "\n  flag S    = " + std::to_string(flags.useS)
+    + "\n  flag E    = " + std::to_string(flags.useE)
+    + "\n  flag D    = " + std::to_string(flags.useD)
+    + "\n  flag DE     = " + std::to_string(flags.useDE)
+    + "\n  flag DD     = " + std::to_string(flags.useDD)
+    + "\n  flag DDE    = " + std::to_string(flags.useDDE);
 }
 //-------------------------------------------------------------------------
 R::~FeatureMultipleFileReader()

@@ -64,38 +64,39 @@
 #include "XLine.h"
 #include "Config.h"
 
+using namespace std;
 using namespace alize;
 typedef FeatureInputStreamModifier M;
 
 //-------------------------------------------------------------------------
-M::FeatureInputStreamModifier(FeatureInputStream& is, const String& m,
+M::FeatureInputStreamModifier(FeatureInputStream& is, const string& m,
                               bool ownStream)
 :FeatureInputStream(is.getConfig()), _pInput(&is), _useMask(false),
 _ownStream(ownStream) { setMask(m); }
 //-------------------------------------------------------------------------
-M& M::create(FeatureInputStream& is, const String& m, bool ownStream)
+M& M::create(FeatureInputStream& is, const string& m, bool ownStream)
 {
   M* p = new (std::nothrow) M(is, m, ownStream);
   assertMemoryIsAllocated(p, __FILE__, __LINE__);
   return *p;
 }
 //-------------------------------------------------------------------------
-void M::setMask(const String& m)
+void M::setMask(const string& m)
 {
   if (m == "NO_MASK")
   {
     _useMask = false;
     return;
   }
-  _tmpMask.reset();
+  _tmpMask.clear();
   unsigned long i = 0;
-  String begin, end;
+  string begin, end;
 
-  if (m.isEmpty())
+  if (m.empty())
     goto xend;
   while (true)
   {
-    if (m[i] < "0" || m[i] > "9")
+    if (m[i] < '0' || m[i] > '9')
       throw Exception("Invalid feature mask", __FILE__, __LINE__);
     begin += m[i++];
     end = begin;
@@ -104,15 +105,15 @@ void M::setMask(const String& m)
       updateMask(begin, end);
       goto xend;
     }
-    if (m[i] == "-")
+    if (m[i] == '-')
     {
       i++;
       if (i == m.length())
         throw Exception("Invalid feature mask", __FILE__, __LINE__);
-      end.reset();
+      end.clear();
       do
       {
-        if (m[i] < "0" || m[i] > "9")
+        if (m[i] < '0' || m[i] > '9')
           throw Exception("Invalid feature mask", __FILE__, __LINE__);
         end += m[i++];
         if (i == m.length())
@@ -121,16 +122,16 @@ void M::setMask(const String& m)
           goto xend;
         }
       }
-      while (m[i] != ",");
+      while (m[i] != ',');
     }
-    if (m[i] == ",")
+    if (m[i] == ',')
     {
       updateMask(begin, end);
       i++;
       if (i == m.length())
         throw Exception("Invalid feature mask", __FILE__, __LINE__);
-      begin.reset();
-      end.reset();
+      begin.clear();
+      end.clear();
     }
   }
 xend:
@@ -144,10 +145,10 @@ xend:
   _selectionSize = _selection.size();
 }
 //-------------------------------------------------------------------------
-void M::updateMask(const String& b, const String& e) // private
+void M::updateMask(const string& b, const string& e) // private
 {
-  unsigned long ee = e.toULong();
-  unsigned long bb = b.toULong();
+  unsigned long ee = stoull(e);
+  unsigned long bb = stoull(b);
   if (ee < bb)
     throw Exception("Invalid feature mask", __FILE__, __LINE__);
   for (unsigned long i=bb; i<=ee; i++)
@@ -213,7 +214,7 @@ const FeatureFlags& M::getFeatureFlags()
 { return _pInput->getFeatureFlags(); }
 // TODO : que faire des flags si _useMask = true ?
 //-------------------------------------------------------------------------
-void M::seekFeature(unsigned long i, const String& s)
+void M::seekFeature(unsigned long i, const string& s)
 { _pInput->seekFeature(i, s); }
 //-------------------------------------------------------------------------
 real_t M::getSampleRate() { return _pInput->getSampleRate(); }
@@ -227,23 +228,23 @@ unsigned long M::getSourceCount() {return _pInput->getSourceCount();}
 unsigned long M::getFeatureCountOfASource(unsigned long srcIdx)
 { return _pInput->getFeatureCountOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-unsigned long M::getFeatureCountOfASource(const String& f)
+unsigned long M::getFeatureCountOfASource(const string& f)
 { return _pInput->getFeatureCountOfASource(f); }
 //-------------------------------------------------------------------------
 unsigned long M::getFirstFeatureIndexOfASource(unsigned long srcIdx)
 { return _pInput->getFirstFeatureIndexOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-unsigned long M::getFirstFeatureIndexOfASource(const String& srcName)
+unsigned long M::getFirstFeatureIndexOfASource(const string& srcName)
 { return _pInput->getFirstFeatureIndexOfASource(srcName); }
 //-------------------------------------------------------------------------
-const String& M::getNameOfASource(unsigned long srcIdx)
+const string& M::getNameOfASource(unsigned long srcIdx)
 { return _pInput->getNameOfASource(srcIdx); }
 //-------------------------------------------------------------------------
-String M::getClassName() const { return "FeatureInputStreamModifier"; }
+string M::getClassName() const { return "FeatureInputStreamModifier"; }
 //-------------------------------------------------------------------------
-String M::toString() const
+string M::toString() const
 {
-  String s =  FeatureInputStream::toString()
+  string s =  FeatureInputStream::toString()
     + "\n  input stream = " + _pInput->getClassName()
     + "[" + getAddress() + "]";
   if (_useMask)

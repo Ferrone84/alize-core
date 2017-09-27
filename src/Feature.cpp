@@ -58,11 +58,12 @@
 #include <new>
 #include <memory.h>
 #include "Feature.h"
-#include "alizeString.h"
+
 #include "Exception.h"
 #include "Config.h"
 #include "ULongVector.h"
 
+using namespace std;
 using namespace alize;
 
 //-------------------------------------------------------------------------
@@ -100,9 +101,9 @@ const Feature& Feature::operator=(const Feature& f)
 {
   if (_vectSize != f._vectSize)
     throw Exception("Feature copy : source vectSize ("
-        + String::valueOf(f._vectSize)
+        + std::to_string(f._vectSize)
         + ") does not match target vectSize ("
-        + String::valueOf(_vectSize) + ")", __FILE__, __LINE__);
+        + std::to_string(_vectSize) + ")", __FILE__, __LINE__);
   memcpy(_dataVector, f._dataVector, _vectSize*sizeof(_dataVector[0]));
   _isValid   = f._isValid;
   _labelCode = f._labelCode;
@@ -214,17 +215,17 @@ void Feature::copySelectedData(const Feature& f, const ULongVector& selection)
 //-------------------------------------------------------------------------
 Feature::data_t* Feature::getDataVector() const { return _dataVector; }
 //-------------------------------------------------------------------------
-String Feature::getClassName() const { return "Feature"; }
+string Feature::getClassName() const { return "Feature"; }
 //-------------------------------------------------------------------------
-String Feature::toString() const
+string Feature::toString() const
 {
-  String s = Object::toString()
-    + "\n  vectSize   = " + String::valueOf(_vectSize)
-    + "\n  label code = " + String::valueOf(_labelCode)
-    + "\n  is valid   = " + String::valueOf(_isValid);
+  string s = Object::toString()
+    + "\n  vectSize   = " + std::to_string(_vectSize)
+    + "\n  label code = " + std::to_string(_labelCode)
+    + "\n  is valid   = " + std::to_string(_isValid);
   for (unsigned long i=0; i<_vectSize; i++)
-    s += "\n  data[" + String::valueOf(i) + "] = "
-      + String::valueOf(operator[](i)); 
+    s += "\n  data[" + std::to_string(i) + "] = "
+      + std::to_string(operator[](i)); 
   return s;
 }
 //-------------------------------------------------------------------------

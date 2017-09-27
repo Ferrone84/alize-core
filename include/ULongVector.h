@@ -151,8 +151,8 @@ namespace alize
     ///
     void setAllValues(unsigned long u);
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
 	void save(const FileName& f);
 	void load(const FileName& f);

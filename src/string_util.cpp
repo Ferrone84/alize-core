@@ -52,75 +52,52 @@
 	Jean-Francois Bonastre [jean-francois.bonastre@univ-avignon.fr]
 */
 
-#if !defined(ALIZE_MixtureFileWriter_h)
-#define ALIZE_MixtureFileWriter_h
+#include "string_util.h"
 
-#if defined(_WIN32)
-#if defined(ALIZE_EXPORTS)
-#define ALIZE_API __declspec(dllexport)
-#else
-#define ALIZE_API __declspec(dllimport)
-#endif
-#else
-#define ALIZE_API
-#endif
+using namespace std;
 
-#include "FileWriter.h"
+namespace alize {
+	//-------------------------------------------------------------------------
+	const char *separators = " \t";
+	
+	string getToken(const string& str, size_t index) {
+		size_t count = 0, previous = str.find_first_not_of(separators), next = 0;
+	
+		if(previous == string::npos) {
+			throw invalid_argument("Empty string for getToken");
+		}
+	
+		for(next = str.find_first_of(separators, previous); count < index && next != string::npos;) {
+			previous = next + 1;
+			next = str.find_first_of(separators, previous);
+	
+			count += 1;
+		}
+	
+		return str.substr(previous, next - previous);
+	}
+	//-------------------------------------------------------------------------
+	bool beginsWith(const string& str, const string& s) {
+		return ( str.compare(0, s.length(), s) == 0 );
+	}
+	//-------------------------------------------------------------------------
+	bool endsWith(const string& str, const string& s) {
+		if (str.length() < s.length()) return false;
 
-namespace alize
-{
-  class Mixture;
-  class MixtureGD;
-  class Config;
-  class MixtureGF;
+		size_t pos = str.length() - s.length();
+		return ( str.compare(pos, s.length(), s) == 0 );
+	}
+	//-------------------------------------------------------------------------
+	bool toBool(const string& str) {
+		if (str == "true")
+			return true;
+		if (str == "false")
+			return false;
 
-  /// Convenient class used to save 1 mixture in a raw or xml file 
-  ///
-  /// @author Frederic Wils  frederic.wils@lia.univ-avignon.fr
-  /// @version 1.0
-  /// @date 2003
+		throw invalid_argument("cannot convert '" + str + "' to boolean, in "
+								+ __FILE__ + " line " + to_string(__LINE__));
 
-  class ALIZE_API MixtureFileWriter : public FileWriter
-  {
-
-  public :
-
-    /// Create a new MixtureFileWriter object to save a mixture
-    /// in a file
-    /// @param f the name of the file
-    /// @param c the configuration to use
-    ///
-    explicit MixtureFileWriter(const FileName& f, const Config& c);
-
-    virtual ~MixtureFileWriter();
-
-    /// Write a mixture to the file
-    /// @param mixture the mixture to save
-    /// @exception IOException if an I/O error occurs
-
-    virtual void writeMixture(const Mixture& mixture);
-    virtual std::string getClassName() const;
-
-  private :
-
-    const Config& _config;
-
-
-    std::string getFullFileName(const Config&, const FileName&) const;
-
-    void writeMixtureGD_XML(const MixtureGD&);
-    void writeMixtureGD_RAW(const MixtureGD&);
-    void writeMixtureGD_ETAT(const MixtureGD&);
-    void writeMixtureGF_XML(const MixtureGF&);
-    void writeMixtureGF_RAW(const MixtureGF&);
-    MixtureFileWriter(const MixtureFileWriter&);   /*!Not implemented*/
-    const MixtureFileWriter& operator=(
-                const MixtureFileWriter&); /*!Not implemented*/
-    bool operator==(const MixtureFileWriter&) const; /*!Not implemented*/
-    bool operator!=(const MixtureFileWriter&) const; /*!Not implemented*/
-  };
-
-} // end namespace alize
-
-#endif // !defined(ALIZE_MixtureFileWriter_h)
-
+		return true;
+	}
+	//-------------------------------------------------------------------------
+} // namespace alize

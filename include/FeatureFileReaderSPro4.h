@@ -148,7 +148,7 @@ namespace alize
     ///
     virtual real_t getSampleRate();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private :
 

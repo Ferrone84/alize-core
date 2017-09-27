@@ -79,7 +79,7 @@ namespace alize
   \n
   void myMethod()\n
   {\n
-    String ss = new String("test");\n
+    std::string ss = new std::string("test");\n
     AutoDestructor aa(ss);\n
     ...\n
   } // when you leave the method, aa is destroyed and ss is destroyed too
@@ -97,7 +97,7 @@ namespace alize
     explicit AutoDestructor(const Object&);
     virtual ~AutoDestructor();
 
-    virtual String getClassName() const;
+    virtual std::string getClassName() const;
 
   private:
 

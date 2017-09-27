@@ -443,19 +443,19 @@ namespace alize
     /// @param id identifier to find
     /// @return the index of the mixture if it exists; -1 otherwise
     ///
-    long getMixtureIndex(const String& id) const;
+    long getMixtureIndex(const std::string& id) const;
 
     /// Sets the identifier of a mixture
     /// @param mix the mixture
     /// @param id the id
     /// @exception IdAlreadyExistsException
     ///
-    void setMixtureId(Mixture& mix, const String& id);
+    void setMixtureId(Mixture& mix, const std::string& id);
 
     //-------------------------------------------------------------------
 
-    const String& getServerName() const;
-    void setServerName(const String&);
+    const std::string& getServerName() const;
+    void setServerName(const std::string&);
 
     /// Loads a mixture server from a file
     /// File naming rules are the same as mixture file.
@@ -475,14 +475,14 @@ namespace alize
     ///
     void save(const FileName& f) const;
 
-    virtual String getClassName() const;
-    virtual String toString() const;
+    virtual std::string getClassName() const;
+    virtual std::string toString() const;
 
 
   private :
 
     const Config&     _config;
-    String        _serverName;
+    std::string        _serverName;
     DistribRefVector    _distribDict;
     MixtureDict       _mixtureDict;
     unsigned long     _lastMixtureId;
@@ -491,9 +491,9 @@ namespace alize
 
     void addDistribToDict(Distrib&);
     void addMixtureToDict(Mixture&);
-    String newId();
+    std::string newId();
     Mixture& loadMixture(const FileName& f, DistribType);
-    void autoSetMixtureId(Mixture& m, String id);
+    void autoSetMixtureId(Mixture& m, std::string id);
 
 
     ///
