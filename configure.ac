@@ -9,16 +9,16 @@ AC_PROG_INSTALL
 
 AC_LIBTOOL_DLOPEN
 
-#CXXFLAGS="-O3 -ffast-math"
+CXXFLAGS="-std=c++11 "
 
 AC_ARG_ENABLE(debug, 
 		[  --enable-debug	  compile ALIZE with debug information [[default=no]] ], 
 		enable_optimize=$enableval, enable_optimize=no)
 if test "$enable_optimize" = "yes"; then 
-	CXXFLAGS="-g -Wall"
+	CXXFLAGS+="-g -Wall"
 	AC_SUBST(DEBUG,"_debug")
 else
-	CXXFLAGS="-O3 -ffast-math"
+	CXXFLAGS+="-O3 -ffast-math"
 	AC_SUBST(DEBUG,"")
 fi
 
