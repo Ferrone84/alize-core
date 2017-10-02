@@ -55,16 +55,7 @@
 #if !defined(ALIZE_Matrix_h)
 #define ALIZE_Matrix_h
 
-#if defined(_WIN32)
-#if defined(ALIZE_EXPORTS)
-#define ALIZE_API __declspec(dllexport)
-#else
-#define ALIZE_API __declspec(dllimport)
-#endif
-#else
-#define ALIZE_API
-#endif
-
+#include "alize_util.h"
 #pragma warning(disable: 4244) // possible loss of data
 #pragma warning(disable: 4146) // unary minus operator applied to unsigned type
 

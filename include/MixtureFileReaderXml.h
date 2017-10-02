@@ -55,16 +55,7 @@
 #if !defined(ALIZE_MixtureFileReaderXml_h)
 #define ALIZE_MixtureFileReaderXml_h
 
-#if defined(_WIN32)
-#if defined(ALIZE_EXPORTS)
-#define ALIZE_API __declspec(dllexport)
-#else
-#define ALIZE_API __declspec(dllimport)
-#endif
-#else
-#define ALIZE_API
-#endif
-
+#include "alize_util.h"
 #include "MixtureFileReaderAbstract.h"
 #include "XmlParser.h"
 

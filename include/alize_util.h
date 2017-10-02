@@ -52,72 +52,17 @@
 	Jean-Francois Bonastre [jean-francois.bonastre@univ-avignon.fr]
 */
 
-#if !defined(ALIZE_FrameAccGD_h)
-#define ALIZE_FrameAccGD_h
+#if !defined(ALIZE_alize_util_h)
+#define ALIZE_alize_util_h
 
-#include "alize_util.h"
-#include "FrameAcc.h"
-#include "RealVector.h"
+#if defined(_WIN32)
+    #if defined(ALIZE_EXPORTS)
+        #define ALIZE_API __declspec(dllexport)
+    #else
+        #define ALIZE_API __declspec(dllimport)
+    #endif
+#else
+    #define ALIZE_API
+#endif
 
-namespace alize
-{
-  /// Class used to compute mean and covariance (DIAG) of a set of 
-  /// features
-  ///
-  /// @author Frederic Wils  frederic.wils@lia.univ-avignon.fr
-  /// @version 1.0
-  /// @date 2003
-  ///
-  class ALIZE_API FrameAccGD : public FrameAcc
-  {
-  friend class TestFrameAccGD;
-  public :
-    explicit FrameAccGD();
-    static FrameAccGD& create();
-    const FrameAccGD& operator=(const FrameAccGD&);
-    FrameAccGD(const FrameAccGD&);
-    virtual ~FrameAccGD();
-    virtual void accumulate(const Feature& f);
-
-    /// Delete an accumulated feature
-    /// @param f the feature to delete
-    /// LIUM Modification
-    ///
-    virtual void deaccumulate(const Feature& f);
-
-    /// Returns the accumulated square parameters vector
-    /// @return the accumulated square parameters vector
-    ///
-    const DoubleVector& getxAccVect() const;
-
-    /// Returns the covariance vector
-    /// @return the covariance vector
-    ///
-    const DoubleVector& getCovVect();
-
-    /// Returns the standard deviation vector
-    /// @return the standard deviation vector
-    ///
-    const DoubleVector& getStdVect();
-
-    /// Add the values from another FrameAcc - LIUM Modification
-    /// @param f the frame acc
-    ///
-    void add(const FrameAccGD& f);
-
-    virtual std::string getClassName() const;
-
-  private:
-    DoubleVector _xaccVect;
-    DoubleVector _covVect;
-    DoubleVector _stdVect;
-    virtual void computeAll();
-    void copy(const FrameAccGD&);
-    bool operator==(const FrameAccGD&) const;/*!Not implemented*/
-    bool operator!=(const FrameAccGD&) const;/*!Not implemented*/
-  };
-
-} // end namespace alize
-
-#endif // !defined(ALIZE_FrameAccGD_h)
-
+#endif

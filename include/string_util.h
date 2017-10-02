@@ -55,18 +55,11 @@
 #if !defined(ALIZE_string_util_h)
 #define ALIZE_string_util_h
 
-#if defined(_WIN32)
-#if defined(ALIZE_EXPORTS)
-#define ALIZE_API __declspec(dllexport)
-#else
-#define ALIZE_API __declspec(dllimport)
-#endif
-#else
-#define ALIZE_API
-#endif
 
 #include <string>
 #include <stdexcept>
+
+#include "alize_util.h"
 
 namespace alize 
 {
